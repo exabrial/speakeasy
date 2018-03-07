@@ -16,24 +16,18 @@
 	</properties>
 
 	<dependencies>
-		<dependency>
-			<groupId>org.apache.commons</groupId>
-			<artifactId>commons-lang3</artifactId>
-			<version>3.7</version>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.openmuc</groupId>
-			<artifactId>jasn1</artifactId>
-			<version>1.9.0</version>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
-			<version>1.7.25</version>
-			<scope>compile</scope>
-		</dependency>
+		<!-- <dependency> -->
+		<!-- <groupId>org.apache.commons</groupId> -->
+		<!-- <artifactId>commons-lang3</artifactId> -->
+		<!-- <version>3.7</version> -->
+		<!-- <scope>compile</scope> -->
+		<!-- </dependency> -->
+		<!-- <dependency> -->
+		<!-- <groupId>org.slf4j</groupId> -->
+		<!-- <artifactId>slf4j-api</artifactId> -->
+		<!-- <version>1.7.25</version> -->
+		<!-- <scope>compile</scope> -->
+		<!-- </dependency> -->
 		<dependency>
 			<groupId>org.bouncycastle</groupId>
 			<artifactId>bcprov-jdk15on</artifactId>
@@ -73,14 +67,42 @@
 					<artifactId>maven-surefire-plugin</artifactId>
 					<version>2.21.0</version>
 				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-shade-plugin</artifactId>
+					<version>3.1.0</version>
+				</plugin>
 			</plugins>
+
 		</pluginManagement>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-shade-plugin</artifactId>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>shade</goal>
+						</goals>
+						<configuration>
+							<relocations>
+								<relocation>
+									<pattern>org.bouncycastle</pattern>
+									<shadedPattern>com.github.exabrial.speakeasy.shaded.org.bouncycastle</shadedPattern>
+								</relocation>
+							</relocations>
+							<shadedArtifactAttached>true</shadedArtifactAttached>
+							<createDependencyReducedPom>true</createDependencyReducedPom>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
 				<configuration>
-					<parallel>methods</parallel>
+					<parallel>classes</parallel>
 					<threadCount>10</threadCount>
 				</configuration>
 			</plugin>

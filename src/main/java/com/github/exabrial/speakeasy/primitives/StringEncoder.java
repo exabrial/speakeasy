@@ -1,4 +1,4 @@
-package com.github.exabrial.speakeasy.primitaves;
+package com.github.exabrial.speakeasy.primitives;
 
 public interface StringEncoder {
 	String encodeBytesAsBase64(byte[] payload);

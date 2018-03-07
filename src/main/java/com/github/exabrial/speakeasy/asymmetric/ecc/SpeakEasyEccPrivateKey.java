@@ -1,8 +1,7 @@
-package com.github.exabrial.speakeasy.asymmetric.encryption.ecc;
+package com.github.exabrial.speakeasy.asymmetric.ecc;
 
-import static com.github.exabrial.speakeasy.asymmetric.encryption.ecc.EccConstants.GEN_ALG;
+import static com.github.exabrial.speakeasy.internal.ECCConstants.GEN_ALG;
 
-import java.security.Key;
 import java.security.PrivateKey;
 
 import com.github.exabrial.speakeasy.asymmetric.SpeakEasyPrivateKey;
@@ -25,7 +24,7 @@ public class SpeakEasyEccPrivateKey implements SpeakEasyPrivateKey {
 	}
 
 	@Override
-	public Key toKey() {
+	public PrivateKey toKey() {
 		return privateKey;
 	}
 }

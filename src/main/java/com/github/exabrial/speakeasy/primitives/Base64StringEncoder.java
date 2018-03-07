@@ -1,4 +1,4 @@
-package com.github.exabrial.speakeasy.primitaves;
+package com.github.exabrial.speakeasy.primitives;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;

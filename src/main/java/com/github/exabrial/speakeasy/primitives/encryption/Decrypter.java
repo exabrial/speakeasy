@@ -1,4 +1,4 @@
-package com.github.exabrial.speakeasy.primitaves;
+package com.github.exabrial.speakeasy.primitives.encryption;
 
 public interface Decrypter {
 	String decrypt(String cipherText);

@@ -1,7 +1,6 @@
-package com.github.exabrial.speakeasy.asymmetric.encryption.ecc;
+package com.github.exabrial.speakeasy.asymmetric.ecc;
 
-import static com.github.exabrial.speakeasy.asymmetric.encryption.ecc.EccConstants.EC_CURVE_NAME;
-import static com.github.exabrial.speakeasy.asymmetric.encryption.ecc.EccConstants.GEN_ALG;
+import static com.github.exabrial.speakeasy.internal.ECCConstants.*;
 
 import java.security.InvalidAlgorithmParameterException;
 import java.security.KeyPair;
@@ -12,10 +11,10 @@ import java.security.spec.ECGenParameterSpec;
 
 import com.github.exabrial.speakeasy.asymmetric.SpeakEasyKeyPairGenerator;
 
-public class EccKeyPairGenerator implements SpeakEasyKeyPairGenerator {
+public class ECCKeyPairGenerator implements SpeakEasyKeyPairGenerator {
 	private final SecureRandom secureRandom;
 
-	public EccKeyPairGenerator() {
+	public ECCKeyPairGenerator() {
 		try {
 			secureRandom = SecureRandom.getInstanceStrong();
 		} catch (NoSuchAlgorithmException e) {

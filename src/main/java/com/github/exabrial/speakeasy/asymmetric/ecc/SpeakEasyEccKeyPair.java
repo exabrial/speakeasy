@@ -1,4 +1,4 @@
-package com.github.exabrial.speakeasy.asymmetric.encryption.ecc;
+package com.github.exabrial.speakeasy.asymmetric.ecc;
 
 import java.security.KeyPair;
 

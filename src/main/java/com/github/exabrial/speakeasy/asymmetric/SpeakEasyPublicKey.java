@@ -1,7 +1,9 @@
 package com.github.exabrial.speakeasy.asymmetric;
 
-import com.github.exabrial.speakeasy.primitaves.SpeakEasyKey;
+import java.security.PublicKey;
+
+import com.github.exabrial.speakeasy.primitives.keys.SpeakEasyKey;
 
 public interface SpeakEasyPublicKey extends SpeakEasyKey {
-
+	PublicKey toKey();
 }

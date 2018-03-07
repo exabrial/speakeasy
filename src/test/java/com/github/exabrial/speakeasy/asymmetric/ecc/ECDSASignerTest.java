@@ -6,8 +6,8 @@ public class ECDSASignerTest {
 
 	@Test
 	public void testSignPayload() {
-		ECCKeyPairGenerator kpg = new ECCKeyPairGenerator();
-		SpeakEasyEccKeyPair keyPair = kpg.createKeyPair();
+		ECCKeyUtils utils = new ECCKeyUtils();
+		SpeakEasyEccKeyPair keyPair = utils.createKeyPair();
 		ECDSASigner signer = new ECDSASigner(keyPair.getPrivateKey());
 		String payload = "payload";
 		String signatureText = signer.signPayload(payload);

@@ -2,7 +2,6 @@ package com.github.exabrial.speakeasy.asymmetric.ecc;
 
 import static com.github.exabrial.speakeasy.internal.ECCConstants.EC_CURVE_NAME;
 import static com.github.exabrial.speakeasy.internal.ECCConstants.GEN_ALG;
-import static com.github.exabrial.speakeasy.primitives.Base64StringEncoder.getSingleton;
 
 import java.security.InvalidAlgorithmParameterException;
 import java.security.KeyFactory;
@@ -13,20 +12,23 @@ import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.security.SecureRandom;
 import java.security.spec.ECGenParameterSpec;
+import java.security.spec.EncodedKeySpec;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 
 import com.github.exabrial.speakeasy.asymmetric.AsymmetricKeyUtils;
+import com.github.exabrial.speakeasy.primitives.Base64StringEncoder;
 import com.github.exabrial.speakeasy.primitives.StringEncoder;
 
-public class ECCKeyUtils implements AsymmetricKeyUtils {
-	private final StringEncoder stringEncoder;
+public class ECCKeyUtils
+		implements AsymmetricKeyUtils<SpeakEasyEccPublicKey, SpeakEasyEccPrivateKey, SpeakEasyEccKeyPair> {
 	private final SecureRandom secureRandom;
+	private final StringEncoder stringEncoder;
 
 	public ECCKeyUtils() {
 		try {
-			this.stringEncoder = getSingleton();
+			stringEncoder = Base64StringEncoder.getSingleton();
 			this.secureRandom = SecureRandom.getInstanceStrong();
 		} catch (NoSuchAlgorithmException e) {
 			throw new RuntimeException(e);
@@ -85,7 +87,25 @@ public class ECCKeyUtils implements AsymmetricKeyUtils {
 		}
 	}
 
-	public StringEncoder getStringEncoder() {
-		return stringEncoder;
+	@Override
+	public String toString(SpeakEasyEccPublicKey speakEasyPublicKey) {
+		try {
+			KeyFactory keyFactory = KeyFactory.getInstance(GEN_ALG);
+			EncodedKeySpec spec = keyFactory.getKeySpec(speakEasyPublicKey.toKey(), X509EncodedKeySpec.class);
+			return stringEncoder.encodeBytesAsBase64(spec.getEncoded());
+		} catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@Override
+	public String toString(SpeakEasyEccPrivateKey speakEasyPrivateKey) {
+		try {
+			KeyFactory keyFactory = KeyFactory.getInstance(GEN_ALG);
+			EncodedKeySpec spec = keyFactory.getKeySpec(speakEasyPrivateKey.toKey(), PKCS8EncodedKeySpec.class);
+			return stringEncoder.encodeBytesAsBase64(spec.getEncoded());
+		} catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
+			throw new RuntimeException(e);
+		}
 	}
 }

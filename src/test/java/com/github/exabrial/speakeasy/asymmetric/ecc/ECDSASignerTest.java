@@ -5,15 +5,15 @@ import org.junit.Test;
 public class ECDSASignerTest {
 
 	@Test
-	public void testSignPayload() {
+	public void testSignmessage() {
 		ECCKeyUtils utils = new ECCKeyUtils();
 		SpeakEasyEccKeyPair keyPair = utils.createKeyPair();
 		ECDSASigner signer = new ECDSASigner(keyPair.getPrivateKey());
-		String payload = "payload";
-		String signatureText = signer.signPayload(payload);
+		String message = "message";
+		String signatureText = signer.signmessage(message);
 		ECDSAVerifier verifier = new ECDSAVerifier(keyPair.getPublicKey());
 		System.out.println(signatureText);
-		System.out.println(verifier.verifyPayloadSignature(payload, signatureText));
+		System.out.println(verifier.verifymessageSignature(message, signatureText));
 	}
 
 }

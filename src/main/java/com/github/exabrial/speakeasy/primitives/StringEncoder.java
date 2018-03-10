@@ -1,11 +1,11 @@
 package com.github.exabrial.speakeasy.primitives;
 
 public interface StringEncoder {
-	String encodeBytesAsBase64(byte[] payload);
+	String encodeBytesAsBase64(byte[] message);
 
-	byte[] decodeBase64StringToBytes(String payload);
+	byte[] decodeBase64StringToBytes(String message);
 
-	byte[] getStringAsBytes(String payload);
+	byte[] getStringAsBytes(String message);
 
-	String stringFromBytes(byte[] payload);
+	String stringFromBytes(byte[] message);
 }

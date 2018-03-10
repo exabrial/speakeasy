@@ -22,23 +22,23 @@ public class Base64StringEncoder implements StringEncoder {
 	}
 
 	@Override
-	public String encodeBytesAsBase64(byte[] payload) {
-		return Base64.getEncoder().encodeToString(payload);
+	public String encodeBytesAsBase64(byte[] message) {
+		return Base64.getEncoder().encodeToString(message);
 	}
 
 	@Override
-	public byte[] decodeBase64StringToBytes(String payload) {
-		return Base64.getDecoder().decode(payload);
+	public byte[] decodeBase64StringToBytes(String message) {
+		return Base64.getDecoder().decode(message);
 	}
 
 	@Override
-	public byte[] getStringAsBytes(String payload) {
-		return payload.getBytes(StandardCharsets.UTF_8);
+	public byte[] getStringAsBytes(String message) {
+		return message.getBytes(StandardCharsets.UTF_8);
 	}
 
 	@Override
-	public String stringFromBytes(byte[] payload) {
-		return new String(payload, StandardCharsets.UTF_8);
+	public String stringFromBytes(byte[] message) {
+		return new String(message, StandardCharsets.UTF_8);
 	}
 
 }

@@ -1,7 +1,7 @@
 package com.github.exabrial.speakeasy.asymmetric.ecc;
 
-import static com.github.exabrial.speakeasy.internal.ECCConstants.EC_CURVE_NAME;
-import static com.github.exabrial.speakeasy.internal.ECCConstants.GEN_ALG;
+import static com.github.exabrial.speakeasy.internal.SpeakEasyConstants.EC_CURVE_NAME;
+import static com.github.exabrial.speakeasy.internal.SpeakEasyConstants.EC;
 
 import java.security.InvalidAlgorithmParameterException;
 import java.security.KeyFactory;
@@ -47,7 +47,7 @@ public class ECCKeyUtils
 	@Override
 	public SpeakEasyEccKeyPair createKeyPair() {
 		try {
-			KeyPairGenerator keyGen = KeyPairGenerator.getInstance(GEN_ALG);
+			KeyPairGenerator keyGen = KeyPairGenerator.getInstance(EC);
 			ECGenParameterSpec ecSpec = new ECGenParameterSpec(EC_CURVE_NAME);
 			keyGen.initialize(ecSpec, secureRandom);
 			KeyPair jceKeyPair;
@@ -66,7 +66,7 @@ public class ECCKeyUtils
 		try {
 			byte[] encodedKeyBytes = stringEncoder.decodeBase64StringToBytes(encodedKeyText);
 			X509EncodedKeySpec keySpec = new X509EncodedKeySpec(encodedKeyBytes);
-			KeyFactory keyFactory = KeyFactory.getInstance(GEN_ALG);
+			KeyFactory keyFactory = KeyFactory.getInstance(EC);
 			PublicKey publicKey = keyFactory.generatePublic(keySpec);
 			return new SpeakEasyEccPublicKey(publicKey);
 		} catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
@@ -79,7 +79,7 @@ public class ECCKeyUtils
 		try {
 			byte[] encodedKeyBytes = stringEncoder.decodeBase64StringToBytes(encodedKeyText);
 			PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(encodedKeyBytes);
-			KeyFactory keyFactory = KeyFactory.getInstance(GEN_ALG);
+			KeyFactory keyFactory = KeyFactory.getInstance(EC);
 			PrivateKey privateKey = keyFactory.generatePrivate(keySpec);
 			return new SpeakEasyEccPrivateKey(privateKey);
 		} catch (InvalidKeySpecException | NoSuchAlgorithmException e) {
@@ -90,7 +90,7 @@ public class ECCKeyUtils
 	@Override
 	public String toString(SpeakEasyEccPublicKey speakEasyPublicKey) {
 		try {
-			KeyFactory keyFactory = KeyFactory.getInstance(GEN_ALG);
+			KeyFactory keyFactory = KeyFactory.getInstance(EC);
 			EncodedKeySpec spec = keyFactory.getKeySpec(speakEasyPublicKey.toKey(), X509EncodedKeySpec.class);
 			return stringEncoder.encodeBytesAsBase64(spec.getEncoded());
 		} catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
@@ -101,7 +101,7 @@ public class ECCKeyUtils
 	@Override
 	public String toString(SpeakEasyEccPrivateKey speakEasyPrivateKey) {
 		try {
-			KeyFactory keyFactory = KeyFactory.getInstance(GEN_ALG);
+			KeyFactory keyFactory = KeyFactory.getInstance(EC);
 			EncodedKeySpec spec = keyFactory.getKeySpec(speakEasyPrivateKey.toKey(), PKCS8EncodedKeySpec.class);
 			return stringEncoder.encodeBytesAsBase64(spec.getEncoded());
 		} catch (NoSuchAlgorithmException | InvalidKeySpecException e) {

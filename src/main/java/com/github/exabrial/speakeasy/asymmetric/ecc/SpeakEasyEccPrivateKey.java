@@ -1,6 +1,6 @@
 package com.github.exabrial.speakeasy.asymmetric.ecc;
 
-import static com.github.exabrial.speakeasy.internal.ECCConstants.GEN_ALG;
+import static com.github.exabrial.speakeasy.internal.SpeakEasyConstants.EC;
 
 import java.security.PrivateKey;
 
@@ -10,7 +10,7 @@ public class SpeakEasyEccPrivateKey implements SpeakEasyPrivateKey {
 	private final PrivateKey privateKey;
 
 	public SpeakEasyEccPrivateKey(final PrivateKey privateKey) {
-		if (!privateKey.getAlgorithm().equals(GEN_ALG)) {
+		if (!privateKey.getAlgorithm().equals(EC)) {
 			// TODO
 			throw new RuntimeException("unsupportted alg");
 		} else {

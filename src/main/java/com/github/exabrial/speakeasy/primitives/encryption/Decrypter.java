@@ -1,5 +1,5 @@
 package com.github.exabrial.speakeasy.primitives.encryption;
 
 public interface Decrypter {
-	String decrypt(String cipherText);
+	String decrypt(String message);
 }

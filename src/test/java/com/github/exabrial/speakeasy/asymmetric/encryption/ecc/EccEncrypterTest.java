@@ -15,7 +15,6 @@ public class EccEncrypterTest {
 		ECIESEncrypter ecc = new ECIESEncrypter(keyPair.getPublicKey());
 		String output = ecc.encrypt("plainText");
 		System.out.println(output);
-
 		ECIESDecrypter dcc = new ECIESDecrypter(keyPair.getPrivateKey());
 		System.out.println(dcc.decrypt(output));
 	}

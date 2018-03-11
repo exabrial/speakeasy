@@ -21,7 +21,6 @@ import com.github.exabrial.speakeasy.primitives.encryption.Decrypter;
 import com.github.exabrial.speakeasy.symmetric.SymmetricKey;
 
 public class AESGCMDecrypter implements Decrypter {
-
 	private final StringEncoder stringEncoder;
 	private final SymmetricKey sharedKey;
 
@@ -41,8 +40,8 @@ public class AESGCMDecrypter implements Decrypter {
 			byte[] messageBytes = stringEncoder.decodeBase64StringToBytes(message);
 			byte[] iv = new byte[GCM_NONCE_LENGTH];
 			System.arraycopy(messageBytes, 0, iv, 0, iv.length);
-			Cipher cipher = Cipher.getInstance(AES_GCM);
 			GCMParameterSpec gcmSpec = new GCMParameterSpec(AES_GCM_TAG_LENGTH, iv);
+			Cipher cipher = Cipher.getInstance(AES_GCM);
 			cipher.init(Cipher.DECRYPT_MODE, sharedKey.toKey(), gcmSpec, SecureRandom.getInstanceStrong());
 			byte[] cipherTextBytes = new byte[messageBytes.length - iv.length];
 			System.arraycopy(messageBytes, iv.length, cipherTextBytes, 0, cipherTextBytes.length);

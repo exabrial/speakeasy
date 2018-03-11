@@ -21,7 +21,6 @@ import com.github.exabrial.speakeasy.primitives.encryption.Encrypter;
 import com.github.exabrial.speakeasy.symmetric.SymmetricKey;
 
 public class AESGCMEncrypter implements Encrypter {
-
 	private final StringEncoder stringEncoder;
 	private final SymmetricKey sharedKey;
 
@@ -38,11 +37,11 @@ public class AESGCMEncrypter implements Encrypter {
 	@Override
 	public String encrypt(String plainText) {
 		try {
-			Cipher cipher = Cipher.getInstance(AES_GCM);
 			byte iv[] = new byte[GCM_NONCE_LENGTH];
 			SecureRandom secureRandom = SecureRandom.getInstanceStrong();
 			secureRandom.nextBytes(iv);
 			GCMParameterSpec gcmSpec = new GCMParameterSpec(AES_GCM_TAG_LENGTH, iv);
+			Cipher cipher = Cipher.getInstance(AES_GCM);
 			cipher.init(Cipher.ENCRYPT_MODE, sharedKey.toKey(), gcmSpec, secureRandom);
 			byte[] plainTextBytes = stringEncoder.getStringAsBytes(plainText);
 			byte[] cipherTextBytes = cipher.doFinal(plainTextBytes);

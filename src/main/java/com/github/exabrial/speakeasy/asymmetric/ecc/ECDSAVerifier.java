@@ -13,7 +13,6 @@ import com.github.exabrial.speakeasy.primitives.StringEncoder;
 
 public class ECDSAVerifier implements Verifier {
 	private final SpeakEasyEccPublicKey publicKey;
-
 	private final StringEncoder stringEncoder;
 
 	public ECDSAVerifier(SpeakEasyEccPublicKey publicKey) {

@@ -9,7 +9,7 @@ import com.github.exabrial.speakeasy.asymmetric.SpeakEasyPrivateKey;
 public class SpeakEasyEccPrivateKey implements SpeakEasyPrivateKey {
 	private final PrivateKey privateKey;
 
-	public SpeakEasyEccPrivateKey(final PrivateKey privateKey) {
+	SpeakEasyEccPrivateKey(final PrivateKey privateKey) {
 		if (!privateKey.getAlgorithm().equals(EC)) {
 			// TODO
 			throw new RuntimeException("unsupportted alg");

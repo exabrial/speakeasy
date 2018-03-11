@@ -26,8 +26,8 @@ import com.github.exabrial.speakeasy.primitives.StringEncoder;
 import com.github.exabrial.speakeasy.primitives.encryption.Decrypter;
 
 public class ECIESDecrypter implements Decrypter {
-	private final StringEncoder stringEncoder;
 	private final SpeakEasyEccPrivateKey privateKey;
+	private final StringEncoder stringEncoder;
 
 	public ECIESDecrypter(final SpeakEasyEccPrivateKey privateKey) {
 		this.stringEncoder = getSingleton();

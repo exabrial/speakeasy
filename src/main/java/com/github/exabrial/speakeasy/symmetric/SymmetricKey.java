@@ -9,7 +9,7 @@ import com.github.exabrial.speakeasy.primitives.keys.SpeakEasyKey;
 public class SymmetricKey implements SpeakEasyKey {
 	private final SecretKey secretKey;
 
-	public SymmetricKey(SecretKey secretKey) {
+	SymmetricKey(SecretKey secretKey) {
 		this.secretKey = secretKey;
 	}
 

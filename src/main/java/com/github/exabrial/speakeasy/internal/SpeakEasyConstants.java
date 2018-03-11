@@ -6,6 +6,10 @@ import java.util.Arrays;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 
 public final class SpeakEasyConstants {
+	public static final int PKDF_ITERATIONS = 4096;
+	public static final int AES_KEY_SIZE = 128;
+	public static final String PKDF = "PBKDF2WithHmacSHA256";
+	public static final String AES = "AES";
 	public static final String AES_GCM = "AES/GCM/PKCS5Padding";
 	public static final int GCM_NONCE_LENGTH = 12;
 	public static final int AES_GCM_TAG_LENGTH = 128;

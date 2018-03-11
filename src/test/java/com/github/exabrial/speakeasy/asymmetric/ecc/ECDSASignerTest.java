@@ -3,7 +3,6 @@ package com.github.exabrial.speakeasy.asymmetric.ecc;
 import org.junit.Test;
 
 public class ECDSASignerTest {
-
 	@Test
 	public void testSignmessage() {
 		ECCKeyUtils utils = new ECCKeyUtils();
@@ -15,5 +14,4 @@ public class ECDSASignerTest {
 		System.out.println(signatureText);
 		System.out.println(verifier.verifymessageSignature(message, signatureText));
 	}
-
 }

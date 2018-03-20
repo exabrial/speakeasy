@@ -26,13 +26,11 @@ import javax.crypto.spec.SecretKeySpec;
 import com.github.exabrial.speakeasy.encoding.Base64StringEncoder;
 import com.github.exabrial.speakeasy.encoding.StringEncoder;
 import com.github.exabrial.speakeasy.misc.ConstantTimeMessageComporator;
-import com.github.exabrial.speakeasy.primitives.FingerPrinter;
+import com.github.exabrial.speakeasy.primitives.Fingerprinter;
 import com.github.exabrial.speakeasy.primitives.MessageComporator;
-import com.github.exabrial.speakeasy.primitives.Signer;
-import com.github.exabrial.speakeasy.primitives.Verifier;
 import com.github.exabrial.speakeasy.symmetric.SymmetricKey;
 
-public class HMACSHA256SignerVerifier implements Signer, Verifier, FingerPrinter {
+public class HMACSHA256SignerVerifier implements Fingerprinter {
   private final SymmetricKey symmetricKey;
   private final StringEncoder stringEncoder;
   private final MessageComporator messageComporator;
@@ -57,7 +55,7 @@ public class HMACSHA256SignerVerifier implements Signer, Verifier, FingerPrinter
   }
 
   @Override
-  public String signMessage(final String message) {
+  public String fingerprint(final String message) {
     try {
       final byte[] messageBytes = stringEncoder.getStringAsBytes(message);
       final Mac hmac = Mac.getInstance(HMAC_SHA256);
@@ -72,7 +70,7 @@ public class HMACSHA256SignerVerifier implements Signer, Verifier, FingerPrinter
   }
 
   @Override
-  public boolean verifyMessageSignature(final String message, final String signature) {
+  public boolean verifyFingerprint(final String message, final String signature) {
     try {
       final byte[] messageBytes = stringEncoder.getStringAsBytes(message);
       final Mac hmac = Mac.getInstance(HMAC_SHA256);
@@ -84,10 +82,5 @@ public class HMACSHA256SignerVerifier implements Signer, Verifier, FingerPrinter
     } catch (final InvalidKeyException | NoSuchAlgorithmException e) {
       throw new RuntimeException(e);
     }
-  }
-
-  @Override
-  public String fingerPrint(final String message) {
-    return signMessage(message);
   }
 }

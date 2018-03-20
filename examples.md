@@ -42,8 +42,8 @@
 * Determining whether or not a message has been altered, without storing the entire message.
 
 ### Don't Use For
-* Don't use the Fingerprint class to "hash a user's password". Holy smokes. Just No. 
-    * Instead Speakeasy offers the SlowHash class that wraps scrypt
+* Don't use the Fingerprint class to "hash a user's password". Holy smokes. Just No.
+    * Instead Speakeasy offers the PasswordMasker class that wraps scrypt
     
     
 #### Non-Keyed

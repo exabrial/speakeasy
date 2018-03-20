@@ -15,6 +15,8 @@
  */
 package com.github.exabrial.speakeasy.primitives;
 
-public interface FingerPrinter {
-  String fingerPrint(String message);
+public interface Fingerprinter {
+  String fingerprint(String message);
+
+  boolean verifyFingerprint(String message, String signature);
 }

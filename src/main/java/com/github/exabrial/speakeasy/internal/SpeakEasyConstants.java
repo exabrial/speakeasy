@@ -22,7 +22,10 @@ import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.bouncycastle.jce.spec.IESParameterSpec;
 
 public final class SpeakEasyConstants {
-  public static final int PKDF_ITERATIONS = 4096;
+  public static final int SCRYPT_SIZE = 64;
+  public static final int SCRYPT_P = 1;
+  public static final int SCRYPT_R = 8;
+  public static final int SCRYPT_N = (int) Math.pow(2, 14);
   public static final int AES_KEY_SIZE = 128;
   public static final String AES = "AES";
   public static final String AES_GCM = "AES/GCM/PKCS5Padding";

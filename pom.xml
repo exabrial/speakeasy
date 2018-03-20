@@ -161,6 +161,8 @@
             <exclude>README.md</exclude>
             <exclude>CONTRIBUTING.md</exclude>
             <exclude>LICENSE.md</exclude>
+            <exclude>examples.md</exclude>
+            <exclude>CLs/*</exclude>
           </excludes>
         </configuration>
       </plugin>

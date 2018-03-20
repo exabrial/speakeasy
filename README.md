@@ -40,7 +40,7 @@ Speakeasy - Plain Simple Cryptography that makes it hard to do the wrong thing
 
 ## License
 
-See [LICENSE.md](LICENSE.md)
+ALL files in this project are licensed. See [LICENSE.md](LICENSE.md)
 
 ## Contributing
 

@@ -1,4 +1,4 @@
-# Speakeasy Contributor License ("CL") V1.1
+# Speakeasy Contributor License ("CL") V1.0
 
 https://github.com/exabrial/Speakeasy
 
@@ -20,16 +20,19 @@ The key must contain the information filled out below. Submit the public key to
 https://pgp.mit.edu/.
 
 Review this document, fill it out, and sign it with your PGP key. Submit a pull
-request with your CL and PGP signature in the CL directory.
+request with your CL and PGP signature in the CL directory. The filename should
+your name.
 
 All commits must be signed with your PGP key. This will prove all commits were
 made by the same person that is bound by the CL.
 
-  Full name: 
-  Github login: 
-  Country: 
-  PGP Fingerprint: 
-  Date: 
+*  Full name: 
+*  Github login: 
+*  Country: 
+*  PGP Fingerprint: 
+*  Date: 
+
+Sign with this command: `gpg --armor --detach-sig Your-Name.md`
 
 ## Terms and Conditions
 

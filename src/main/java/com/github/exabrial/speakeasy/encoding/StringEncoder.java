@@ -13,13 +13,20 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.github.exabrial.speakeasy.asymmetric;
+package com.github.exabrial.speakeasy.encoding;
 
-import java.security.PublicKey;
+import java.nio.charset.StandardCharsets;
 
-import com.github.exabrial.speakeasy.primitives.SpeakEasyKey;
+public interface StringEncoder {
+  String encodeBytesAsString(byte[] message);
 
-public interface SpeakEasyPublicKey extends SpeakEasyKey {
-  @Override
-  PublicKey toKey();
+  byte[] decodeStringToBytes(String message);
+
+  default byte[] getStringAsBytes(final String message) {
+    return message.getBytes(StandardCharsets.UTF_8);
+  }
+
+  default String stringFromBytes(final byte[] message) {
+    return new String(message, StandardCharsets.UTF_8);
+  }
 }

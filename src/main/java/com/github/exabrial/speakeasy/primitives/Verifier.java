@@ -13,13 +13,8 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.github.exabrial.speakeasy.asymmetric;
+package com.github.exabrial.speakeasy.primitives;
 
-import java.security.PublicKey;
-
-import com.github.exabrial.speakeasy.primitives.SpeakEasyKey;
-
-public interface SpeakEasyPublicKey extends SpeakEasyKey {
-  @Override
-  PublicKey toKey();
+public interface Verifier {
+  boolean verifyMessageSignature(String message, String signature);
 }

@@ -13,13 +13,10 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.github.exabrial.speakeasy.asymmetric;
+package com.github.exabrial.speakeasy.primitives;
 
-import java.security.PublicKey;
+public interface FingerPrinter {
+  String fingerPrint(String message);
 
-import com.github.exabrial.speakeasy.primitives.SpeakEasyKey;
-
-public interface SpeakEasyPublicKey extends SpeakEasyKey {
-  @Override
-  PublicKey toKey();
+  boolean compare(String calculatedFingerPrint, String presentedFingerPrint);
 }

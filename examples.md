@@ -30,17 +30,38 @@
 * Randomized IV is prepended to the encrypted message.
 
 
-
 ## Fingerprinter
 * Take an arbitrary length message, create a much smaller hash value, or fingerprint.
 * Given the same message input, you'll get the same fingerprint.
 * It's very difficult to go in reverse: start with a fingerprint and create an input that produces said fingerprint.
 * The output fingerprint is always a fixed length.
 * Changing one bit of the message will result in a massive change in the fingerprint.
+* Offers a constant-time `verify()` option to avoid timing attacks.
 
 ### Use for
 * Determining whether or not a message has been altered, without storing the entire message.
 
 ### Don't Use For
-* Don't "hash a user's password". Holy smokes. Just No. Don't. Do. It. Please, not even with a salt. No. No. No.
+* Don't use the Fingerprint class to "hash a user's password". Holy smokes. Just No. 
+    * Instead Speakeasy offers the SlowHash class that wraps scrypt
+    
+    
+#### Non-Keyed
 
+##### SHA-256
+* Very fast
+* Doesnt require a secret key
+
+#### Symmetric
+
+##### HMACS-SHA256
+
+* Makes use of HMAC-SHA256
+* Anyone that posses the key can create valid fingerprints
+
+#### Asymmetric
+ 
+* See Signer/Verifier
+
+
+ 

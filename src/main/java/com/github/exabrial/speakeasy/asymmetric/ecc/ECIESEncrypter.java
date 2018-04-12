@@ -15,11 +15,8 @@
  */
 package com.github.exabrial.speakeasy.asymmetric.ecc;
 
-import static com.github.exabrial.speakeasy.internal.SpeakEasyConstants.IES_PARAMATER_SPEC;
-
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 
 import javax.crypto.BadPaddingException;
@@ -36,21 +33,29 @@ import org.bouncycastle.jcajce.provider.asymmetric.ec.IESCipher;
 
 import com.github.exabrial.speakeasy.encoding.Base64StringEncoder;
 import com.github.exabrial.speakeasy.encoding.StringEncoder;
+import com.github.exabrial.speakeasy.entropy.NativeThreadLocalSecureRandomProvider;
 import com.github.exabrial.speakeasy.internal.GCMBufferedBlockCipher;
 import com.github.exabrial.speakeasy.primitives.Encrypter;
+import com.github.exabrial.speakeasy.primitives.SecureRandomProvider;
+
+import static com.github.exabrial.speakeasy.internal.SpeakEasyConstants.IES_PARAMATER_SPEC;
 
 public class ECIESEncrypter implements Encrypter {
   private final SpeakEasyEccPublicKey publicKey;
   private final StringEncoder stringEncoder;
+  private final SecureRandomProvider secureRandomProvider;
 
   public ECIESEncrypter(final SpeakEasyEccPublicKey publicKey) {
-    this.stringEncoder = Base64StringEncoder.getSingleton();
     this.publicKey = publicKey;
+    this.stringEncoder = Base64StringEncoder.getSingleton();
+    this.secureRandomProvider = NativeThreadLocalSecureRandomProvider.getSingleton();
   }
 
-  public ECIESEncrypter(final SpeakEasyEccPublicKey publicKey, final StringEncoder stringEncoder) {
-    this.stringEncoder = stringEncoder;
+  public ECIESEncrypter(final SpeakEasyEccPublicKey publicKey, final StringEncoder stringEncoder,
+      final SecureRandomProvider secureRandomProvider) {
     this.publicKey = publicKey;
+    this.stringEncoder = stringEncoder;
+    this.secureRandomProvider = secureRandomProvider;
   }
 
   @Override
@@ -59,14 +64,14 @@ public class ECIESEncrypter implements Encrypter {
       final IESEngine engine = new IESEngine(new ECDHBasicAgreement(), new KDF2BytesGenerator(new SHA256Digest()),
           new HMac(new SHA256Digest()), new GCMBufferedBlockCipher(new AESEngine()));
       final IESCipher cipher = new IESCipher(engine);
-      final SecureRandom secureRandom = SecureRandom.getInstanceStrong();
+      final SecureRandom secureRandom = secureRandomProvider.borrowSecureRandom();
       cipher.engineInit(Cipher.ENCRYPT_MODE, publicKey.toKey(), IES_PARAMATER_SPEC, secureRandom);
       final byte[] plainTextBytes = stringEncoder.getStringAsBytes(plainText);
       final byte[] cipherTextBytes = cipher.engineDoFinal(plainTextBytes, 0, plainTextBytes.length);
       final String cipherText = stringEncoder.encodeBytesAsString(cipherTextBytes);
       return cipherText;
-    } catch (InvalidKeyException | NoSuchAlgorithmException | InvalidAlgorithmParameterException
-        | IllegalBlockSizeException | BadPaddingException e) {
+    } catch (InvalidKeyException | InvalidAlgorithmParameterException | IllegalBlockSizeException
+        | BadPaddingException e) {
       throw new RuntimeException(e);
     }
   }

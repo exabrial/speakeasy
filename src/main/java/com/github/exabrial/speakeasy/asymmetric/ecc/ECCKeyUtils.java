@@ -22,7 +22,6 @@ import java.security.KeyPairGenerator;
 import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
 import java.security.PublicKey;
-import java.security.SecureRandom;
 import java.security.spec.ECGenParameterSpec;
 import java.security.spec.EncodedKeySpec;
 import java.security.spec.InvalidKeySpecException;
@@ -32,31 +31,25 @@ import java.security.spec.X509EncodedKeySpec;
 import com.github.exabrial.speakeasy.asymmetric.AsymmetricKeyUtils;
 import com.github.exabrial.speakeasy.encoding.Base64StringEncoder;
 import com.github.exabrial.speakeasy.encoding.StringEncoder;
+import com.github.exabrial.speakeasy.entropy.NativeThreadLocalSecureRandomProvider;
+import com.github.exabrial.speakeasy.primitives.SecureRandomProvider;
 
 import static com.github.exabrial.speakeasy.internal.SpeakEasyConstants.EC;
 import static com.github.exabrial.speakeasy.internal.SpeakEasyConstants.EC_CURVE_NAME;
 
 public class ECCKeyUtils
     implements AsymmetricKeyUtils<SpeakEasyEccPublicKey, SpeakEasyEccPrivateKey, SpeakEasyEccKeyPair> {
-  private final SecureRandom secureRandom;
   private final StringEncoder stringEncoder;
+  private final SecureRandomProvider secureRandomProvider;
 
   public ECCKeyUtils() {
-    try {
-      stringEncoder = Base64StringEncoder.getSingleton();
-      this.secureRandom = SecureRandom.getInstanceStrong();
-    } catch (final NoSuchAlgorithmException e) {
-      throw new RuntimeException(e);
-    }
+    this.stringEncoder = Base64StringEncoder.getSingleton();
+    this.secureRandomProvider = NativeThreadLocalSecureRandomProvider.getSingleton();
   }
 
-  public ECCKeyUtils(final StringEncoder stringEncoder) {
-    try {
-      this.stringEncoder = stringEncoder;
-      this.secureRandom = SecureRandom.getInstanceStrong();
-    } catch (final NoSuchAlgorithmException e) {
-      throw new RuntimeException(e);
-    }
+  public ECCKeyUtils(final StringEncoder stringEncoder, final SecureRandomProvider secureRandomProvider) {
+    this.stringEncoder = stringEncoder;
+    this.secureRandomProvider = secureRandomProvider;
   }
 
   @Override
@@ -64,11 +57,8 @@ public class ECCKeyUtils
     try {
       final KeyPairGenerator keyGen = KeyPairGenerator.getInstance(EC);
       final ECGenParameterSpec ecSpec = new ECGenParameterSpec(EC_CURVE_NAME);
-      keyGen.initialize(ecSpec, secureRandom);
-      KeyPair jceKeyPair;
-      synchronized (secureRandom) {
-        jceKeyPair = keyGen.generateKeyPair();
-      }
+      keyGen.initialize(ecSpec, secureRandomProvider.borrowSecureRandom());
+      final KeyPair jceKeyPair = keyGen.generateKeyPair();
       final SpeakEasyEccKeyPair keyPair = new SpeakEasyEccKeyPair(jceKeyPair);
       return keyPair;
     } catch (NoSuchAlgorithmException | InvalidAlgorithmParameterException e) {

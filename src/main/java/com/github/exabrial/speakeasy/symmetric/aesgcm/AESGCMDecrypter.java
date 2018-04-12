@@ -15,14 +15,9 @@
  */
 package com.github.exabrial.speakeasy.symmetric.aesgcm;
 
-import static com.github.exabrial.speakeasy.internal.SpeakEasyConstants.AES_GCM;
-import static com.github.exabrial.speakeasy.internal.SpeakEasyConstants.AES_GCM_TAG_LENGTH;
-import static com.github.exabrial.speakeasy.internal.SpeakEasyConstants.GCM_NONCE_LENGTH;
-
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
@@ -34,6 +29,10 @@ import com.github.exabrial.speakeasy.encoding.Base64StringEncoder;
 import com.github.exabrial.speakeasy.encoding.StringEncoder;
 import com.github.exabrial.speakeasy.primitives.Decrypter;
 import com.github.exabrial.speakeasy.symmetric.SymmetricKey;
+
+import static com.github.exabrial.speakeasy.internal.SpeakEasyConstants.AES_GCM;
+import static com.github.exabrial.speakeasy.internal.SpeakEasyConstants.AES_GCM_TAG_LENGTH;
+import static com.github.exabrial.speakeasy.internal.SpeakEasyConstants.GCM_NONCE_LENGTH;
 
 public class AESGCMDecrypter implements Decrypter {
   private final StringEncoder stringEncoder;
@@ -57,7 +56,7 @@ public class AESGCMDecrypter implements Decrypter {
       System.arraycopy(messageBytes, 0, iv, 0, iv.length);
       final GCMParameterSpec gcmSpec = new GCMParameterSpec(AES_GCM_TAG_LENGTH, iv);
       final Cipher cipher = Cipher.getInstance(AES_GCM);
-      cipher.init(Cipher.DECRYPT_MODE, sharedKey.toKey(), gcmSpec, SecureRandom.getInstanceStrong());
+      cipher.init(Cipher.DECRYPT_MODE, sharedKey.toKey(), gcmSpec, null);
       final byte[] cipherTextBytes = new byte[messageBytes.length - iv.length];
       System.arraycopy(messageBytes, iv.length, cipherTextBytes, 0, cipherTextBytes.length);
       final byte[] plainTextBytes = cipher.doFinal(cipherTextBytes);

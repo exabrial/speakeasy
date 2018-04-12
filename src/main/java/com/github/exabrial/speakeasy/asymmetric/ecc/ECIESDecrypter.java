@@ -15,12 +15,8 @@
  */
 package com.github.exabrial.speakeasy.asymmetric.ecc;
 
-import static com.github.exabrial.speakeasy.internal.SpeakEasyConstants.IES_PARAMATER_SPEC;
-
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
@@ -38,6 +34,8 @@ import com.github.exabrial.speakeasy.encoding.Base64StringEncoder;
 import com.github.exabrial.speakeasy.encoding.StringEncoder;
 import com.github.exabrial.speakeasy.internal.GCMBufferedBlockCipher;
 import com.github.exabrial.speakeasy.primitives.Decrypter;
+
+import static com.github.exabrial.speakeasy.internal.SpeakEasyConstants.IES_PARAMATER_SPEC;
 
 public class ECIESDecrypter implements Decrypter {
   private final SpeakEasyEccPrivateKey privateKey;
@@ -59,14 +57,13 @@ public class ECIESDecrypter implements Decrypter {
       final IESEngine engine = new IESEngine(new ECDHBasicAgreement(), new KDF2BytesGenerator(new SHA256Digest()),
           new HMac(new SHA256Digest()), new GCMBufferedBlockCipher(new AESEngine()));
       final IESCipher cipher = new IESCipher(engine);
-      final SecureRandom secureRandom = SecureRandom.getInstanceStrong();
       final byte[] cipherTextBytes = stringEncoder.decodeStringToBytes(message);
-      cipher.engineInit(Cipher.DECRYPT_MODE, privateKey.toKey(), IES_PARAMATER_SPEC, secureRandom);
+      cipher.engineInit(Cipher.DECRYPT_MODE, privateKey.toKey(), IES_PARAMATER_SPEC, null);
       final byte[] plainTextBytes = cipher.engineDoFinal(cipherTextBytes, 0, cipherTextBytes.length);
       final String plainText = stringEncoder.stringFromBytes(plainTextBytes);
       return plainText;
-    } catch (IllegalBlockSizeException | BadPaddingException | InvalidKeyException | InvalidAlgorithmParameterException
-        | NoSuchAlgorithmException e) {
+    } catch (IllegalBlockSizeException | BadPaddingException | InvalidKeyException
+        | InvalidAlgorithmParameterException e) {
       throw new RuntimeException(e);
     }
   }

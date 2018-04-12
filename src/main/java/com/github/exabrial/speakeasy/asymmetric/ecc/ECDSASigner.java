@@ -21,24 +21,30 @@ import java.security.SecureRandom;
 import java.security.Signature;
 import java.security.SignatureException;
 
+import com.github.exabrial.speakeasy.encoding.Base64StringEncoder;
 import com.github.exabrial.speakeasy.encoding.StringEncoder;
+import com.github.exabrial.speakeasy.entropy.NativeThreadLocalSecureRandomProvider;
+import com.github.exabrial.speakeasy.primitives.SecureRandomProvider;
 import com.github.exabrial.speakeasy.primitives.Signer;
 
-import static com.github.exabrial.speakeasy.encoding.Base64StringEncoder.getSingleton;
 import static com.github.exabrial.speakeasy.internal.SpeakEasyConstants.EC_SIG_ALG;
 
 public class ECDSASigner implements Signer {
   private final SpeakEasyEccPrivateKey privateKey;
   private final StringEncoder stringEncoder;
+  private final SecureRandomProvider secureRandomProvider;
 
   public ECDSASigner(final SpeakEasyEccPrivateKey privateKey) {
     this.privateKey = privateKey;
-    this.stringEncoder = getSingleton();
+    this.stringEncoder = Base64StringEncoder.getSingleton();
+    this.secureRandomProvider = NativeThreadLocalSecureRandomProvider.getSingleton();
   }
 
-  public ECDSASigner(final SpeakEasyEccPrivateKey privateKey, final StringEncoder stringEncoder) {
+  public ECDSASigner(final SpeakEasyEccPrivateKey privateKey, final StringEncoder stringEncoder,
+      final SecureRandomProvider secureRandomProvider) {
     this.privateKey = privateKey;
     this.stringEncoder = stringEncoder;
+    this.secureRandomProvider = secureRandomProvider;
   }
 
   @Override
@@ -46,7 +52,7 @@ public class ECDSASigner implements Signer {
     try {
       final byte[] messageBytes = stringEncoder.getStringAsBytes(message);
       final Signature signature = Signature.getInstance(EC_SIG_ALG);
-      final SecureRandom secureRandom = SecureRandom.getInstanceStrong();
+      final SecureRandom secureRandom = secureRandomProvider.borrowSecureRandom();
       signature.initSign(privateKey.toKey(), secureRandom);
       signature.update(messageBytes);
       final byte[] signatureBytes = signature.sign();

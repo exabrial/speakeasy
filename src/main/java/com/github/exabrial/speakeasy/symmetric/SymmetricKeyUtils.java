@@ -16,7 +16,6 @@
 package com.github.exabrial.speakeasy.symmetric;
 
 import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
 
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
@@ -24,30 +23,24 @@ import javax.crypto.spec.SecretKeySpec;
 
 import com.github.exabrial.speakeasy.encoding.Base64StringEncoder;
 import com.github.exabrial.speakeasy.encoding.StringEncoder;
+import com.github.exabrial.speakeasy.entropy.NativeThreadLocalSecureRandomProvider;
+import com.github.exabrial.speakeasy.primitives.SecureRandomProvider;
 
 import static com.github.exabrial.speakeasy.internal.SpeakEasyConstants.AES;
 import static com.github.exabrial.speakeasy.internal.SpeakEasyConstants.AES_KEY_SIZE;
 
 public class SymmetricKeyUtils {
-  private final SecureRandom secureRandom;
   private final StringEncoder stringEncoder;
+  private final SecureRandomProvider secureRandomProvider;
 
   public SymmetricKeyUtils() {
-    try {
-      this.secureRandom = SecureRandom.getInstanceStrong();
-      this.stringEncoder = Base64StringEncoder.getSingleton();
-    } catch (final NoSuchAlgorithmException e) {
-      throw new RuntimeException(e);
-    }
+    this.stringEncoder = Base64StringEncoder.getSingleton();
+    this.secureRandomProvider = NativeThreadLocalSecureRandomProvider.getSingleton();
   }
 
-  public SymmetricKeyUtils(final StringEncoder stringEncoder) {
-    try {
-      this.secureRandom = SecureRandom.getInstanceStrong();
-      this.stringEncoder = Base64StringEncoder.getSingleton();
-    } catch (final NoSuchAlgorithmException e) {
-      throw new RuntimeException(e);
-    }
+  public SymmetricKeyUtils(final StringEncoder stringEncoder, final SecureRandomProvider secureRandomProvider) {
+    this.stringEncoder = Base64StringEncoder.getSingleton();
+    this.secureRandomProvider = secureRandomProvider;
   }
 
   public String toString(final SymmetricKey symmetricKey) {
@@ -66,11 +59,8 @@ public class SymmetricKeyUtils {
   public SymmetricKey generateSecureSymmetricKey() {
     try {
       final KeyGenerator keyGen = KeyGenerator.getInstance(AES);
-      keyGen.init(AES_KEY_SIZE, secureRandom);
-      SecretKey secretKey;
-      synchronized (secureRandom) {
-        secretKey = keyGen.generateKey();
-      }
+      keyGen.init(AES_KEY_SIZE, secureRandomProvider.borrowSecureRandom());
+      final SecretKey secretKey = keyGen.generateKey();
       return new SymmetricKey(secretKey);
     } catch (final NoSuchAlgorithmException e) {
       throw new RuntimeException(e);

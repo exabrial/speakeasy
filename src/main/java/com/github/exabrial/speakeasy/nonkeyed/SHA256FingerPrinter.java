@@ -15,8 +15,6 @@
  */
 package com.github.exabrial.speakeasy.nonkeyed;
 
-import static com.github.exabrial.speakeasy.internal.SpeakEasyConstants.SHA256;
-
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
@@ -24,6 +22,8 @@ import java.util.Arrays;
 import com.github.exabrial.speakeasy.encoding.Base64StringEncoder;
 import com.github.exabrial.speakeasy.encoding.StringEncoder;
 import com.github.exabrial.speakeasy.primitives.Fingerprinter;
+
+import static com.github.exabrial.speakeasy.internal.SpeakEasyConstants.SHA256;
 
 public class SHA256Fingerprinter implements Fingerprinter {
   private final StringEncoder stringEncoder;
@@ -38,27 +38,33 @@ public class SHA256Fingerprinter implements Fingerprinter {
 
   @Override
   public String fingerprint(final String message) {
-    final byte[] fingerprintBytes = digest(message);
-    final String fingerprint = stringEncoder.encodeBytesAsString(fingerprintBytes);
-    return fingerprint;
+    try {
+      final byte[] fingerprintBytes = digest(message);
+      final String fingerprint = stringEncoder.encodeBytesAsString(fingerprintBytes);
+      return fingerprint;
+    } catch (final NoSuchAlgorithmException e) {
+      throw new RuntimeException(e);
+    }
   }
 
   @Override
   public boolean verifyFingerprint(final String message, final String fingerprint) {
-    final byte[] cfingerprintBytes = digest(message);
-    final byte[] pFingerprintBytes = stringEncoder.decodeStringToBytes(fingerprint);
-    final boolean equals = Arrays.equals(cfingerprintBytes, pFingerprintBytes);
-    return equals;
-  }
-
-  private byte[] digest(final String message) {
     try {
-      final byte[] messageBytes = stringEncoder.getStringAsBytes(message);
-      final MessageDigest digest = MessageDigest.getInstance(SHA256);
-      final byte[] fingerprintBytes = digest.digest(messageBytes);
-      return fingerprintBytes;
+      final byte[] cfingerprintBytes = digest(message);
+      final byte[] pFingerprintBytes = stringEncoder.decodeStringToBytes(fingerprint);
+      final boolean equals = Arrays.equals(cfingerprintBytes, pFingerprintBytes);
+      return equals;
+    } catch (final NullPointerException | ArrayIndexOutOfBoundsException e) {
+      return false;
     } catch (final NoSuchAlgorithmException e) {
       throw new RuntimeException(e);
     }
+  }
+
+  private byte[] digest(final String message) throws NoSuchAlgorithmException {
+    final byte[] messageBytes = stringEncoder.getStringAsBytes(message);
+    final MessageDigest digest = MessageDigest.getInstance(SHA256);
+    final byte[] fingerprintBytes = digest.digest(messageBytes);
+    return fingerprintBytes;
   }
 }

@@ -27,7 +27,9 @@ import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.GCMParameterSpec;
 
 import com.github.exabrial.speakeasy.encoding.StringEncoder;
+import com.github.exabrial.speakeasy.entropy.NativeThreadLocalSecureRandomProvider;
 import com.github.exabrial.speakeasy.primitives.Encrypter;
+import com.github.exabrial.speakeasy.primitives.SecureRandomProvider;
 import com.github.exabrial.speakeasy.symmetric.SymmetricKey;
 
 import static com.github.exabrial.speakeasy.encoding.Base64StringEncoder.getSingleton;
@@ -38,22 +40,26 @@ import static com.github.exabrial.speakeasy.internal.SpeakEasyConstants.GCM_NONC
 public class AESGCMEncrypter implements Encrypter {
   private final StringEncoder stringEncoder;
   private final SymmetricKey sharedKey;
+  private final SecureRandomProvider secureRandomProvider;
 
   public AESGCMEncrypter(final SymmetricKey sharedKey) {
     this.stringEncoder = getSingleton();
     this.sharedKey = sharedKey;
+    this.secureRandomProvider = NativeThreadLocalSecureRandomProvider.getSingleton();
   }
 
-  public AESGCMEncrypter(final SymmetricKey sharedKey, final StringEncoder stringEncoder) {
+  public AESGCMEncrypter(final SymmetricKey sharedKey, final StringEncoder stringEncoder,
+      final SecureRandomProvider secureRandomProvider) {
     this.stringEncoder = stringEncoder;
     this.sharedKey = sharedKey;
+    this.secureRandomProvider = secureRandomProvider;
   }
 
   @Override
   public String encrypt(final String plainText) {
     try {
       final byte iv[] = new byte[GCM_NONCE_LENGTH];
-      final SecureRandom secureRandom = SecureRandom.getInstanceStrong();
+      final SecureRandom secureRandom = secureRandomProvider.borrowSecureRandom();
       secureRandom.nextBytes(iv);
       final GCMParameterSpec gcmSpec = new GCMParameterSpec(AES_GCM_TAG_LENGTH, iv);
       final Cipher cipher = Cipher.getInstance(AES_GCM);

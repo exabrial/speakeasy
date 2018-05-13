@@ -49,9 +49,9 @@ public class ECDSAVerifier implements Verifier {
       signature.initVerify(publicKey.toKey());
       signature.update(messageBytes);
       return signature.verify(signatureBytes);
-    } catch (final NullPointerException | ArrayIndexOutOfBoundsException e) {
+    } catch (final NullPointerException | ArrayIndexOutOfBoundsException | SignatureException e) {
       return false;
-    } catch (final InvalidKeyException | NoSuchAlgorithmException | SignatureException e) {
+    } catch (final InvalidKeyException | NoSuchAlgorithmException e) {
       throw new RuntimeException(e);
     }
   }

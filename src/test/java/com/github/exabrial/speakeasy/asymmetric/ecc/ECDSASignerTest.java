@@ -17,16 +17,50 @@ package com.github.exabrial.speakeasy.asymmetric.ecc;
 
 import org.junit.Test;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 public class ECDSASignerTest {
+  final String message = "I was asked to name all the presidents. I thought they already had names.";
+
   @Test
   public void testSignmessage() {
     final ECCKeyUtils utils = new ECCKeyUtils();
     final SpeakEasyEccKeyPair keyPair = utils.createKeyPair();
     final ECDSASigner signer = new ECDSASigner(keyPair.getPrivateKey());
-    final String message = "message";
     final String signatureText = signer.signMessage(message);
     final ECDSAVerifier verifier = new ECDSAVerifier(keyPair.getPublicKey());
-    System.out.println(signatureText);
-    System.out.println(verifier.verifyMessageSignature(message, signatureText));
+    assertTrue(verifier.verifyMessageSignature(message, signatureText));
+  }
+
+  @Test
+  public void testSignmessage_modMessage() {
+    final ECCKeyUtils utils = new ECCKeyUtils();
+    final SpeakEasyEccKeyPair keyPair = utils.createKeyPair();
+    final ECDSASigner signer = new ECDSASigner(keyPair.getPrivateKey());
+    final String signatureText = signer.signMessage(message);
+    final ECDSAVerifier verifier = new ECDSAVerifier(keyPair.getPublicKey());
+    assertFalse(verifier.verifyMessageSignature(message + " ", signatureText));
+  }
+
+  @Test
+  public void testSignmessage_modMessage2() {
+    final ECCKeyUtils utils = new ECCKeyUtils();
+    final SpeakEasyEccKeyPair keyPair = utils.createKeyPair();
+    final ECDSASigner signer = new ECDSASigner(keyPair.getPrivateKey());
+    final String signatureText = signer.signMessage(message);
+    final ECDSAVerifier verifier = new ECDSAVerifier(keyPair.getPublicKey());
+    assertFalse(verifier.verifyMessageSignature(message.replaceFirst("was", "Was"), signatureText));
+  }
+
+  @Test
+  public void testSignmessage_modSig() {
+    final ECCKeyUtils utils = new ECCKeyUtils();
+    final SpeakEasyEccKeyPair keyPair = utils.createKeyPair();
+    final ECDSASigner signer = new ECDSASigner(keyPair.getPrivateKey());
+    final String signatureText = signer.signMessage(message);
+    final ECDSAVerifier verifier = new ECDSAVerifier(keyPair.getPublicKey());
+    final char newChar = (char) (signatureText.charAt(5) + 1);
+    assertFalse(verifier.verifyMessageSignature(message, signatureText.replace(signatureText.charAt(5), newChar)));
   }
 }

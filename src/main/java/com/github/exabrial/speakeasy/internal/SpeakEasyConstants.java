@@ -15,12 +15,6 @@
  */
 package com.github.exabrial.speakeasy.internal;
 
-import java.security.Security;
-import java.util.Arrays;
-
-import org.bouncycastle.jce.provider.BouncyCastleProvider;
-import org.bouncycastle.jce.spec.IESParameterSpec;
-
 public final class SpeakEasyConstants {
   public static final int SCRYPT_SIZE = 64;
   public static final int SCRYPT_P = 1;
@@ -37,19 +31,6 @@ public final class SpeakEasyConstants {
   public static final String SHA256 = "SHA256";
   public static final String HMAC_SHA256 = "HmacSHA256";
   public static final int HMACSHA256_SIG_LENGTH = 32;
-  public static final IESParameterSpec IES_PARAMATER_SPEC;
-  static {
-    if (Arrays.asList(Security.getProviders()).stream()
-        .filter(provider -> provider.getName().equals(BouncyCastleProvider.PROVIDER_NAME)).findFirst()
-        .orElse(null) == null) {
-      Security.addProvider(new BouncyCastleProvider());
-    }
-    // Normally, this would be very stupid. However, a fixed nonce is ok when using
-    // ECIES, because the ephemeral key is never repeated.
-    final byte[] nonce = new byte[GCM_NONCE_LENGTH];
-    Arrays.fill(nonce, Byte.MIN_VALUE);
-    IES_PARAMATER_SPEC = new IESParameterSpec(null, null, 128, 128, nonce);
-  }
 
   private SpeakEasyConstants() {
   }

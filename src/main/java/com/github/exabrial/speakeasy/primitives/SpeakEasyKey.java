@@ -13,12 +13,13 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
+
 package com.github.exabrial.speakeasy.primitives;
 
 import java.security.Key;
 
 public interface SpeakEasyKey {
-  byte[] getKeyBytes();
+	byte[] getKeyBytes();
 
-  Key toKey();
+	Key toKey();
 }

@@ -13,6 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
+
 package com.github.exabrial.speakeasy.symmetric;
 
 import static com.github.exabrial.speakeasy.internal.SpeakEasyConstants.AES;
@@ -30,40 +31,40 @@ import com.github.exabrial.speakeasy.entropy.NativeThreadLocalSecureRandomProvid
 import com.github.exabrial.speakeasy.primitives.SecureRandomProvider;
 
 public class SymmetricKeyUtils {
-  private final StringEncoder stringEncoder;
-  private final SecureRandomProvider secureRandomProvider;
+	private final StringEncoder stringEncoder;
+	private final SecureRandomProvider secureRandomProvider;
 
-  public SymmetricKeyUtils() {
-    this.stringEncoder = Base64StringEncoder.getSingleton();
-    this.secureRandomProvider = NativeThreadLocalSecureRandomProvider.getSingleton();
-  }
+	public SymmetricKeyUtils() {
+		this.stringEncoder = Base64StringEncoder.getSingleton();
+		this.secureRandomProvider = NativeThreadLocalSecureRandomProvider.getSingleton();
+	}
 
-  public SymmetricKeyUtils(final StringEncoder stringEncoder, final SecureRandomProvider secureRandomProvider) {
-    this.stringEncoder = stringEncoder;
-    this.secureRandomProvider = secureRandomProvider;
-  }
+	public SymmetricKeyUtils(final StringEncoder stringEncoder, final SecureRandomProvider secureRandomProvider) {
+		this.stringEncoder = stringEncoder;
+		this.secureRandomProvider = secureRandomProvider;
+	}
 
-  public String toString(final SymmetricKey symmetricKey) {
-    final byte[] keyBytes = symmetricKey.getKeyBytes();
-    final String encodedKey = stringEncoder.encodeBytesAsString(keyBytes);
-    return encodedKey;
-  }
+	public String toString(final SymmetricKey symmetricKey) {
+		final byte[] keyBytes = symmetricKey.getKeyBytes();
+		final String encodedKey = stringEncoder.encodeBytesAsString(keyBytes);
+		return encodedKey;
+	}
 
-  public SymmetricKey fromString(final String encodedKeyString) {
-    final byte[] encodedKeyBytes = stringEncoder.decodeStringToBytes(encodedKeyString);
-    final SecretKey secretKey = new SecretKeySpec(encodedKeyBytes, 0, encodedKeyBytes.length, AES);
-    final SymmetricKey symmetricKey = new SymmetricKey(secretKey);
-    return symmetricKey;
-  }
+	public SymmetricKey fromString(final String encodedKeyString) {
+		final byte[] encodedKeyBytes = stringEncoder.decodeStringToBytes(encodedKeyString);
+		final SecretKey secretKey = new SecretKeySpec(encodedKeyBytes, 0, encodedKeyBytes.length, AES);
+		final SymmetricKey symmetricKey = new SymmetricKey(secretKey);
+		return symmetricKey;
+	}
 
-  public SymmetricKey generateSecureSymmetricKey() {
-    try {
-      final KeyGenerator keyGen = KeyGenerator.getInstance(AES);
-      keyGen.init(AES_KEY_SIZE, secureRandomProvider.borrowSecureRandom());
-      final SecretKey secretKey = keyGen.generateKey();
-      return new SymmetricKey(secretKey);
-    } catch (final NoSuchAlgorithmException e) {
-      throw new RuntimeException(e);
-    }
-  }
+	public SymmetricKey generateSecureSymmetricKey() {
+		try {
+			final KeyGenerator keyGen = KeyGenerator.getInstance(AES);
+			keyGen.init(AES_KEY_SIZE, secureRandomProvider.borrowSecureRandom());
+			final SecretKey secretKey = keyGen.generateKey();
+			return new SymmetricKey(secretKey);
+		} catch (final NoSuchAlgorithmException e) {
+			throw new RuntimeException(e);
+		}
+	}
 }

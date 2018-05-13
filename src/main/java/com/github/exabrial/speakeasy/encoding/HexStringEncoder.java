@@ -13,34 +13,35 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
+
 package com.github.exabrial.speakeasy.encoding;
 
 import javax.xml.bind.DatatypeConverter;
 
 public class HexStringEncoder implements StringEncoder {
-  public static HexStringEncoder getSingleton() {
-    return Singleton.Instance.encoder;
-  }
+	public static HexStringEncoder getSingleton() {
+		return Singleton.Instance.encoder;
+	}
 
-  private enum Singleton {
-    Instance;
-    public final HexStringEncoder encoder;
+	private enum Singleton {
+		Instance;
+		public final HexStringEncoder encoder;
 
-    Singleton() {
-      this.encoder = new HexStringEncoder();
-    }
-  }
+		Singleton() {
+			this.encoder = new HexStringEncoder();
+		}
+	}
 
-  private HexStringEncoder() {
-  }
+	private HexStringEncoder() {
+	}
 
-  @Override
-  public String encodeBytesAsString(final byte[] message) {
-    return DatatypeConverter.printHexBinary(message);
-  }
+	@Override
+	public String encodeBytesAsString(final byte[] message) {
+		return DatatypeConverter.printHexBinary(message);
+	}
 
-  @Override
-  public byte[] decodeStringToBytes(final String message) {
-    return DatatypeConverter.parseHexBinary(message);
-  }
+	@Override
+	public byte[] decodeStringToBytes(final String message) {
+		return DatatypeConverter.parseHexBinary(message);
+	}
 }

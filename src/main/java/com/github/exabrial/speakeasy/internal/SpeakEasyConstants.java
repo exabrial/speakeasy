@@ -13,25 +13,26 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
+
 package com.github.exabrial.speakeasy.internal;
 
 public final class SpeakEasyConstants {
-  public static final int SCRYPT_SIZE = 64;
-  public static final int SCRYPT_P = 1;
-  public static final int SCRYPT_R = 8;
-  public static final int SCRYPT_N = (int) Math.pow(2, 14);
-  public static final int AES_KEY_SIZE = 128;
-  public static final String AES = "AES";
-  public static final String AES_GCM = "AES/GCM/PKCS5Padding";
-  public static final int GCM_NONCE_LENGTH = 12;
-  public static final int AES_GCM_TAG_LENGTH = 128;
-  public static final String EC = "EC";
-  public static final String EC_SIG_ALG = "SHA256withECDSA";
-  public static final String EC_CURVE_NAME = "secp256r1";
-  public static final String SHA256 = "SHA256";
-  public static final String HMAC_SHA256 = "HmacSHA256";
-  public static final int HMACSHA256_SIG_LENGTH = 32;
+	public static final int SCRYPT_SIZE = 64;
+	public static final int SCRYPT_P = 1;
+	public static final int SCRYPT_R = 8;
+	public static final int SCRYPT_N = (int) Math.pow(2, 14);
+	public static final int AES_KEY_SIZE = 128;
+	public static final String AES = "AES";
+	public static final String AES_GCM = "AES/GCM/PKCS5Padding";
+	public static final int GCM_NONCE_LENGTH = 12;
+	public static final int AES_GCM_TAG_LENGTH = 128;
+	public static final String EC = "EC";
+	public static final String EC_SIG_ALG = "SHA256withECDSA";
+	public static final String EC_CURVE_NAME = "secp256r1";
+	public static final String SHA256 = "SHA256";
+	public static final String HMAC_SHA256 = "HmacSHA256";
+	public static final int HMACSHA256_SIG_LENGTH = 32;
 
-  private SpeakEasyConstants() {
-  }
+	private SpeakEasyConstants() {
+	}
 }

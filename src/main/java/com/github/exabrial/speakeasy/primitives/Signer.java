@@ -13,8 +13,9 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
+
 package com.github.exabrial.speakeasy.primitives;
 
 public interface Signer {
-  String signMessage(String message);
+	String signMessage(String message);
 }

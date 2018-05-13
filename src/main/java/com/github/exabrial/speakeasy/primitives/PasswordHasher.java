@@ -13,10 +13,11 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
+
 package com.github.exabrial.speakeasy.primitives;
 
 public interface PasswordHasher {
-  String hashPassword(String password);
+	String hashPassword(String password);
 
-  boolean checkPassword(String password, String hash);
+	boolean checkPassword(String password, String hash);
 }

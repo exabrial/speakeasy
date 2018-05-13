@@ -13,6 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
+
 package com.github.exabrial.speakeasy.symmetric;
 
 import java.security.Key;
@@ -22,20 +23,20 @@ import javax.crypto.SecretKey;
 import com.github.exabrial.speakeasy.primitives.SpeakEasyKey;
 
 public class SymmetricKey implements SpeakEasyKey {
-  private final SecretKey secretKey;
+	private final SecretKey secretKey;
 
-  SymmetricKey(final SecretKey secretKey) {
-    // TODO 128?
-    this.secretKey = secretKey;
-  }
+	SymmetricKey(final SecretKey secretKey) {
+		// TODO 128?
+		this.secretKey = secretKey;
+	}
 
-  @Override
-  public byte[] getKeyBytes() {
-    return secretKey.getEncoded();
-  }
+	@Override
+	public byte[] getKeyBytes() {
+		return secretKey.getEncoded();
+	}
 
-  @Override
-  public Key toKey() {
-    return secretKey;
-  }
+	@Override
+	public Key toKey() {
+		return secretKey;
+	}
 }

@@ -13,6 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
+
 package com.github.exabrial.speakeasy.symmetric.aesgcm;
 
 import static com.github.exabrial.speakeasy.internal.SpeakEasyConstants.AES_GCM;
@@ -35,36 +36,36 @@ import com.github.exabrial.speakeasy.primitives.Decrypter;
 import com.github.exabrial.speakeasy.symmetric.SymmetricKey;
 
 public class AESGCMDecrypter implements Decrypter {
-  private final StringEncoder stringEncoder;
-  private final SymmetricKey sharedKey;
+	private final StringEncoder stringEncoder;
+	private final SymmetricKey sharedKey;
 
-  public AESGCMDecrypter(final SymmetricKey sharedKey) {
-    this.stringEncoder = Base64StringEncoder.getSingleton();
-    this.sharedKey = sharedKey;
-  }
+	public AESGCMDecrypter(final SymmetricKey sharedKey) {
+		this.stringEncoder = Base64StringEncoder.getSingleton();
+		this.sharedKey = sharedKey;
+	}
 
-  public AESGCMDecrypter(final SymmetricKey sharedKey, final StringEncoder stringEncoder) {
-    this.stringEncoder = stringEncoder;
-    this.sharedKey = sharedKey;
-  }
+	public AESGCMDecrypter(final SymmetricKey sharedKey, final StringEncoder stringEncoder) {
+		this.stringEncoder = stringEncoder;
+		this.sharedKey = sharedKey;
+	}
 
-  @Override
-  public String decrypt(final String message) {
-    try {
-      final byte[] messageBytes = stringEncoder.decodeStringToBytes(message);
-      final byte[] iv = new byte[GCM_NONCE_LENGTH];
-      System.arraycopy(messageBytes, 0, iv, 0, iv.length);
-      final GCMParameterSpec gcmSpec = new GCMParameterSpec(AES_GCM_TAG_LENGTH, iv);
-      final Cipher cipher = Cipher.getInstance(AES_GCM);
-      cipher.init(Cipher.DECRYPT_MODE, sharedKey.toKey(), gcmSpec, null);
-      final byte[] cipherTextBytes = new byte[messageBytes.length - iv.length];
-      System.arraycopy(messageBytes, iv.length, cipherTextBytes, 0, cipherTextBytes.length);
-      final byte[] plainTextBytes = cipher.doFinal(cipherTextBytes);
-      final String plainText = stringEncoder.stringFromBytes(plainTextBytes);
-      return plainText;
-    } catch (IllegalBlockSizeException | BadPaddingException | InvalidKeyException | InvalidAlgorithmParameterException
-        | NoSuchAlgorithmException | NoSuchPaddingException e) {
-      throw new RuntimeException(e);
-    }
-  }
+	@Override
+	public String decrypt(final String message) {
+		try {
+			final byte[] messageBytes = stringEncoder.decodeStringToBytes(message);
+			final byte[] iv = new byte[GCM_NONCE_LENGTH];
+			System.arraycopy(messageBytes, 0, iv, 0, iv.length);
+			final GCMParameterSpec gcmSpec = new GCMParameterSpec(AES_GCM_TAG_LENGTH, iv);
+			final Cipher cipher = Cipher.getInstance(AES_GCM);
+			cipher.init(Cipher.DECRYPT_MODE, sharedKey.toKey(), gcmSpec, null);
+			final byte[] cipherTextBytes = new byte[messageBytes.length - iv.length];
+			System.arraycopy(messageBytes, iv.length, cipherTextBytes, 0, cipherTextBytes.length);
+			final byte[] plainTextBytes = cipher.doFinal(cipherTextBytes);
+			final String plainText = stringEncoder.stringFromBytes(plainTextBytes);
+			return plainText;
+		} catch (IllegalBlockSizeException | BadPaddingException | InvalidKeyException | InvalidAlgorithmParameterException
+				| NoSuchAlgorithmException | NoSuchPaddingException e) {
+			throw new RuntimeException(e);
+		}
+	}
 }

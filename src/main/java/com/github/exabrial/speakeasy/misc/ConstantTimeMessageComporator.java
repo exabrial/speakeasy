@@ -13,6 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
+
 package com.github.exabrial.speakeasy.misc;
 
 import static com.github.exabrial.speakeasy.internal.SpeakEasyConstants.HMACSHA256_SIG_LENGTH;
@@ -22,61 +23,61 @@ import com.github.exabrial.speakeasy.encoding.StringEncoder;
 import com.github.exabrial.speakeasy.primitives.MessageComporator;
 
 public class ConstantTimeMessageComporator implements MessageComporator {
-  public static MessageComporator getSingleton() {
-    return Singleton.Instance.messageComporator;
-  }
+	private final StringEncoder stringEncoder;
 
-  private enum Singleton {
-    Instance;
-    public final ConstantTimeMessageComporator messageComporator;
+	public static MessageComporator getSingleton() {
+		return Singleton.Instance.messageComporator;
+	}
 
-    Singleton() {
-      this.messageComporator = new ConstantTimeMessageComporator();
-    }
-  }
+	public ConstantTimeMessageComporator() {
+		this.stringEncoder = Base64StringEncoder.getSingleton();
+	}
 
-  private final StringEncoder stringEncoder;
+	public ConstantTimeMessageComporator(final Base64StringEncoder stringEncoder) {
+		this.stringEncoder = stringEncoder;
+	}
 
-  public ConstantTimeMessageComporator() {
-    this.stringEncoder = Base64StringEncoder.getSingleton();
-  }
+	@Override
+	public boolean compare(final String calculatedFingerprint, final String presentedFingerprint) {
+		final byte[] calculatedSignatureBytes = getBytes(calculatedFingerprint, HMACSHA256_SIG_LENGTH);
+		final byte[] presentedSignatureBytes = getBytes(presentedFingerprint, HMACSHA256_SIG_LENGTH);
+		return internalCompare(calculatedSignatureBytes, presentedSignatureBytes);
+	}
 
-  public ConstantTimeMessageComporator(final Base64StringEncoder stringEncoder) {
-    this.stringEncoder = stringEncoder;
-  }
+	private byte[] getBytes(final String signature, final int length) {
+		byte[] presentedSignatureBytes;
+		try {
+			presentedSignatureBytes = stringEncoder.decodeStringToBytes(signature);
+		} catch (final Exception e) {
+			presentedSignatureBytes = new byte[length];
+		}
+		return presentedSignatureBytes;
+	}
 
-  @Override
-  public boolean compare(final String calculatedFingerprint, final String presentedFingerprint) {
-    final byte[] cSignatureBytes = getBytes(calculatedFingerprint, HMACSHA256_SIG_LENGTH);
-    final byte[] pSignatureBytes = getBytes(presentedFingerprint, HMACSHA256_SIG_LENGTH);
-    return compare(cSignatureBytes, pSignatureBytes);
-  }
+	private static boolean internalCompare(final byte[] calculatedSignatureBytes, final byte[] presentedSignatureBytes) {
+		boolean isValid = true;
+		// Arrays.equals would be great
+		// MAC comparisons should be constant time however
+		for (int index = 0; index < calculatedSignatureBytes.length; index++) {
+			final byte cByte = calculatedSignatureBytes[index];
+			if (index < presentedSignatureBytes.length) {
+				final byte pByte = presentedSignatureBytes[index];
+				if (isValid) {
+					isValid = cByte == pByte;
+				}
+			} else {
+				isValid = false;
+			}
+		}
+		return isValid;
+	}
 
-  private byte[] getBytes(final String signature, final int length) {
-    byte[] pSignatureBytes;
-    try {
-      pSignatureBytes = stringEncoder.decodeStringToBytes(signature);
-    } catch (final Exception e) {
-      pSignatureBytes = new byte[length];
-    }
-    return pSignatureBytes;
-  }
+	private enum Singleton {
+		Instance;
+		private final ConstantTimeMessageComporator messageComporator;
 
-  private static boolean compare(final byte[] cSignatureBytes, final byte[] pSignatureBytes) {
-    boolean isValid = true;
-    // Arrays.equals would be great
-    // MAC comparisons should be constant time however
-    for (int i = 0; i < cSignatureBytes.length; i++) {
-      final byte cByte = cSignatureBytes[i];
-      if (i < pSignatureBytes.length) {
-        final byte pByte = pSignatureBytes[i];
-        if (isValid) {
-          isValid = cByte == pByte;
-        }
-      } else {
-        isValid = false;
-      }
-    }
-    return isValid;
-  }
+		Singleton() {
+			this.messageComporator = new ConstantTimeMessageComporator();
+		}
+	}
 }

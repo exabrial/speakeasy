@@ -13,8 +13,9 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
+
 package com.github.exabrial.speakeasy.primitives;
 
 public interface MessageComporator {
-  boolean compare(String calculatedFingerprint, String presentedFingerprint);
+	boolean compare(String calculatedFingerprint, String presentedFingerprint);
 }

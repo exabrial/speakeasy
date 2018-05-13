@@ -13,6 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
+
 package com.github.exabrial.speakeasy.asymmetric.ecc;
 
 import static com.github.exabrial.speakeasy.encoding.Base64StringEncoder.getSingleton;
@@ -27,32 +28,32 @@ import com.github.exabrial.speakeasy.encoding.StringEncoder;
 import com.github.exabrial.speakeasy.primitives.Verifier;
 
 public class ECDSAVerifier implements Verifier {
-  private final SpeakEasyEccPublicKey publicKey;
-  private final StringEncoder stringEncoder;
+	private final SpeakEasyEccPublicKey publicKey;
+	private final StringEncoder stringEncoder;
 
-  public ECDSAVerifier(final SpeakEasyEccPublicKey publicKey) {
-    this.publicKey = publicKey;
-    this.stringEncoder = getSingleton();
-  }
+	public ECDSAVerifier(final SpeakEasyEccPublicKey publicKey) {
+		this.publicKey = publicKey;
+		this.stringEncoder = getSingleton();
+	}
 
-  public ECDSAVerifier(final SpeakEasyEccPublicKey publicKey, final StringEncoder stringEncoder) {
-    this.publicKey = publicKey;
-    this.stringEncoder = stringEncoder;
-  }
+	public ECDSAVerifier(final SpeakEasyEccPublicKey publicKey, final StringEncoder stringEncoder) {
+		this.publicKey = publicKey;
+		this.stringEncoder = stringEncoder;
+	}
 
-  @Override
-  public boolean verifyMessageSignature(final String message, final String signatureText) {
-    try {
-      final byte[] messageBytes = stringEncoder.getStringAsBytes(message);
-      final byte[] signatureBytes = stringEncoder.decodeStringToBytes(signatureText);
-      final Signature signature = Signature.getInstance(EC_SIG_ALG);
-      signature.initVerify(publicKey.toKey());
-      signature.update(messageBytes);
-      return signature.verify(signatureBytes);
-    } catch (final NullPointerException | ArrayIndexOutOfBoundsException | SignatureException e) {
-      return false;
-    } catch (final InvalidKeyException | NoSuchAlgorithmException e) {
-      throw new RuntimeException(e);
-    }
-  }
+	@Override
+	public boolean verifyMessageSignature(final String message, final String signatureText) {
+		try {
+			final byte[] messageBytes = stringEncoder.getStringAsBytes(message);
+			final byte[] signatureBytes = stringEncoder.decodeStringToBytes(signatureText);
+			final Signature signature = Signature.getInstance(EC_SIG_ALG);
+			signature.initVerify(publicKey.toKey());
+			signature.update(messageBytes);
+			return signature.verify(signatureBytes);
+		} catch (final NullPointerException | ArrayIndexOutOfBoundsException | SignatureException e) {
+			return false;
+		} catch (final InvalidKeyException | NoSuchAlgorithmException e) {
+			throw new RuntimeException(e);
+		}
+	}
 }

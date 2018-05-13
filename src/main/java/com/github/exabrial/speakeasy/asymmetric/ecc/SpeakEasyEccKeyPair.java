@@ -13,6 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
+
 package com.github.exabrial.speakeasy.asymmetric.ecc;
 
 import java.security.KeyPair;
@@ -20,26 +21,26 @@ import java.security.KeyPair;
 import com.github.exabrial.speakeasy.asymmetric.SpeakEasyKeyPair;
 
 public class SpeakEasyEccKeyPair implements SpeakEasyKeyPair {
-  private final SpeakEasyEccPrivateKey privateKey;
-  private final SpeakEasyEccPublicKey publicKey;
+	private final SpeakEasyEccPrivateKey privateKey;
+	private final SpeakEasyEccPublicKey publicKey;
 
-  public SpeakEasyEccKeyPair(final SpeakEasyEccPrivateKey privateKey, final SpeakEasyEccPublicKey publicKey) {
-    this.privateKey = privateKey;
-    this.publicKey = publicKey;
-  }
+	public SpeakEasyEccKeyPair(final SpeakEasyEccPrivateKey privateKey, final SpeakEasyEccPublicKey publicKey) {
+		this.privateKey = privateKey;
+		this.publicKey = publicKey;
+	}
 
-  public SpeakEasyEccKeyPair(final KeyPair jceKeyPair) {
-    this.privateKey = new SpeakEasyEccPrivateKey(jceKeyPair.getPrivate());
-    this.publicKey = new SpeakEasyEccPublicKey(jceKeyPair.getPublic());
-  }
+	public SpeakEasyEccKeyPair(final KeyPair jceKeyPair) {
+		this.privateKey = new SpeakEasyEccPrivateKey(jceKeyPair.getPrivate());
+		this.publicKey = new SpeakEasyEccPublicKey(jceKeyPair.getPublic());
+	}
 
-  @Override
-  public SpeakEasyEccPrivateKey getPrivateKey() {
-    return privateKey;
-  }
+	@Override
+	public SpeakEasyEccPrivateKey getPrivateKey() {
+		return privateKey;
+	}
 
-  @Override
-  public SpeakEasyEccPublicKey getPublicKey() {
-    return publicKey;
-  }
+	@Override
+	public SpeakEasyEccPublicKey getPublicKey() {
+		return publicKey;
+	}
 }

@@ -13,6 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
+
 package com.github.exabrial.speakeasy.symmetric.hmacsha2;
 
 import static org.junit.Assert.assertFalse;
@@ -24,39 +25,39 @@ import com.github.exabrial.speakeasy.symmetric.SymmetricKey;
 import com.github.exabrial.speakeasy.symmetric.SymmetricKeyUtils;
 
 public class HMACSHA256SignerVerifierTest {
-  final String message = "The best thing about a boolean is even if you are wrong, you are only off by a bit.";
+	final String message = "The best thing about a boolean is even if you are wrong, you are only off by a bit.";
 
-  @Test
-  public void testVerifyMessageSignature() {
-    final SymmetricKeyUtils utils = new SymmetricKeyUtils();
-    final SymmetricKey key = utils.generateSecureSymmetricKey();
-    final HMACSHA256SignerVerifier sv = new HMACSHA256SignerVerifier(key);
-    final String signature = sv.fingerprint(message);
-    assertTrue(sv.verifyFingerprint(message, signature));
-  }
+	@Test
+	public void testVerifyMessageSignature() {
+		final SymmetricKeyUtils utils = new SymmetricKeyUtils();
+		final SymmetricKey key = utils.generateSecureSymmetricKey();
+		final HMACSHA256SignerVerifier sv = new HMACSHA256SignerVerifier(key);
+		final String signature = sv.fingerprint(message);
+		assertTrue(sv.verifyFingerprint(message, signature));
+	}
 
-  @Test
-  public void testVerifyMessageSignature_modifiedSignature() {
-    final SymmetricKeyUtils utils = new SymmetricKeyUtils();
-    final SymmetricKey key = utils.generateSecureSymmetricKey();
-    final HMACSHA256SignerVerifier sv = new HMACSHA256SignerVerifier(key);
-    final String signature = sv.fingerprint(message);
-    assertFalse(sv.verifyFingerprint(message, "P" + signature));
-  }
+	@Test
+	public void testVerifyMessageSignature_modifiedSignature() {
+		final SymmetricKeyUtils utils = new SymmetricKeyUtils();
+		final SymmetricKey key = utils.generateSecureSymmetricKey();
+		final HMACSHA256SignerVerifier sv = new HMACSHA256SignerVerifier(key);
+		final String signature = sv.fingerprint(message);
+		assertFalse(sv.verifyFingerprint(message, "P" + signature));
+	}
 
-  @Test
-  public void testVerifyMessageSignature_notBase64() {
-    final SymmetricKeyUtils utils = new SymmetricKeyUtils();
-    final SymmetricKey key = utils.generateSecureSymmetricKey();
-    final HMACSHA256SignerVerifier sv = new HMACSHA256SignerVerifier(key);
-    assertFalse(sv.verifyFingerprint(message, "I'm not base64 at all! haha"));
-  }
+	@Test
+	public void testVerifyMessageSignature_notBase64() {
+		final SymmetricKeyUtils utils = new SymmetricKeyUtils();
+		final SymmetricKey key = utils.generateSecureSymmetricKey();
+		final HMACSHA256SignerVerifier sv = new HMACSHA256SignerVerifier(key);
+		assertFalse(sv.verifyFingerprint(message, "I'm not base64 at all! haha"));
+	}
 
-  @Test
-  public void testVerifyMessageSignature_base64ButInvalid() {
-    final SymmetricKeyUtils utils = new SymmetricKeyUtils();
-    final SymmetricKey key = utils.generateSecureSymmetricKey();
-    final HMACSHA256SignerVerifier sv = new HMACSHA256SignerVerifier(key);
-    assertFalse(sv.verifyFingerprint(message, "ZG9uJ3QgdHJ5IHRoaXMgYXQgaG9tZQ=="));
-  }
+	@Test
+	public void testVerifyMessageSignature_base64ButInvalid() {
+		final SymmetricKeyUtils utils = new SymmetricKeyUtils();
+		final SymmetricKey key = utils.generateSecureSymmetricKey();
+		final HMACSHA256SignerVerifier sv = new HMACSHA256SignerVerifier(key);
+		assertFalse(sv.verifyFingerprint(message, "ZG9uJ3QgdHJ5IHRoaXMgYXQgaG9tZQ=="));
+	}
 }

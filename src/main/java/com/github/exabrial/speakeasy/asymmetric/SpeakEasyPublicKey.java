@@ -13,6 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
+
 package com.github.exabrial.speakeasy.asymmetric;
 
 import java.security.PublicKey;
@@ -20,6 +21,6 @@ import java.security.PublicKey;
 import com.github.exabrial.speakeasy.primitives.SpeakEasyKey;
 
 public interface SpeakEasyPublicKey extends SpeakEasyKey {
-  @Override
-  PublicKey toKey();
+	@Override
+	PublicKey toKey();
 }

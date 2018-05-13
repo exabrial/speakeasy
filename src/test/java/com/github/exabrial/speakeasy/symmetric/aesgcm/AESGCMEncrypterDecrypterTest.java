@@ -13,36 +13,37 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
+
 package com.github.exabrial.speakeasy.symmetric.aesgcm;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
 import org.junit.Test;
 
 import com.github.exabrial.speakeasy.symmetric.SymmetricKey;
 import com.github.exabrial.speakeasy.symmetric.SymmetricKeyUtils;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
-
 public class AESGCMEncrypterDecrypterTest {
-  private final String plainText = "Never iron a four leaf clover... you don't want to press your luck";
+	private final String plainText = "Never iron a four leaf clover... you don't want to press your luck";
 
-  @Test
-  public void testEncryptDecrypt() throws Exception {
-    final SymmetricKeyUtils utils = new SymmetricKeyUtils();
-    final SymmetricKey sharedKey = utils.generateSecureSymmetricKey();
-    final AESGCMEncrypter encrypter = new AESGCMEncrypter(sharedKey);
-    final String cipherText = encrypter.encrypt(plainText);
-    final AESGCMDecrypter decrypter = new AESGCMDecrypter(sharedKey);
-    assertEquals(plainText, decrypter.decrypt(cipherText));
-  }
+	@Test
+	public void testEncryptDecrypt() throws Exception {
+		final SymmetricKeyUtils utils = new SymmetricKeyUtils();
+		final SymmetricKey sharedKey = utils.generateSecureSymmetricKey();
+		final AESGCMEncrypter encrypter = new AESGCMEncrypter(sharedKey);
+		final String cipherText = encrypter.encrypt(plainText);
+		final AESGCMDecrypter decrypter = new AESGCMDecrypter(sharedKey);
+		assertEquals(plainText, decrypter.decrypt(cipherText));
+	}
 
-  @Test
-  public void testEncrypt_doesntProduceSameCiphertext() throws Exception {
-    final SymmetricKeyUtils utils = new SymmetricKeyUtils();
-    final SymmetricKey sharedKey = utils.generateSecureSymmetricKey();
-    final AESGCMEncrypter encrypter = new AESGCMEncrypter(sharedKey);
-    final String cipherText0 = encrypter.encrypt(plainText);
-    final String cipherText1 = encrypter.encrypt(plainText);
-    assertNotEquals(cipherText0, cipherText1);
-  }
+	@Test
+	public void testEncrypt_doesntProduceSameCiphertext() throws Exception {
+		final SymmetricKeyUtils utils = new SymmetricKeyUtils();
+		final SymmetricKey sharedKey = utils.generateSecureSymmetricKey();
+		final AESGCMEncrypter encrypter = new AESGCMEncrypter(sharedKey);
+		final String cipherText0 = encrypter.encrypt(plainText);
+		final String cipherText1 = encrypter.encrypt(plainText);
+		assertNotEquals(cipherText0, cipherText1);
+	}
 }

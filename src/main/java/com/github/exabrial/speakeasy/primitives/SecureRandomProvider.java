@@ -13,10 +13,11 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
+
 package com.github.exabrial.speakeasy.primitives;
 
 import java.security.SecureRandom;
 
 public interface SecureRandomProvider {
-  SecureRandom borrowSecureRandom();
+	SecureRandom borrowSecureRandom();
 }

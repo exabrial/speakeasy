@@ -13,6 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
+
 package com.github.exabrial.speakeasy.nonkeyed;
 
 import static com.github.exabrial.speakeasy.internal.SpeakEasyConstants.SHA256;
@@ -26,45 +27,45 @@ import com.github.exabrial.speakeasy.encoding.StringEncoder;
 import com.github.exabrial.speakeasy.primitives.Fingerprinter;
 
 public class SHA256Fingerprinter implements Fingerprinter {
-  private final StringEncoder stringEncoder;
+	private final StringEncoder stringEncoder;
 
-  public SHA256Fingerprinter() {
-    this.stringEncoder = Base64StringEncoder.getSingleton();
-  }
+	public SHA256Fingerprinter() {
+		this.stringEncoder = Base64StringEncoder.getSingleton();
+	}
 
-  public SHA256Fingerprinter(final StringEncoder stringEncoder) {
-    this.stringEncoder = stringEncoder;
-  }
+	public SHA256Fingerprinter(final StringEncoder stringEncoder) {
+		this.stringEncoder = stringEncoder;
+	}
 
-  @Override
-  public String fingerprint(final String message) {
-    try {
-      final byte[] fingerprintBytes = digest(message);
-      final String fingerprint = stringEncoder.encodeBytesAsString(fingerprintBytes);
-      return fingerprint;
-    } catch (final NoSuchAlgorithmException e) {
-      throw new RuntimeException(e);
-    }
-  }
+	@Override
+	public String fingerprint(final String message) {
+		try {
+			final byte[] fingerprintBytes = digest(message);
+			final String fingerprint = stringEncoder.encodeBytesAsString(fingerprintBytes);
+			return fingerprint;
+		} catch (final NoSuchAlgorithmException e) {
+			throw new RuntimeException(e);
+		}
+	}
 
-  @Override
-  public boolean verifyFingerprint(final String message, final String fingerprint) {
-    try {
-      final byte[] cfingerprintBytes = digest(message);
-      final byte[] pFingerprintBytes = stringEncoder.decodeStringToBytes(fingerprint);
-      final boolean equals = Arrays.equals(cfingerprintBytes, pFingerprintBytes);
-      return equals;
-    } catch (final NullPointerException | ArrayIndexOutOfBoundsException e) {
-      return false;
-    } catch (final NoSuchAlgorithmException e) {
-      throw new RuntimeException(e);
-    }
-  }
+	@Override
+	public boolean verifyFingerprint(final String message, final String fingerprint) {
+		try {
+			final byte[] cfingerprintBytes = digest(message);
+			final byte[] pFingerprintBytes = stringEncoder.decodeStringToBytes(fingerprint);
+			final boolean equals = Arrays.equals(cfingerprintBytes, pFingerprintBytes);
+			return equals;
+		} catch (final NullPointerException | ArrayIndexOutOfBoundsException e) {
+			return false;
+		} catch (final NoSuchAlgorithmException e) {
+			throw new RuntimeException(e);
+		}
+	}
 
-  private byte[] digest(final String message) throws NoSuchAlgorithmException {
-    final byte[] messageBytes = stringEncoder.getStringAsBytes(message);
-    final MessageDigest digest = MessageDigest.getInstance(SHA256);
-    final byte[] fingerprintBytes = digest.digest(messageBytes);
-    return fingerprintBytes;
-  }
+	private byte[] digest(final String message) throws NoSuchAlgorithmException {
+		final byte[] messageBytes = stringEncoder.getStringAsBytes(message);
+		final MessageDigest digest = MessageDigest.getInstance(SHA256);
+		final byte[] fingerprintBytes = digest.digest(messageBytes);
+		return fingerprintBytes;
+	}
 }

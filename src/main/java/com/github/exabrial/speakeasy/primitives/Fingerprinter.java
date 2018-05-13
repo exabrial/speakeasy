@@ -13,10 +13,11 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
+
 package com.github.exabrial.speakeasy.primitives;
 
 public interface Fingerprinter {
-  String fingerprint(String message);
+	String fingerprint(String message);
 
-  boolean verifyFingerprint(String message, String signature);
+	boolean verifyFingerprint(String message, String signature);
 }

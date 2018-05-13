@@ -26,7 +26,7 @@ public class ConstantTimeMessageComporator implements MessageComporator {
     return Singleton.Instance.messageComporator;
   }
 
-  private static enum Singleton {
+  private enum Singleton {
     Instance;
     public final ConstantTimeMessageComporator messageComporator;
 

@@ -1,12 +1,12 @@
 /**
  * Copyright [2018] [Jonathan S. Fisher]
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
@@ -14,6 +14,9 @@
  * the License.
  */
 package com.github.exabrial.speakeasy.symmetric;
+
+import static com.github.exabrial.speakeasy.internal.SpeakEasyConstants.AES;
+import static com.github.exabrial.speakeasy.internal.SpeakEasyConstants.AES_KEY_SIZE;
 
 import java.security.NoSuchAlgorithmException;
 
@@ -26,9 +29,6 @@ import com.github.exabrial.speakeasy.encoding.StringEncoder;
 import com.github.exabrial.speakeasy.entropy.NativeThreadLocalSecureRandomProvider;
 import com.github.exabrial.speakeasy.primitives.SecureRandomProvider;
 
-import static com.github.exabrial.speakeasy.internal.SpeakEasyConstants.AES;
-import static com.github.exabrial.speakeasy.internal.SpeakEasyConstants.AES_KEY_SIZE;
-
 public class SymmetricKeyUtils {
   private final StringEncoder stringEncoder;
   private final SecureRandomProvider secureRandomProvider;
@@ -39,7 +39,7 @@ public class SymmetricKeyUtils {
   }
 
   public SymmetricKeyUtils(final StringEncoder stringEncoder, final SecureRandomProvider secureRandomProvider) {
-    this.stringEncoder = Base64StringEncoder.getSingleton();
+    this.stringEncoder = stringEncoder;
     this.secureRandomProvider = secureRandomProvider;
   }
 

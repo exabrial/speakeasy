@@ -15,6 +15,11 @@
  */
 package com.github.exabrial.speakeasy.symmetric.aesgcm;
 
+import static com.github.exabrial.speakeasy.encoding.Base64StringEncoder.getSingleton;
+import static com.github.exabrial.speakeasy.internal.SpeakEasyConstants.AES_GCM;
+import static com.github.exabrial.speakeasy.internal.SpeakEasyConstants.AES_GCM_TAG_LENGTH;
+import static com.github.exabrial.speakeasy.internal.SpeakEasyConstants.GCM_NONCE_LENGTH;
+
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
@@ -31,11 +36,6 @@ import com.github.exabrial.speakeasy.entropy.NativeThreadLocalSecureRandomProvid
 import com.github.exabrial.speakeasy.primitives.Encrypter;
 import com.github.exabrial.speakeasy.primitives.SecureRandomProvider;
 import com.github.exabrial.speakeasy.symmetric.SymmetricKey;
-
-import static com.github.exabrial.speakeasy.encoding.Base64StringEncoder.getSingleton;
-import static com.github.exabrial.speakeasy.internal.SpeakEasyConstants.AES_GCM;
-import static com.github.exabrial.speakeasy.internal.SpeakEasyConstants.AES_GCM_TAG_LENGTH;
-import static com.github.exabrial.speakeasy.internal.SpeakEasyConstants.GCM_NONCE_LENGTH;
 
 public class AESGCMEncrypter implements Encrypter {
   private final StringEncoder stringEncoder;

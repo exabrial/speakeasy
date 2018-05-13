@@ -15,6 +15,9 @@
  */
 package com.github.exabrial.speakeasy.asymmetric.ecc;
 
+import static com.github.exabrial.speakeasy.internal.SpeakEasyConstants.EC;
+import static com.github.exabrial.speakeasy.internal.SpeakEasyConstants.EC_CURVE_NAME;
+
 import java.security.InvalidAlgorithmParameterException;
 import java.security.KeyFactory;
 import java.security.KeyPair;
@@ -33,9 +36,6 @@ import com.github.exabrial.speakeasy.encoding.Base64StringEncoder;
 import com.github.exabrial.speakeasy.encoding.StringEncoder;
 import com.github.exabrial.speakeasy.entropy.NativeThreadLocalSecureRandomProvider;
 import com.github.exabrial.speakeasy.primitives.SecureRandomProvider;
-
-import static com.github.exabrial.speakeasy.internal.SpeakEasyConstants.EC;
-import static com.github.exabrial.speakeasy.internal.SpeakEasyConstants.EC_CURVE_NAME;
 
 public class ECCKeyUtils
     implements AsymmetricKeyUtils<SpeakEasyEccPublicKey, SpeakEasyEccPrivateKey, SpeakEasyEccKeyPair> {

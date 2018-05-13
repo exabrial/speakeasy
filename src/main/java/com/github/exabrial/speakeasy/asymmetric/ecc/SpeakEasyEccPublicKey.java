@@ -15,11 +15,11 @@
  */
 package com.github.exabrial.speakeasy.asymmetric.ecc;
 
+import static com.github.exabrial.speakeasy.internal.SpeakEasyConstants.EC;
+
 import java.security.PublicKey;
 
 import com.github.exabrial.speakeasy.asymmetric.SpeakEasyPublicKey;
-
-import static com.github.exabrial.speakeasy.internal.SpeakEasyConstants.EC;
 
 public class SpeakEasyEccPublicKey implements SpeakEasyPublicKey {
   public final PublicKey publicKey;

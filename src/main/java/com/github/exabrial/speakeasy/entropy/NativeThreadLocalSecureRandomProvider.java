@@ -30,7 +30,7 @@ public class NativeThreadLocalSecureRandomProvider implements SecureRandomProvid
     return Singleton.Instance.provider;
   }
 
-  private static enum Singleton {
+  private enum Singleton {
     Instance;
     public final NativeThreadLocalSecureRandomProvider provider;
 

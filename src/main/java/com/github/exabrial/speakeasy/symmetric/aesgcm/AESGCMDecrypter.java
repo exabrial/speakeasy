@@ -15,6 +15,10 @@
  */
 package com.github.exabrial.speakeasy.symmetric.aesgcm;
 
+import static com.github.exabrial.speakeasy.internal.SpeakEasyConstants.AES_GCM;
+import static com.github.exabrial.speakeasy.internal.SpeakEasyConstants.AES_GCM_TAG_LENGTH;
+import static com.github.exabrial.speakeasy.internal.SpeakEasyConstants.GCM_NONCE_LENGTH;
+
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
@@ -29,10 +33,6 @@ import com.github.exabrial.speakeasy.encoding.Base64StringEncoder;
 import com.github.exabrial.speakeasy.encoding.StringEncoder;
 import com.github.exabrial.speakeasy.primitives.Decrypter;
 import com.github.exabrial.speakeasy.symmetric.SymmetricKey;
-
-import static com.github.exabrial.speakeasy.internal.SpeakEasyConstants.AES_GCM;
-import static com.github.exabrial.speakeasy.internal.SpeakEasyConstants.AES_GCM_TAG_LENGTH;
-import static com.github.exabrial.speakeasy.internal.SpeakEasyConstants.GCM_NONCE_LENGTH;
 
 public class AESGCMDecrypter implements Decrypter {
   private final StringEncoder stringEncoder;

@@ -15,6 +15,8 @@
  */
 package com.github.exabrial.speakeasy.nonkeyed;
 
+import static com.github.exabrial.speakeasy.internal.SpeakEasyConstants.SHA256;
+
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
@@ -22,8 +24,6 @@ import java.util.Arrays;
 import com.github.exabrial.speakeasy.encoding.Base64StringEncoder;
 import com.github.exabrial.speakeasy.encoding.StringEncoder;
 import com.github.exabrial.speakeasy.primitives.Fingerprinter;
-
-import static com.github.exabrial.speakeasy.internal.SpeakEasyConstants.SHA256;
 
 public class SHA256Fingerprinter implements Fingerprinter {
   private final StringEncoder stringEncoder;

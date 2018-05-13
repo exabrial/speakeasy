@@ -15,6 +15,8 @@
  */
 package com.github.exabrial.speakeasy.asymmetric.ecc;
 
+import static com.github.exabrial.speakeasy.internal.SpeakEasyConstants.EC_SIG_ALG;
+
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
@@ -26,8 +28,6 @@ import com.github.exabrial.speakeasy.encoding.StringEncoder;
 import com.github.exabrial.speakeasy.entropy.NativeThreadLocalSecureRandomProvider;
 import com.github.exabrial.speakeasy.primitives.SecureRandomProvider;
 import com.github.exabrial.speakeasy.primitives.Signer;
-
-import static com.github.exabrial.speakeasy.internal.SpeakEasyConstants.EC_SIG_ALG;
 
 public class ECDSASigner implements Signer {
   private final SpeakEasyEccPrivateKey privateKey;

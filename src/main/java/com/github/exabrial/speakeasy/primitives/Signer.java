@@ -13,6 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
+
 package com.github.exabrial.speakeasy.primitives;
 
 /**
@@ -23,11 +24,12 @@ package com.github.exabrial.speakeasy.primitives;
  * signers can be considered to be keyed Fingerprint functions.
  */
 public interface Signer {
-  /**
-   * Produce a signature for a plaintext message input.
-   * 
-   * @param message plaintext
-   * @return message signaure
-   */
-  String signMessage(String message);
+	/**
+	 * Produce a signature for a plaintext message input.
+	 * 
+	 * @param message
+	 *          plaintext
+	 * @return message signaure
+	 */
+	String signMessage(String message);
 }

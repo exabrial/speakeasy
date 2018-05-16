@@ -22,17 +22,16 @@ import javax.crypto.SecretKey;
 
 import com.github.exabrial.speakeasy.primitives.SpeakEasyKey;
 
+/**
+ * An algorithm that uses a single key for two converse or inverse operations is
+ * called symmetric. This class holds said key value.
+ */
 public class SymmetricKey implements SpeakEasyKey {
 	private final SecretKey secretKey;
 
 	SymmetricKey(final SecretKey secretKey) {
 		// TODO 128?
 		this.secretKey = secretKey;
-	}
-
-	@Override
-	public byte[] getKeyBytes() {
-		return secretKey.getEncoded();
 	}
 
 	@Override

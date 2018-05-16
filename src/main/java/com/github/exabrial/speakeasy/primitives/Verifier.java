@@ -13,6 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
+
 package com.github.exabrial.speakeasy.primitives;
 
 /**
@@ -20,14 +21,16 @@ package com.github.exabrial.speakeasy.primitives;
  * Signer.
  */
 public interface Verifier {
-  /**
-   * Checks whether or not a signature was produced by a corresponding signer.
-   * TODO: Set the log level to trace to see stack traces when errors occur.
-   * 
-   * @param message plaintext
-   * @param signature provided signature to verify
-   * @return returns true if the signature matches, or false if the signature is
-   *         invalid, or false if an error occurs.
-   */
-  boolean verifyMessageSignature(String message, String signature);
+	/**
+	 * Checks whether or not a signature was produced by a corresponding signer.
+	 * TODO: Set the log level to trace to see stack traces when errors occur.
+	 * 
+	 * @param message
+	 *          plaintext
+	 * @param signature
+	 *          provided signature to verify
+	 * @return returns true if the signature matches, or false if the signature is
+	 *         invalid, or false if an error occurs.
+	 */
+	boolean verifyMessageSignature(String message, String signature);
 }

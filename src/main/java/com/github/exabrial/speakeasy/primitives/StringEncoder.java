@@ -13,6 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
+
 package com.github.exabrial.speakeasy.primitives;
 
 import java.nio.charset.StandardCharsets;
@@ -22,15 +23,15 @@ import java.nio.charset.StandardCharsets;
  * are assumed to be UTF-8.
  */
 public interface StringEncoder {
-  String encodeBytesAsString(byte[] message);
+	String encodeBytesAsString(byte[] message);
 
-  byte[] decodeStringToBytes(String message);
+	byte[] decodeStringToBytes(String message);
 
-  default byte[] getStringAsBytes(final String message) {
-    return message.getBytes(StandardCharsets.UTF_8);
-  }
+	default byte[] getStringAsBytes(final String message) {
+		return message.getBytes(StandardCharsets.UTF_8);
+	}
 
-  default String stringFromBytes(final byte[] message) {
-    return new String(message, StandardCharsets.UTF_8);
-  }
+	default String stringFromBytes(final byte[] message) {
+		return new String(message, StandardCharsets.UTF_8);
+	}
 }

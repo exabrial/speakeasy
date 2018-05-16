@@ -13,6 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
+
 package com.github.exabrial.speakeasy.entropy;
 
 import java.lang.ref.WeakReference;
@@ -37,54 +38,54 @@ import com.github.exabrial.speakeasy.primitives.SecureRandomProvider;
  * https://bit.ly/2En8fOI
  */
 public class NativeThreadLocalSecureRandomProvider implements SecureRandomProvider {
-  private static final String NATIVE_PRNG = "NativePRNG";
-  private static final String SUN = "SUN";
-  private static final ThreadLocal<WeakReference<SecureRandom>> threadLocal = new ThreadLocal<>();
+	private static final String NATIVE_PRNG = "NativePRNG";
+	private static final String SUN = "SUN";
+	private static final ThreadLocal<WeakReference<SecureRandom>> threadLocal = new ThreadLocal<>();
 
-  public static NativeThreadLocalSecureRandomProvider getSingleton() {
-    return Singleton.Instance.provider;
-  }
+	public static NativeThreadLocalSecureRandomProvider getSingleton() {
+		return Singleton.Instance.provider;
+	}
 
-  @Override
-  public SecureRandom borrowSecureRandom() {
-    WeakReference<SecureRandom> weakReference = threadLocal.get();
-    SecureRandom secureRandom;
-    if (weakReference != null) {
-      secureRandom = weakReference.get();
-    } else {
-      secureRandom = null;
-    }
-    if (secureRandom == null) {
-      try {
-        // Attempt to use non-blocking native RNG with xor PRNG.
-        secureRandom = SecureRandom.getInstance(NATIVE_PRNG, SUN);
-      } catch (final NoSuchAlgorithmException e) {
-        try {
-          // Probably on winblows, sigh. Retreat.
-          System.err.println(
-              "WARN: NativePRNG not available, weaker RNG being used. It may not be a good idea to use this VM to do ANY ECC "
-                  + "operations, as it may be result in complete revelation of the secret keys");
-          secureRandom = SecureRandom.getInstanceStrong();
-        } catch (final NoSuchAlgorithmException e1) {
-          throw new RuntimeException(e1);
-        }
-      } catch (final NoSuchProviderException e) {
-        throw new RuntimeException(e);
-      }
-      // Because America. Why not?
-      final byte[] seed = SecureRandom.getSeed(55);
-      secureRandom.setSeed(seed);
-      threadLocal.set(new WeakReference<SecureRandom>(secureRandom));
-    }
-    return secureRandom;
-  }
+	@Override
+	public SecureRandom borrowSecureRandom() {
+		WeakReference<SecureRandom> weakReference = threadLocal.get();
+		SecureRandom secureRandom;
+		if (weakReference != null) {
+			secureRandom = weakReference.get();
+		} else {
+			secureRandom = null;
+		}
+		if (secureRandom == null) {
+			try {
+				// Attempt to use non-blocking native RNG with xor PRNG.
+				secureRandom = SecureRandom.getInstance(NATIVE_PRNG, SUN);
+			} catch (final NoSuchAlgorithmException e) {
+				try {
+					// Probably on winblows, sigh. Retreat.
+					System.err
+							.println("WARN: NativePRNG not available, weaker RNG being used. It may not be a good idea to use this VM to do ANY ECC "
+									+ "operations, as it may be result in complete revelation of the secret keys");
+					secureRandom = SecureRandom.getInstanceStrong();
+				} catch (final NoSuchAlgorithmException e1) {
+					throw new RuntimeException(e1);
+				}
+			} catch (final NoSuchProviderException e) {
+				throw new RuntimeException(e);
+			}
+			// Because America. Why not?
+			final byte[] seed = SecureRandom.getSeed(55);
+			secureRandom.setSeed(seed);
+			threadLocal.set(new WeakReference<SecureRandom>(secureRandom));
+		}
+		return secureRandom;
+	}
 
-  private enum Singleton {
-    Instance;
-    public final NativeThreadLocalSecureRandomProvider provider;
+	private enum Singleton {
+		Instance;
+		public final NativeThreadLocalSecureRandomProvider provider;
 
-    Singleton() {
-      this.provider = new NativeThreadLocalSecureRandomProvider();
-    }
-  }
+		Singleton() {
+			this.provider = new NativeThreadLocalSecureRandomProvider();
+		}
+	}
 }

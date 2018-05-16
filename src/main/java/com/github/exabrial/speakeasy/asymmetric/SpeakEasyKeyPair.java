@@ -16,6 +16,10 @@
 
 package com.github.exabrial.speakeasy.asymmetric;
 
+/**
+ * Represents the full public and private key portions of a asymmetric key
+ * pair. @see SpeakEasyKeyPairGenerator
+ */
 public interface SpeakEasyKeyPair {
 	SpeakEasyPrivateKey getPrivateKey();
 

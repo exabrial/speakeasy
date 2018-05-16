@@ -13,6 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
+
 package com.github.exabrial.speakeasy.primitives;
 
 import java.security.Key;
@@ -21,17 +22,10 @@ import java.security.Key;
  * A key that can be used by various SpeakEasy primitives.
  */
 public interface SpeakEasyKey {
-  /**
-   * The bytes of a key.
-   * 
-   * @return bytes
-   */
-  byte[] getKeyBytes();
-
-  /**
-   * Transform this object into a JCE key.
-   * 
-   * @return a JCE representation of the wrapped key.
-   */
-  Key toKey();
+	/**
+	 * Transform this object into a JCE key.
+	 * 
+	 * @return a JCE representation of the wrapped key.
+	 */
+	Key toKey();
 }

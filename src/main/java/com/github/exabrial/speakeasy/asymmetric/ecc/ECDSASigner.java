@@ -30,6 +30,12 @@ import com.github.exabrial.speakeasy.primitives.SecureRandomProvider;
 import com.github.exabrial.speakeasy.primitives.Signer;
 import com.github.exabrial.speakeasy.primitives.StringEncoder;
 
+/**
+ * Sign a message using a private key. Message signatures are non-deterministic,
+ * meaning signing the same message with the same private key will create
+ * different results. Messages can only be verified using the corresponding
+ * public key.
+ */
 public class ECDSASigner implements Signer {
 	private final SpeakEasyEccPrivateKey privateKey;
 	private final StringEncoder stringEncoder;

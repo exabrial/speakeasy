@@ -12,7 +12,7 @@ Speakeasy - Plain Simple Cryptography that makes it hard to do the wrong thing
 * Be DI framework friendly
 * Be thread safe
 * Be easy to debug
-* Be opinionated about algorithm choices (ECIES, ECDSA, SHA2, AES-GCM, RSA)
+* Be opinionated about algorithm choices (ECIES, ECDSA, SHA2, AES-GCM, RSA, ect)
 * Be opinionated about key sizes for the user
 * Make it easy to the right thing, difficult to the wrong thing
 * Get rid of the checked exception mess in the JCE
@@ -20,7 +20,7 @@ Speakeasy - Plain Simple Cryptography that makes it hard to do the wrong thing
 ## Not Goals
 
 * Invent own crypto
-* Support MD5, SHA1, RSA < 2048, Non-NIST Elliptic Curves
+* Support MD5, SHA1, RSA < 2048, Non-NIST Elliptic Curves, but maybe Ed25519s
 * Implement algorithms... for now
 * < JDK 1.8 support (Using a dated JDK and concerned about security, really?)
 
@@ -49,3 +49,23 @@ Yay! See [CONTRIBUTING.md](CONTRIBUTING.md)
 ## Examples
 
 See [examples.md](examples.md) or peruse the unit tests
+
+## Building
+
+* Install homebrew
+* Install gpg, either MacGPG or homebrew gpg
+* Set gpg and it's agent up
+* `brew cask install java8`
+* `brew install maven`
+
+Currently, Speakeasy targets JDK 1.8. You will need a `~/.m2/toolchains.xml` file that points to a JDK 8 installation. An example file is included in this project.
+
+`mvn install`
+
+## TODO List
+* RSA: 2048, 3072, 4096
+* SHA3: 256, 384, 512
+* Argon, Scrypt, Bcrypt
+* EdDSA signatures
+* Curve25519 for ECDSA, ECIES
+* Hmac over the new Fingerprint algs

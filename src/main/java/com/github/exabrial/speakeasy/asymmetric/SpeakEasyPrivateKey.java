@@ -20,6 +20,10 @@ import java.security.PrivateKey;
 
 import com.github.exabrial.speakeasy.primitives.SpeakEasyKey;
 
+/**
+ * Represents the private key portion of a asymmetric key pair. @see
+ * SpeakEasyKeyPair
+ */
 public interface SpeakEasyPrivateKey extends SpeakEasyKey {
 	@Override
 	PrivateKey toKey();

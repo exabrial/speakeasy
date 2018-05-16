@@ -38,6 +38,12 @@ import com.github.exabrial.speakeasy.primitives.SecureRandomProvider;
 import com.github.exabrial.speakeasy.primitives.StringEncoder;
 import com.github.exabrial.speakeasy.symmetric.SymmetricKey;
 
+/**
+ * AES is a fast and secure symmetric encryption algorithm when used correctly.
+ * AES should NEVER be used as a hash algorithm. Normally, AES requires MAC the
+ * IV and message before decryption, but when combined with the GCM cipher mode,
+ * message authentication is included, making it simpler to "get correct".
+ */
 public class AESGCMEncrypter implements Encrypter {
 	private final StringEncoder stringEncoder;
 	private final SymmetricKey sharedKey;

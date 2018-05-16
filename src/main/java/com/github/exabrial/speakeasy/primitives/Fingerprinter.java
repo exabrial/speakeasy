@@ -13,6 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
+
 package com.github.exabrial.speakeasy.primitives;
 
 /**
@@ -20,22 +21,25 @@ package com.github.exabrial.speakeasy.primitives;
  * arbitrarily-sized input.
  */
 public interface Fingerprinter {
-  /**
-   * Compute the fingerprint for the given plaintext message.
-   * 
-   * @param message plaintext
-   * @return fingerprint
-   */
-  String fingerprint(String message);
+	/**
+	 * Compute the fingerprint for the given plaintext message.
+	 * 
+	 * @param message
+	 *          plaintext
+	 * @return fingerprint
+	 */
+	String fingerprint(String message);
 
-  /**
-   * Checks whether or not a fingerprint matches. TODO: Set the log level to trace
-   * to see stack traces when errors occur.
-   * 
-   * @param message plaintext
-   * @param fingerprint provided fingerprint to verify
-   * @return returns true if the fingerprint matches, or false if the fingerprint
-   *         is invalid, or false if an error occurs.
-   */
-  boolean verifyFingerprint(String message, String fingerprint);
+	/**
+	 * Checks whether or not a fingerprint matches. TODO: Set the log level to trace
+	 * to see stack traces when errors occur.
+	 * 
+	 * @param message
+	 *          plaintext
+	 * @param fingerprint
+	 *          provided fingerprint to verify
+	 * @return returns true if the fingerprint matches, or false if the fingerprint
+	 *         is invalid, or false if an error occurs.
+	 */
+	boolean verifyFingerprint(String message, String fingerprint);
 }

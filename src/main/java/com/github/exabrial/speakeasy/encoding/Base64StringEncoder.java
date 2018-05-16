@@ -13,36 +13,41 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
+
 package com.github.exabrial.speakeasy.encoding;
 
 import java.util.Base64;
 
 import com.github.exabrial.speakeasy.primitives.StringEncoder;
 
+/**
+ * Serializes and deserializes a byte[] using rfc compliant base64 encoding.
+ * This implementation does not escape URL characters.
+ */
 public class Base64StringEncoder implements StringEncoder {
-  private Base64StringEncoder() {
-  }
+	private Base64StringEncoder() {
+	}
 
-  public static Base64StringEncoder getSingleton() {
-    return Singleton.Instance.encoder;
-  }
+	public static Base64StringEncoder getSingleton() {
+		return Singleton.Instance.encoder;
+	}
 
-  @Override
-  public String encodeBytesAsString(final byte[] message) {
-    return Base64.getEncoder().encodeToString(message);
-  }
+	@Override
+	public String encodeBytesAsString(final byte[] message) {
+		return Base64.getEncoder().encodeToString(message);
+	}
 
-  @Override
-  public byte[] decodeStringToBytes(final String message) {
-    return Base64.getDecoder().decode(message);
-  }
+	@Override
+	public byte[] decodeStringToBytes(final String message) {
+		return Base64.getDecoder().decode(message);
+	}
 
-  private enum Singleton {
-    Instance;
-    Base64StringEncoder encoder;
+	private enum Singleton {
+		Instance;
+		Base64StringEncoder encoder;
 
-    Singleton() {
-      this.encoder = new Base64StringEncoder();
-    }
-  }
+		Singleton() {
+			this.encoder = new Base64StringEncoder();
+		}
+	}
 }

@@ -13,36 +13,47 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
+
 package com.github.exabrial.speakeasy.encoding;
+
+import java.util.Locale;
 
 import javax.xml.bind.DatatypeConverter;
 
 import com.github.exabrial.speakeasy.primitives.StringEncoder;
 
+/**
+ * Serializes and deserializes a byte[] using standard 2-digit hexadecimal
+ * encoding.
+ */
 public class HexStringEncoder implements StringEncoder {
-  private HexStringEncoder() {
-  }
+	private HexStringEncoder() {
+	}
 
-  public static HexStringEncoder getSingleton() {
-    return Singleton.Instance.encoder;
-  }
+	public static HexStringEncoder getSingleton() {
+		return Singleton.Instance.encoder;
+	}
 
-  @Override
-  public String encodeBytesAsString(final byte[] message) {
-    return DatatypeConverter.printHexBinary(message);
-  }
+	@Override
+	public String encodeBytesAsString(final byte[] message) {
+		String hex = DatatypeConverter.printHexBinary(message);
+		if (hex != null) {
+			hex = hex.toUpperCase(Locale.US);
+		}
+		return hex;
+	}
 
-  @Override
-  public byte[] decodeStringToBytes(final String message) {
-    return DatatypeConverter.parseHexBinary(message);
-  }
+	@Override
+	public byte[] decodeStringToBytes(final String message) {
+		return DatatypeConverter.parseHexBinary(message);
+	}
 
-  private enum Singleton {
-    Instance;
-    public final HexStringEncoder encoder;
+	private enum Singleton {
+		Instance;
+		public final HexStringEncoder encoder;
 
-    Singleton() {
-      this.encoder = new HexStringEncoder();
-    }
-  }
+		Singleton() {
+			this.encoder = new HexStringEncoder();
+		}
+	}
 }

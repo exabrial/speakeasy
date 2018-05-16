@@ -16,6 +16,16 @@
 
 package com.github.exabrial.speakeasy.asymmetric;
 
+/**
+ * Parent interface for workging with asymmetric keys.
+ * 
+ * @param <Pub>
+ *          public key type
+ * @param <Priv>
+ *          private key type
+ * @param <Pair>
+ *          key pair type
+ */
 public interface AsymmetricKeyUtils<Pub extends SpeakEasyPublicKey, Priv extends SpeakEasyPrivateKey, Pair extends SpeakEasyKeyPair> {
 	Pair createKeyPair();
 

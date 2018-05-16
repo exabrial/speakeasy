@@ -20,6 +20,9 @@ import java.security.KeyPair;
 
 import com.github.exabrial.speakeasy.asymmetric.SpeakEasyKeyPair;
 
+/**
+ * An ECC key pair. @see SpeakEasyKeyPair
+ */
 public class SpeakEasyEccKeyPair implements SpeakEasyKeyPair {
 	private final SpeakEasyEccPrivateKey privateKey;
 	private final SpeakEasyEccPublicKey publicKey;

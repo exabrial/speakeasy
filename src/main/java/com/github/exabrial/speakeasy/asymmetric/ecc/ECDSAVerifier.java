@@ -27,6 +27,10 @@ import java.security.SignatureException;
 import com.github.exabrial.speakeasy.primitives.StringEncoder;
 import com.github.exabrial.speakeasy.primitives.Verifier;
 
+/**
+ * Verify a message using a private key. @see notes on ECDSASigner about
+ * deterministic results.
+ */
 public class ECDSAVerifier implements Verifier {
 	private final SpeakEasyEccPublicKey publicKey;
 	private final StringEncoder stringEncoder;

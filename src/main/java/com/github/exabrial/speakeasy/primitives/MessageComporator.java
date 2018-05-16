@@ -13,6 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
+
 package com.github.exabrial.speakeasy.primitives;
 
 /**
@@ -20,16 +21,16 @@ package com.github.exabrial.speakeasy.primitives;
  * properties, like constant time comparison, or side channel attack resistance.
  */
 public interface MessageComporator {
-  /**
-   * Compare two messages for equality. TODO: Turn on logging at the trace level
-   * to receive stack traces for errors.
-   * 
-   * @param calculatedFingerprint the fingerprint freshly calculated by a
-   *          speakeasy fingerprinter
-   * @param presentedFingerprint the fingerprint provided by an untrusted or
-   *          unauthenticated system
-   * @return true if the fingerprints match, false if they do not, or false if an
-   *         error occurs.
-   */
-  boolean compare(String calculatedFingerprint, String presentedFingerprint);
+	/**
+	 * Compare two messages for equality. TODO: Turn on logging at the trace level
+	 * to receive stack traces for errors.
+	 * 
+	 * @param calculatedFingerprint
+	 *          the fingerprint freshly calculated by a speakeasy fingerprinter
+	 * @param presentedFingerprint
+	 *          the fingerprint provided by an untrusted or unauthenticated system
+	 * @return true if the fingerprints match, false if they do not, or false if an
+	 *         error occurs.
+	 */
+	boolean compare(String calculatedFingerprint, String presentedFingerprint);
 }

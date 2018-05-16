@@ -38,6 +38,13 @@ import com.github.exabrial.speakeasy.entropy.NativeThreadLocalSecureRandomProvid
 import com.github.exabrial.speakeasy.primitives.SecureRandomProvider;
 import com.github.exabrial.speakeasy.primitives.StringEncoder;
 
+/**
+ * Utility class for managing ECC keys. @see
+ * com.github.exabrial.speakeasy.symmetric.SymmetricKeyUtils.generateSecureSymmetricKey()
+ * for some notes on secure generation. Keep in mind, creating ECC keys with a
+ * weak random generator can totally compromisre the security of the system,
+ * even allowing the private key to be divulged.
+ */
 public class ECCKeyUtils implements AsymmetricKeyUtils<SpeakEasyEccPublicKey, SpeakEasyEccPrivateKey, SpeakEasyEccKeyPair> {
 	private final StringEncoder stringEncoder;
 	private final SecureRandomProvider secureRandomProvider;

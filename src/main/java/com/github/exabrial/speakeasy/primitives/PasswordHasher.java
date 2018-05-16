@@ -13,6 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
+
 package com.github.exabrial.speakeasy.primitives;
 
 /**
@@ -23,22 +24,25 @@ package com.github.exabrial.speakeasy.primitives;
  * search a plaitnext for a given password hash.
  */
 public interface PasswordHasher {
-  /**
-   * Compute the hash for a password.
-   * 
-   * @param password plaintext password
-   * @return hash
-   */
-  String hashPassword(String password);
+	/**
+	 * Compute the hash for a password.
+	 * 
+	 * @param password
+	 *          plaintext password
+	 * @return hash
+	 */
+	String hashPassword(String password);
 
-  /**
-   * Checks to see if a plaintext password hashes to the given hash. TODO: Turn on
-   * logging at the trace level to receive stack traces for errors.
-   * 
-   * @param password plaintext password
-   * @param hash the hash to compare against
-   * @return true if the resulting password hash equals the provided hash, false
-   *         if it does not, or false if there is an error.
-   */
-  boolean checkPassword(String password, String hash);
+	/**
+	 * Checks to see if a plaintext password hashes to the given hash. TODO: Turn on
+	 * logging at the trace level to receive stack traces for errors.
+	 * 
+	 * @param password
+	 *          plaintext password
+	 * @param hash
+	 *          the hash to compare against
+	 * @return true if the resulting password hash equals the provided hash, false
+	 *         if it does not, or false if there is an error.
+	 */
+	boolean checkPassword(String password, String hash);
 }

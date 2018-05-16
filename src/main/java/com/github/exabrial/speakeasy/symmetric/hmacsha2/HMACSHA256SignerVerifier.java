@@ -31,6 +31,10 @@ import com.github.exabrial.speakeasy.primitives.MessageComporator;
 import com.github.exabrial.speakeasy.primitives.StringEncoder;
 import com.github.exabrial.speakeasy.symmetric.SymmetricKey;
 
+/**
+ * HMAC takes a standard hash algorithm (Fingerprint) and makes it require a
+ * symmetric key in order to produce hashes.
+ */
 public class HMACSHA256SignerVerifier implements Fingerprinter {
 	private final SymmetricKey symmetricKey;
 	private final StringEncoder stringEncoder;
@@ -60,7 +64,7 @@ public class HMACSHA256SignerVerifier implements Fingerprinter {
 		try {
 			final byte[] messageBytes = stringEncoder.getStringAsBytes(message);
 			final Mac hmac = Mac.getInstance(HMAC_SHA256);
-			final SecretKeySpec secret_key = new SecretKeySpec(symmetricKey.getKeyBytes(), HMAC_SHA256);
+			final SecretKeySpec secret_key = new SecretKeySpec(symmetricKey.toKey().getEncoded(), HMAC_SHA256);
 			hmac.init(secret_key);
 			final byte[] signatureBytes = hmac.doFinal(messageBytes);
 			final String signature = stringEncoder.encodeBytesAsString(signatureBytes);
@@ -75,7 +79,7 @@ public class HMACSHA256SignerVerifier implements Fingerprinter {
 		try {
 			final byte[] messageBytes = stringEncoder.getStringAsBytes(message);
 			final Mac hmac = Mac.getInstance(HMAC_SHA256);
-			final SecretKeySpec secret_key = new SecretKeySpec(symmetricKey.getKeyBytes(), HMAC_SHA256);
+			final SecretKeySpec secret_key = new SecretKeySpec(symmetricKey.toKey().getEncoded(), HMAC_SHA256);
 			hmac.init(secret_key);
 			final byte[] cSignatureBytes = hmac.doFinal(messageBytes);
 			final String cSignature = stringEncoder.encodeBytesAsString(cSignatureBytes);

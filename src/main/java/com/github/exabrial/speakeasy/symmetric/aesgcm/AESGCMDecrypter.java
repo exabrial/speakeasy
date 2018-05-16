@@ -35,6 +35,11 @@ import com.github.exabrial.speakeasy.primitives.Decrypter;
 import com.github.exabrial.speakeasy.primitives.StringEncoder;
 import com.github.exabrial.speakeasy.symmetric.SymmetricKey;
 
+/**
+ * See corresponding class for information.
+ * 
+ * @see AESGCMEncrypter
+ */
 public class AESGCMDecrypter implements Decrypter {
 	private final StringEncoder stringEncoder;
 	private final SymmetricKey sharedKey;

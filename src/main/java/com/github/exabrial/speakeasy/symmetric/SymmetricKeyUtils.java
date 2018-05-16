@@ -30,6 +30,9 @@ import com.github.exabrial.speakeasy.entropy.NativeThreadLocalSecureRandomProvid
 import com.github.exabrial.speakeasy.primitives.SecureRandomProvider;
 import com.github.exabrial.speakeasy.primitives.StringEncoder;
 
+/**
+ * Utilities for working with SymmetricKey objects.
+ */
 public class SymmetricKeyUtils {
 	private final StringEncoder stringEncoder;
 	private final SecureRandomProvider secureRandomProvider;
@@ -44,12 +47,26 @@ public class SymmetricKeyUtils {
 		this.secureRandomProvider = secureRandomProvider;
 	}
 
+	/**
+	 * Create a string representation of a key that can be deserialized later.
+	 * 
+	 * @param symmetricKey
+	 *          the key to be serialized
+	 * @return the string representation of the key
+	 */
 	public String toString(final SymmetricKey symmetricKey) {
-		final byte[] keyBytes = symmetricKey.getKeyBytes();
+		final byte[] keyBytes = symmetricKey.toKey().getEncoded();
 		final String encodedKey = stringEncoder.encodeBytesAsString(keyBytes);
 		return encodedKey;
 	}
 
+	/**
+	 * Create a object representation of key from the serialized string.
+	 * 
+	 * @param encodedKeyString
+	 *          string representation of a key
+	 * @return the object represented by the string
+	 */
 	public SymmetricKey fromString(final String encodedKeyString) {
 		final byte[] encodedKeyBytes = stringEncoder.decodeStringToBytes(encodedKeyString);
 		final SecretKey secretKey = new SecretKeySpec(encodedKeyBytes, 0, encodedKeyBytes.length, AES);
@@ -57,6 +74,14 @@ public class SymmetricKeyUtils {
 		return symmetricKey;
 	}
 
+	/**
+	 * The best way to create a new key is to generate it here. A lot of people with
+	 * take a random string and called .getBytes(), which only returns bytes
+	 * possible in ascii or UTF charsets, severely limiting the entropy of the key.
+	 * The method ensure correctness.
+	 * 
+	 * @return a randomly generated key
+	 */
 	public SymmetricKey generateSecureSymmetricKey() {
 		try {
 			final KeyGenerator keyGen = KeyGenerator.getInstance(AES);

@@ -16,28 +16,28 @@
 
 package com.github.exabrial.speakeasy.nonkeyed;
 
-import static com.github.exabrial.speakeasy.internal.SpeakEasyConstants.SHA256;
+import static com.github.exabrial.speakeasy.internal.SpeakEasyConstants.SHA384;
 
 import com.github.exabrial.speakeasy.encoding.Base64StringEncoder;
 import com.github.exabrial.speakeasy.primitives.StringEncoder;
 
 /**
- * SHA-256 implementation of Fingerprinter.
+ * SHA-384 implementation of Fingerprinter.
  */
-public class SHA256Fingerprinter extends FingerprinterBase {
+public class SHA384Fingerprinter extends FingerprinterBase {
 	private final StringEncoder stringEncoder;
 
-	public SHA256Fingerprinter() {
+	public SHA384Fingerprinter() {
 		this.stringEncoder = Base64StringEncoder.getSingleton();
 	}
 
-	public SHA256Fingerprinter(final StringEncoder stringEncoder) {
+	public SHA384Fingerprinter(final StringEncoder stringEncoder) {
 		this.stringEncoder = stringEncoder;
 	}
 
 	@Override
 	String getAlg() {
-		return SHA256;
+		return SHA384;
 	}
 
 	@Override

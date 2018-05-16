@@ -16,6 +16,10 @@
 
 package com.github.exabrial.speakeasy.internal;
 
+/**
+ * Internal class used to configure key sizes and algs. Good for reference but
+ * not really useful to the user.
+ */
 public final class SpeakEasyConstants {
 	public static final int SCRYPT_SIZE = 64;
 	public static final int SCRYPT_P = 1;
@@ -29,7 +33,9 @@ public final class SpeakEasyConstants {
 	public static final String EC = "EC";
 	public static final String EC_SIG_ALG = "SHA256withECDSA";
 	public static final String EC_CURVE_NAME = "secp256r1";
-	public static final String SHA256 = "SHA256";
+	public static final String SHA256 = "SHA-256";
+	public static final String SHA384 = "SHA-384";
+	public static final String SHA512 = "SHA-512";
 	public static final String HMAC_SHA256 = "HmacSHA256";
 	public static final int HMACSHA256_SIG_LENGTH = 32;
 

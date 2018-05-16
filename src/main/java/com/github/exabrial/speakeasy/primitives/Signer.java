@@ -13,9 +13,21 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-
 package com.github.exabrial.speakeasy.primitives;
 
+/**
+ * Produces an output for a given arbitrarily-sized input that can be
+ * deterministically checked by a verifier. The output necessarily is not
+ * consistent for the same input, however, the corresponding verifier must
+ * always return true for a signature created by a corresponding signer. Usually
+ * signers can be considered to be keyed Fingerprint functions.
+ */
 public interface Signer {
-	String signMessage(String message);
+  /**
+   * Produce a signature for a plaintext message input.
+   * 
+   * @param message plaintext
+   * @return message signaure
+   */
+  String signMessage(String message);
 }

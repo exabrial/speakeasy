@@ -25,10 +25,10 @@ import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 
 import com.github.exabrial.speakeasy.encoding.Base64StringEncoder;
-import com.github.exabrial.speakeasy.encoding.StringEncoder;
 import com.github.exabrial.speakeasy.misc.ConstantTimeMessageComporator;
 import com.github.exabrial.speakeasy.primitives.Fingerprinter;
 import com.github.exabrial.speakeasy.primitives.MessageComporator;
+import com.github.exabrial.speakeasy.primitives.StringEncoder;
 import com.github.exabrial.speakeasy.symmetric.SymmetricKey;
 
 public class HMACSHA256SignerVerifier implements Fingerprinter {

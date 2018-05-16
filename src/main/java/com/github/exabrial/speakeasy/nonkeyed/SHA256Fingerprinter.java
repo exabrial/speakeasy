@@ -23,9 +23,12 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 
 import com.github.exabrial.speakeasy.encoding.Base64StringEncoder;
-import com.github.exabrial.speakeasy.encoding.StringEncoder;
 import com.github.exabrial.speakeasy.primitives.Fingerprinter;
+import com.github.exabrial.speakeasy.primitives.StringEncoder;
 
+/**
+ * SHA-256 implementation of Fingerprinter.
+ */
 public class SHA256Fingerprinter implements Fingerprinter {
 	private final StringEncoder stringEncoder;
 

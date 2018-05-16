@@ -13,11 +13,29 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-
 package com.github.exabrial.speakeasy.primitives;
 
+/**
+ * A deterministic hash-function who's fixed-length output is stable for a given
+ * arbitrarily-sized input.
+ */
 public interface Fingerprinter {
-	String fingerprint(String message);
+  /**
+   * Compute the fingerprint for the given plaintext message.
+   * 
+   * @param message plaintext
+   * @return fingerprint
+   */
+  String fingerprint(String message);
 
-	boolean verifyFingerprint(String message, String signature);
+  /**
+   * Checks whether or not a fingerprint matches. TODO: Set the log level to trace
+   * to see stack traces when errors occur.
+   * 
+   * @param message plaintext
+   * @param fingerprint provided fingerprint to verify
+   * @return returns true if the fingerprint matches, or false if the fingerprint
+   *         is invalid, or false if an error occurs.
+   */
+  boolean verifyFingerprint(String message, String fingerprint);
 }

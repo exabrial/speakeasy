@@ -13,8 +13,15 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-
 package com.github.exabrial.speakeasy;
 
+/**
+ * Does nothing. Just a placeholder for now. Might be used later for CDI or
+ * Spring bootstrapping.
+ */
 public class SpeakEasy {
+  public static final String GET_HELLO() {
+    String hi = "hi";
+    return "Hello, speakeasy";
+  }
 }

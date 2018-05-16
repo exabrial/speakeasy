@@ -32,10 +32,10 @@ import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.GCMParameterSpec;
 
-import com.github.exabrial.speakeasy.encoding.StringEncoder;
 import com.github.exabrial.speakeasy.entropy.NativeThreadLocalSecureRandomProvider;
 import com.github.exabrial.speakeasy.primitives.Encrypter;
 import com.github.exabrial.speakeasy.primitives.SecureRandomProvider;
+import com.github.exabrial.speakeasy.primitives.StringEncoder;
 import com.github.exabrial.speakeasy.symmetric.SymmetricKey;
 
 public class AESGCMEncrypter implements Encrypter {

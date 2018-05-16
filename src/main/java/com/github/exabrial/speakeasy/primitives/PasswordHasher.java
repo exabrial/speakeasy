@@ -13,11 +13,32 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-
 package com.github.exabrial.speakeasy.primitives;
 
+/**
+ * Similar to a Fingerprint, a PasswordHash is a deterministic hash-function
+ * who's fixed-length output is stable for a given arbitrarily-sized input.
+ * Whereas a Fingerprint is designed to be very fast, a PasswordHash is designed
+ * to be very slow. This makes it difficult for an attacker to brute force
+ * search a plaitnext for a given password hash.
+ */
 public interface PasswordHasher {
-	String hashPassword(String password);
+  /**
+   * Compute the hash for a password.
+   * 
+   * @param password plaintext password
+   * @return hash
+   */
+  String hashPassword(String password);
 
-	boolean checkPassword(String password, String hash);
+  /**
+   * Checks to see if a plaintext password hashes to the given hash. TODO: Turn on
+   * logging at the trace level to receive stack traces for errors.
+   * 
+   * @param password plaintext password
+   * @param hash the hash to compare against
+   * @return true if the resulting password hash equals the provided hash, false
+   *         if it does not, or false if there is an error.
+   */
+  boolean checkPassword(String password, String hash);
 }

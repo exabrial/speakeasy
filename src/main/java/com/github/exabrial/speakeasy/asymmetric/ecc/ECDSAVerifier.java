@@ -24,7 +24,7 @@ import java.security.NoSuchAlgorithmException;
 import java.security.Signature;
 import java.security.SignatureException;
 
-import com.github.exabrial.speakeasy.encoding.StringEncoder;
+import com.github.exabrial.speakeasy.primitives.StringEncoder;
 import com.github.exabrial.speakeasy.primitives.Verifier;
 
 public class ECDSAVerifier implements Verifier {

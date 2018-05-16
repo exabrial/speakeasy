@@ -34,9 +34,9 @@ import java.security.spec.X509EncodedKeySpec;
 
 import com.github.exabrial.speakeasy.asymmetric.AsymmetricKeyUtils;
 import com.github.exabrial.speakeasy.encoding.Base64StringEncoder;
-import com.github.exabrial.speakeasy.encoding.StringEncoder;
 import com.github.exabrial.speakeasy.entropy.NativeThreadLocalSecureRandomProvider;
 import com.github.exabrial.speakeasy.primitives.SecureRandomProvider;
+import com.github.exabrial.speakeasy.primitives.StringEncoder;
 
 public class ECCKeyUtils implements AsymmetricKeyUtils<SpeakEasyEccPublicKey, SpeakEasyEccPrivateKey, SpeakEasyEccKeyPair> {
 	private final StringEncoder stringEncoder;

@@ -25,7 +25,7 @@ import com.github.exabrial.speakeasy.symmetric.SymmetricKey;
 import com.github.exabrial.speakeasy.symmetric.SymmetricKeyUtils;
 
 public class HMACSHA256SignerVerifierTest {
-	final String message = "The best thing about a boolean is even if you are wrong, you are only off by a bit.";
+	private final String message = "The best thing about a boolean is even if you are wrong, you are only off by a bit.";
 
 	@Test
 	public void testVerifyMessageSignature() {

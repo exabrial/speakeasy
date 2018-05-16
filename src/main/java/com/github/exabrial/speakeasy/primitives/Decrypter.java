@@ -13,9 +13,17 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-
 package com.github.exabrial.speakeasy.primitives;
 
+/**
+ * Transforms ciphertext into plaintext.
+ */
 public interface Decrypter {
-	String decrypt(String message);
+  /**
+   * Decrypts message into plaintext.
+   * 
+   * @param message ciphertext
+   * @return plaintext
+   */
+  String decrypt(String message);
 }

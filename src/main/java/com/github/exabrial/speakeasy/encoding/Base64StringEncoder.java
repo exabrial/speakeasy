@@ -13,35 +13,36 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-
 package com.github.exabrial.speakeasy.encoding;
 
 import java.util.Base64;
 
+import com.github.exabrial.speakeasy.primitives.StringEncoder;
+
 public class Base64StringEncoder implements StringEncoder {
-	public static Base64StringEncoder getSingleton() {
-		return Singleton.Instance.encoder;
-	}
+  private Base64StringEncoder() {
+  }
 
-	private enum Singleton {
-		Instance;
-		Base64StringEncoder encoder;
+  public static Base64StringEncoder getSingleton() {
+    return Singleton.Instance.encoder;
+  }
 
-		Singleton() {
-			this.encoder = new Base64StringEncoder();
-		}
-	}
+  @Override
+  public String encodeBytesAsString(final byte[] message) {
+    return Base64.getEncoder().encodeToString(message);
+  }
 
-	private Base64StringEncoder() {
-	}
+  @Override
+  public byte[] decodeStringToBytes(final String message) {
+    return Base64.getDecoder().decode(message);
+  }
 
-	@Override
-	public String encodeBytesAsString(final byte[] message) {
-		return Base64.getEncoder().encodeToString(message);
-	}
+  private enum Singleton {
+    Instance;
+    Base64StringEncoder encoder;
 
-	@Override
-	public byte[] decodeStringToBytes(final String message) {
-		return Base64.getDecoder().decode(message);
-	}
+    Singleton() {
+      this.encoder = new Base64StringEncoder();
+    }
+  }
 }

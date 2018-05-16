@@ -22,7 +22,7 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 public class ECDSASignerTest {
-	final String message = "I was asked to name all the presidents. I thought they already had names.";
+	private final String message = "I was asked to name all the presidents. I thought they already had names.";
 
 	@Test
 	public void testSignmessage() {

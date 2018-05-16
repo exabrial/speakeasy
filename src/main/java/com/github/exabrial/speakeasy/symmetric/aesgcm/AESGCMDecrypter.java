@@ -31,8 +31,8 @@ import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.GCMParameterSpec;
 
 import com.github.exabrial.speakeasy.encoding.Base64StringEncoder;
-import com.github.exabrial.speakeasy.encoding.StringEncoder;
 import com.github.exabrial.speakeasy.primitives.Decrypter;
+import com.github.exabrial.speakeasy.primitives.StringEncoder;
 import com.github.exabrial.speakeasy.symmetric.SymmetricKey;
 
 public class AESGCMDecrypter implements Decrypter {

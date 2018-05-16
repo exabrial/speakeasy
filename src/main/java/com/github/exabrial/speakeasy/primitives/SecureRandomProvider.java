@@ -13,11 +13,21 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-
 package com.github.exabrial.speakeasy.primitives;
 
 import java.security.SecureRandom;
 
+/**
+ * Provides an instance of a secure random. Implementations made provide
+ * security, concurrency, or performance guarantees.
+ */
 public interface SecureRandomProvider {
-	SecureRandom borrowSecureRandom();
+  /**
+   * Borrow a secure random. Callers should not store references that exist beyond
+   * their local context. Best practice is to ALWAYS call borrowSecureRandom() and
+   * never ever ever assign it to a reference.
+   * 
+   * @return a SecureRandom
+   */
+  SecureRandom borrowSecureRandom();
 }

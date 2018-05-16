@@ -25,10 +25,10 @@ import java.security.Signature;
 import java.security.SignatureException;
 
 import com.github.exabrial.speakeasy.encoding.Base64StringEncoder;
-import com.github.exabrial.speakeasy.encoding.StringEncoder;
 import com.github.exabrial.speakeasy.entropy.NativeThreadLocalSecureRandomProvider;
 import com.github.exabrial.speakeasy.primitives.SecureRandomProvider;
 import com.github.exabrial.speakeasy.primitives.Signer;
+import com.github.exabrial.speakeasy.primitives.StringEncoder;
 
 public class ECDSASigner implements Signer {
 	private final SpeakEasyEccPrivateKey privateKey;

@@ -15,19 +15,22 @@
  */
 package com.github.exabrial.speakeasy.primitives;
 
+import java.nio.charset.StandardCharsets;
+
 /**
- * A Verifier will check that a signature was produced by a corresponding
- * Signer.
+ * Transforms a byte[] to a textual representation, and vice versa. All strings
+ * are assumed to be UTF-8.
  */
-public interface Verifier {
-  /**
-   * Checks whether or not a signature was produced by a corresponding signer.
-   * TODO: Set the log level to trace to see stack traces when errors occur.
-   * 
-   * @param message plaintext
-   * @param signature provided signature to verify
-   * @return returns true if the signature matches, or false if the signature is
-   *         invalid, or false if an error occurs.
-   */
-  boolean verifyMessageSignature(String message, String signature);
+public interface StringEncoder {
+  String encodeBytesAsString(byte[] message);
+
+  byte[] decodeStringToBytes(String message);
+
+  default byte[] getStringAsBytes(final String message) {
+    return message.getBytes(StandardCharsets.UTF_8);
+  }
+
+  default String stringFromBytes(final byte[] message) {
+    return new String(message, StandardCharsets.UTF_8);
+  }
 }

@@ -3,8 +3,50 @@ Speakeasy - Plain Simple Cryptography that makes it hard to do the wrong thing
 
 ## Preamble
 
-* The JCE gives you a lot of primitives, but not a lot of direction
+* Most cryptographic bugs in Java code are not from the JCE, but because outdated, bad, or malevolent advice in Stack Exchange or GitHub Gists.
+* The JCE gives you a lot of primitives, but not a lot of direction.
+* This library is not "implementing your own crypto", but "using the crypto you already have correctly".
 * Basically, just read this: https://www.nccgroup.trust/us/about-us/newsroom-and-events/blog/2009/july/if-youre-typing-the-letters-a-e-s-into-your-code-youre-doing-it-wrong/
+
+## Quick Examples
+
+How to hash something with Speakeasy:
+
+```
+public class MyThing {
+	// Wahoo no stupid checked exceptions!
+	private final Fingerprinter fingerprinter = new SHA256Fingerprinter();
+
+	public String doSomeMagic(String testVetor) {
+		// Even better, I'm Thread safe!
+		String fingerprint = fingerprinter.fingerprint(testVetor);
+		....
+	}
+}
+```
+
+How to encrypt something with Speakeasy:
+
+```
+public class MyThing {
+	private final SymmetricKeyUtils utils = new SymmetricKeyUtils();
+	// Properly and Securely generate a key 
+	private final SymmetricKey sharedKey = utils.generateSecureSymmetricKey();
+	// Wahoo no stupid checked exceptions!
+	private final Encrypter encrypter = new AESGCMEncrypter(sharedKey);
+
+	public String doSomeMagic(String plainText) {
+		final String cipherText = encrypter.encrypt(plainText);
+		...
+	}
+	
+	public String saveKey() {
+		// Me save dis for later
+		return utils.toString(sharedKey);
+	}
+}
+```
+
 
 ## Goals
 
@@ -16,13 +58,21 @@ Speakeasy - Plain Simple Cryptography that makes it hard to do the wrong thing
 * Be opinionated about key sizes for the user
 * Make it easy to the right thing, difficult to the wrong thing
 * Get rid of the checked exception mess in the JCE
+* Use the type system to check for bugs the JCE does not allow you to do
 
 ## Not Goals
 
-* Invent own crypto
+* Invent or implement own crypto. That sort of fun will be in another project
 * Support MD5, SHA1, RSA < 2048, Non-NIST Elliptic Curves, but maybe Ed25519s
-* Implement algorithms... for now
 * < JDK 1.8 support (Using a dated JDK and concerned about security, really?)
+* Side channel attacks. Hire a crypto expert instead
+
+## Currently Supported Algs
+
+* ECDSA
+* SHA256, SHA384, SHA512
+* AES128
+* HMAC-SHA256
 
 ## Compatibility
 
@@ -46,9 +96,6 @@ ALL files in this project are licensed. See [LICENSE.md](LICENSE.md)
 
 Yay! See [CONTRIBUTING.md](CONTRIBUTING.md)
 
-## Examples
-
-See [examples.md](examples.md) or peruse the unit tests
 
 ## Building
 
@@ -64,6 +111,8 @@ Currently, Speakeasy targets JDK 1.8. You will need a `~/.m2/toolchains.xml` fil
 
 ## TODO List
 * RSA: 2048, 3072, 4096
+
+If these can be found in a JCE, I'll include them, otherwise I'll probably start a seperate JCE project where we IMPLEMENT CRYPTO lol:
 * SHA3: 256, 384, 512
 * Argon, Scrypt, Bcrypt
 * EdDSA signatures

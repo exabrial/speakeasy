@@ -15,9 +15,9 @@
 
 package com.github.exabrial.speakeasy.symmetric;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class SymmetricKeyUtilsTest {
 	private final SymmetricKeyUtils symmetricKeyUtils = new SymmetricKeyUtils();
@@ -28,7 +28,6 @@ public class SymmetricKeyUtilsTest {
 		SymmetricKey symmetricKey = symmetricKeyUtils.fromString(encodedKeyString);
 		String keyString = symmetricKeyUtils.toString(symmetricKey);
 		assertEquals(encodedKeyString, keyString);
-
 	}
 
 	@Test

@@ -8,6 +8,10 @@ Speakeasy - Plain Simple Cryptography that makes it hard to do the wrong thing
 * This library is not "implementing your own crypto", but "using the crypto you already have correctly".
 * Basically, just read this: https://www.nccgroup.trust/us/about-us/newsroom-and-events/blog/2009/july/if-youre-typing-the-letters-a-e-s-into-your-code-youre-doing-it-wrong/
 
+## How To Use
+
+Start in the `com.github.exabrial.speakeasy.primitives` package and look at the interfaces. Every cryptographic primitive is represented by a Java interface. 
+
 ## Quick Examples
 
 How to hash something with Speakeasy:
@@ -17,9 +21,9 @@ public class MyThing {
 	// Wahoo no stupid checked exceptions!
 	private final Fingerprinter fingerprinter = new SHA256Fingerprinter();
 
-	public String doSomeMagic(String testVetor) {
+	public String doSomeMagic(String testVector) {
 		// Even better, I'm Thread safe!
-		String fingerprint = fingerprinter.fingerprint(testVetor);
+		String fingerprint = fingerprinter.fingerprint(testVector);
 		....
 	}
 }
@@ -71,6 +75,7 @@ public class MyThing {
 
 * ECDSA
 * SHA256, SHA384, SHA512
+* Blake2b-256, 384, 512 (both keyed/non-keyed)
 * AES128
 * HMAC-SHA256
 
@@ -95,6 +100,11 @@ ALL files in this project are licensed. See [LICENSE.md](LICENSE.md)
 ## Contributing
 
 Yay! See [CONTRIBUTING.md](CONTRIBUTING.md)
+
+
+## Downloading
+
+This artifact isn't in central yet. :( Working on it.
 
 
 ## Building

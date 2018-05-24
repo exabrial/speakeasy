@@ -14,34 +14,44 @@
  * the License.
  */
 
-package com.github.exabrial.speakeasy.nonkeyed;
+package com.github.exabrial.speakeasy.oneway;
 
-import static com.github.exabrial.speakeasy.internal.SpeakEasyConstants.SHA384;
+import static com.github.exabrial.speakeasy.internal.SpeakEasyConstants.BC_PROVIDER;
+import static com.github.exabrial.speakeasy.internal.SpeakEasyConstants.BLAKE2B_512;
+
+import java.security.Provider;
 
 import com.github.exabrial.speakeasy.encoding.Base64StringEncoder;
 import com.github.exabrial.speakeasy.primitives.StringEncoder;
 
 /**
- * SHA-384 implementation of Fingerprinter.
+ * Blake2b is _the fastest_ cryptographic hash algorithm available, it's much
+ * faster than md5 and sha1, but offers none of the security problems. This
+ * implementation uses a "self-keying" construction.
  */
-public class SHA384Fingerprinter extends FingerprinterBase {
+public class Blake2b512Fingerprinter extends FingerprinterBase {
 	private final StringEncoder stringEncoder;
 
-	public SHA384Fingerprinter() {
+	public Blake2b512Fingerprinter() {
 		this.stringEncoder = Base64StringEncoder.getSingleton();
 	}
 
-	public SHA384Fingerprinter(final StringEncoder stringEncoder) {
+	public Blake2b512Fingerprinter(final StringEncoder stringEncoder) {
 		this.stringEncoder = stringEncoder;
 	}
 
 	@Override
 	String getAlg() {
-		return SHA384;
+		return BLAKE2B_512;
 	}
 
 	@Override
 	StringEncoder getStringEncoder() {
 		return stringEncoder;
+	}
+
+	@Override
+	Provider getProvider() {
+		return BC_PROVIDER;
 	}
 }

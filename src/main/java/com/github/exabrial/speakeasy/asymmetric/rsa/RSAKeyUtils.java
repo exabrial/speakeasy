@@ -1,12 +1,12 @@
 /**
  * Copyright [2018] [Jonathan S. Fisher]
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
@@ -14,18 +14,16 @@
  * the License.
  */
 
-package com.github.exabrial.speakeasy.asymmetric.ecc;
+package com.github.exabrial.speakeasy.asymmetric.rsa;
 
 import static com.github.exabrial.speakeasy.internal.SpeakEasyConstants.EC;
 import static com.github.exabrial.speakeasy.internal.SpeakEasyConstants.EC_CURVE_NAME;
-import static com.github.exabrial.speakeasy.internal.SpeakEasyConstants.SUN_EC;
 
 import java.security.InvalidAlgorithmParameterException;
 import java.security.KeyFactory;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.NoSuchAlgorithmException;
-import java.security.NoSuchProviderException;
 import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.security.spec.ECGenParameterSpec;
@@ -41,84 +39,84 @@ import com.github.exabrial.speakeasy.primitives.SecureRandomProvider;
 import com.github.exabrial.speakeasy.primitives.StringEncoder;
 
 /**
- * Utility class for managing ECC keys. @see
+ * Utility class for managing RSA keys. @see
  * com.github.exabrial.speakeasy.symmetric.SymmetricKeyUtils.generateSecureSymmetricKey()
- * for some notes on secure generation. Keep in mind, creating ECC keys with a
+ * for some notes on secure generation. Keep in mind, creating RSA keys with a
  * weak random generator can totally compromisre the security of the system,
  * even allowing the private key to be divulged.
  */
-public class ECCKeyUtils implements AsymmetricKeyUtils<SpeakEasyEccPublicKey, SpeakEasyEccPrivateKey, SpeakEasyEccKeyPair> {
+public class RSAKeyUtils implements AsymmetricKeyUtils<SpeakEasyRSAPublicKey, SpeakEasyRSAPrivateKey, SpeakEasyRSAKeyPair> {
 	private final StringEncoder stringEncoder;
 	private final SecureRandomProvider secureRandomProvider;
 
-	public ECCKeyUtils() {
+	public RSAKeyUtils() {
 		this.stringEncoder = Base64StringEncoder.getSingleton();
 		this.secureRandomProvider = NativeThreadLocalSecureRandomProvider.getSingleton();
 	}
 
-	public ECCKeyUtils(final StringEncoder stringEncoder, final SecureRandomProvider secureRandomProvider) {
+	public RSAKeyUtils(final StringEncoder stringEncoder, final SecureRandomProvider secureRandomProvider) {
 		this.stringEncoder = stringEncoder;
 		this.secureRandomProvider = secureRandomProvider;
 	}
 
 	@Override
-	public SpeakEasyEccKeyPair createKeyPair() {
+	public SpeakEasyRSAKeyPair createKeyPair() {
 		try {
-			final KeyPairGenerator keyGen = KeyPairGenerator.getInstance(EC, SUN_EC);
+			final KeyPairGenerator keyGen = KeyPairGenerator.getInstance(EC);
 			final ECGenParameterSpec ecSpec = new ECGenParameterSpec(EC_CURVE_NAME);
 			keyGen.initialize(ecSpec, secureRandomProvider.borrowSecureRandom());
 			final KeyPair jceKeyPair = keyGen.generateKeyPair();
-			final SpeakEasyEccKeyPair keyPair = new SpeakEasyEccKeyPair(jceKeyPair);
+			final SpeakEasyRSAKeyPair keyPair = new SpeakEasyRSAKeyPair(jceKeyPair);
 			return keyPair;
-		} catch (NoSuchAlgorithmException | InvalidAlgorithmParameterException | NoSuchProviderException e) {
+		} catch (NoSuchAlgorithmException | InvalidAlgorithmParameterException e) {
 			throw new RuntimeException(e);
 		}
 	}
 
 	@Override
-	public SpeakEasyEccPublicKey readPublicKey(final String encodedKeyText) {
+	public SpeakEasyRSAPublicKey readPublicKey(final String encodedKeyText) {
 		try {
 			final byte[] encodedKeyBytes = stringEncoder.decodeStringToBytes(encodedKeyText);
 			final X509EncodedKeySpec keySpec = new X509EncodedKeySpec(encodedKeyBytes);
-			final KeyFactory keyFactory = KeyFactory.getInstance(EC, SUN_EC);
+			final KeyFactory keyFactory = KeyFactory.getInstance(EC);
 			final PublicKey publicKey = keyFactory.generatePublic(keySpec);
-			return new SpeakEasyEccPublicKey(publicKey);
-		} catch (NoSuchAlgorithmException | InvalidKeySpecException | NoSuchProviderException e) {
+			return new SpeakEasyRSAPublicKey(publicKey);
+		} catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
 			throw new RuntimeException(e);
 		}
 	}
 
 	@Override
-	public SpeakEasyEccPrivateKey readPrivateKey(final String encodedKeyText) {
+	public SpeakEasyRSAPrivateKey readPrivateKey(final String encodedKeyText) {
 		try {
 			final byte[] encodedKeyBytes = stringEncoder.decodeStringToBytes(encodedKeyText);
 			final PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(encodedKeyBytes);
-			final KeyFactory keyFactory = KeyFactory.getInstance(EC, SUN_EC);
+			final KeyFactory keyFactory = KeyFactory.getInstance(EC);
 			final PrivateKey privateKey = keyFactory.generatePrivate(keySpec);
-			return new SpeakEasyEccPrivateKey(privateKey);
-		} catch (InvalidKeySpecException | NoSuchAlgorithmException | NoSuchProviderException e) {
+			return new SpeakEasyRSAPrivateKey(privateKey);
+		} catch (InvalidKeySpecException | NoSuchAlgorithmException e) {
 			throw new RuntimeException(e);
 		}
 	}
 
 	@Override
-	public String toString(final SpeakEasyEccPublicKey speakEasyPublicKey) {
+	public String toString(final SpeakEasyRSAPublicKey speakEasyPublicKey) {
 		try {
-			final KeyFactory keyFactory = KeyFactory.getInstance(EC, SUN_EC);
+			final KeyFactory keyFactory = KeyFactory.getInstance(EC);
 			final EncodedKeySpec spec = keyFactory.getKeySpec(speakEasyPublicKey.toKey(), X509EncodedKeySpec.class);
 			return stringEncoder.encodeBytesAsString(spec.getEncoded());
-		} catch (NoSuchAlgorithmException | InvalidKeySpecException | NoSuchProviderException e) {
+		} catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
 			throw new RuntimeException(e);
 		}
 	}
 
 	@Override
-	public String toString(final SpeakEasyEccPrivateKey speakEasyPrivateKey) {
+	public String toString(final SpeakEasyRSAPrivateKey speakEasyPrivateKey) {
 		try {
-			final KeyFactory keyFactory = KeyFactory.getInstance(EC, SUN_EC);
+			final KeyFactory keyFactory = KeyFactory.getInstance(EC);
 			final EncodedKeySpec spec = keyFactory.getKeySpec(speakEasyPrivateKey.toKey(), PKCS8EncodedKeySpec.class);
 			return stringEncoder.encodeBytesAsString(spec.getEncoded());
-		} catch (NoSuchAlgorithmException | InvalidKeySpecException | NoSuchProviderException e) {
+		} catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
 			throw new RuntimeException(e);
 		}
 	}

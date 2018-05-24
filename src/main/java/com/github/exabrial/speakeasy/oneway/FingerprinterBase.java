@@ -14,20 +14,33 @@
  * the License.
  */
 
-package com.github.exabrial.speakeasy.nonkeyed;
+package com.github.exabrial.speakeasy.oneway;
+
+import static com.github.exabrial.speakeasy.internal.SpeakEasyConstants.SUN;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.Arrays;
+import java.security.NoSuchProviderException;
+import java.security.Provider;
+import java.security.Security;
 
+import com.github.exabrial.speakeasy.comporator.BasicMessageComporator;
 import com.github.exabrial.speakeasy.primitives.Fingerprinter;
+import com.github.exabrial.speakeasy.primitives.MessageComporator;
 import com.github.exabrial.speakeasy.primitives.StringEncoder;
 
 abstract class FingerprinterBase implements Fingerprinter {
-
 	abstract String getAlg();
 
 	abstract StringEncoder getStringEncoder();
+
+	MessageComporator getMessageComporator() {
+		return BasicMessageComporator.getSingleton();
+	}
+
+	Provider getProvider() {
+		return Security.getProvider(SUN);
+	}
 
 	@Override
 	public String fingerprint(final String message) {
@@ -35,7 +48,7 @@ abstract class FingerprinterBase implements Fingerprinter {
 			final byte[] fingerprintBytes = digest(message);
 			final String fingerprint = getStringEncoder().encodeBytesAsString(fingerprintBytes);
 			return fingerprint;
-		} catch (final NoSuchAlgorithmException e) {
+		} catch (final NoSuchAlgorithmException | NoSuchProviderException e) {
 			throw new RuntimeException(e);
 		}
 	}
@@ -45,19 +58,18 @@ abstract class FingerprinterBase implements Fingerprinter {
 		try {
 			final byte[] calculatedFingerprintBytes = digest(message);
 			final byte[] presentedFingerprintBytes = getStringEncoder().decodeStringToBytes(fingerprint);
-			// TODO give option for constant time comparator
-			final boolean equals = Arrays.equals(calculatedFingerprintBytes, presentedFingerprintBytes);
+			final boolean equals = getMessageComporator().compare(calculatedFingerprintBytes, presentedFingerprintBytes);
 			return equals;
 		} catch (final NullPointerException | ArrayIndexOutOfBoundsException e) {
 			return false;
-		} catch (final NoSuchAlgorithmException e) {
+		} catch (final NoSuchAlgorithmException | NoSuchProviderException e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	private byte[] digest(final String message) throws NoSuchAlgorithmException {
+	private byte[] digest(final String message) throws NoSuchAlgorithmException, NoSuchProviderException {
 		final byte[] messageBytes = getStringEncoder().getStringAsBytes(message);
-		final MessageDigest digest = MessageDigest.getInstance(getAlg());
+		final MessageDigest digest = MessageDigest.getInstance(getAlg(), getProvider());
 		final byte[] fingerprintBytes = digest.digest(messageBytes);
 		return fingerprintBytes;
 	}

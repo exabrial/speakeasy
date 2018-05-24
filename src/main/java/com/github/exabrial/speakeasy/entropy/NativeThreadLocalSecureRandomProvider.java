@@ -16,6 +16,8 @@
 
 package com.github.exabrial.speakeasy.entropy;
 
+import static com.github.exabrial.speakeasy.internal.SpeakEasyConstants.SUN;
+
 import java.lang.ref.WeakReference;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
@@ -39,7 +41,6 @@ import com.github.exabrial.speakeasy.primitives.SecureRandomProvider;
  */
 public class NativeThreadLocalSecureRandomProvider implements SecureRandomProvider {
 	private static final String NATIVE_PRNG = "NativePRNG";
-	private static final String SUN = "SUN";
 	private static final ThreadLocal<WeakReference<SecureRandom>> threadLocal = new ThreadLocal<>();
 
 	public static NativeThreadLocalSecureRandomProvider getSingleton() {

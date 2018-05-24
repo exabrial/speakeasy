@@ -14,26 +14,29 @@
  * the License.
  */
 
-package com.github.exabrial.speakeasy.asymmetric;
+package com.github.exabrial.speakeasy.oneway;
+
+import static com.github.exabrial.speakeasy.internal.SpeakEasyConstants.SHA256;
+
+import com.github.exabrial.speakeasy.primitives.StringEncoder;
 
 /**
- * Parent interface for working with asymmetric keys.
- * 
- * @param <Pub>
- *          public key type
- * @param <Priv>
- *          private key type
- * @param <Pair>
- *          key pair type
+ * SHA-256 implementation of Fingerprinter.
  */
-public interface AsymmetricKeyUtils<Pub extends SpeakEasyPublicKey, Priv extends SpeakEasyPrivateKey, Pair extends SpeakEasyKeyPair> {
-	Pair createKeyPair();
+public class SHA256Fingerprinter extends FingerprinterBase {
+	private final StringEncoder stringEncoder;
 
-	Pub readPublicKey(String encodedKeyText);
+	public SHA256Fingerprinter(final StringEncoder stringEncoder) {
+		this.stringEncoder = stringEncoder;
+	}
 
-	Priv readPrivateKey(String encodedKeyText);
+	@Override
+	String getAlg() {
+		return SHA256;
+	}
 
-	String toString(Pub speakEasyPublicKey);
-
-	String toString(Priv speakEasyPrivateKey);
+	@Override
+	StringEncoder getStringEncoder() {
+		return stringEncoder;
+	}
 }

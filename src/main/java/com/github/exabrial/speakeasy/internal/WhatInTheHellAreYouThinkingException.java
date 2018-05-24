@@ -14,26 +14,12 @@
  * the License.
  */
 
-package com.github.exabrial.speakeasy.asymmetric;
+package com.github.exabrial.speakeasy.internal;
 
-/**
- * Parent interface for working with asymmetric keys.
- * 
- * @param <Pub>
- *          public key type
- * @param <Priv>
- *          private key type
- * @param <Pair>
- *          key pair type
- */
-public interface AsymmetricKeyUtils<Pub extends SpeakEasyPublicKey, Priv extends SpeakEasyPrivateKey, Pair extends SpeakEasyKeyPair> {
-	Pair createKeyPair();
+public class WhatInTheHellAreYouThinkingException extends RuntimeException {
+	private static final long serialVersionUID = 1L;
 
-	Pub readPublicKey(String encodedKeyText);
-
-	Priv readPrivateKey(String encodedKeyText);
-
-	String toString(Pub speakEasyPublicKey);
-
-	String toString(Priv speakEasyPrivateKey);
+	public WhatInTheHellAreYouThinkingException(String message) {
+		super(message);
+	}
 }

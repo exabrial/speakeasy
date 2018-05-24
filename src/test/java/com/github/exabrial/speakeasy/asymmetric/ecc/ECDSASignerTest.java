@@ -16,10 +16,10 @@
 
 package com.github.exabrial.speakeasy.asymmetric.ecc;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class ECDSASignerTest {
 	private final String message = "I was asked to name all the presidents. I thought they already had names.";

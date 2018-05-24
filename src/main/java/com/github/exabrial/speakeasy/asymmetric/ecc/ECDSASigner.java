@@ -17,9 +17,11 @@
 package com.github.exabrial.speakeasy.asymmetric.ecc;
 
 import static com.github.exabrial.speakeasy.internal.SpeakEasyConstants.EC_SIG_ALG;
+import static com.github.exabrial.speakeasy.internal.SpeakEasyConstants.SUN_EC;
 
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+import java.security.NoSuchProviderException;
 import java.security.SecureRandom;
 import java.security.Signature;
 import java.security.SignatureException;
@@ -58,13 +60,13 @@ public class ECDSASigner implements Signer {
 	public String signMessage(final String message) {
 		try {
 			final byte[] messageBytes = stringEncoder.getStringAsBytes(message);
-			final Signature signature = Signature.getInstance(EC_SIG_ALG);
+			final Signature signature = Signature.getInstance(EC_SIG_ALG, SUN_EC);
 			final SecureRandom secureRandom = secureRandomProvider.borrowSecureRandom();
 			signature.initSign(privateKey.toKey(), secureRandom);
 			signature.update(messageBytes);
 			final byte[] signatureBytes = signature.sign();
 			return stringEncoder.encodeBytesAsString(signatureBytes);
-		} catch (InvalidKeyException | NoSuchAlgorithmException | SignatureException e) {
+		} catch (InvalidKeyException | NoSuchAlgorithmException | SignatureException | NoSuchProviderException e) {
 			throw new RuntimeException(e);
 		}
 	}

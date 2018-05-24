@@ -14,26 +14,19 @@
  * the License.
  */
 
-package com.github.exabrial.speakeasy.asymmetric;
+package com.github.exabrial.testing;
 
-/**
- * Parent interface for working with asymmetric keys.
- * 
- * @param <Pub>
- *          public key type
- * @param <Priv>
- *          private key type
- * @param <Pair>
- *          key pair type
- */
-public interface AsymmetricKeyUtils<Pub extends SpeakEasyPublicKey, Priv extends SpeakEasyPrivateKey, Pair extends SpeakEasyKeyPair> {
-	Pair createKeyPair();
+import com.github.exabrial.speakeasy.encoding.HexStringEncoder;
+import com.github.exabrial.speakeasy.primitives.StringEncoder;
 
-	Pub readPublicKey(String encodedKeyText);
+public class StringBytesEncoder implements StringEncoder {
+	@Override
+	public String encodeBytesAsString(byte[] message) {
+		return HexStringEncoder.getSingleton().encodeBytesAsString(message);
+	}
 
-	Priv readPrivateKey(String encodedKeyText);
-
-	String toString(Pub speakEasyPublicKey);
-
-	String toString(Priv speakEasyPrivateKey);
+	@Override
+	public byte[] decodeStringToBytes(String message) {
+		return message.getBytes();
+	}
 }

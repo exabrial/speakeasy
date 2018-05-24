@@ -14,7 +14,7 @@
  * the License.
  */
 
-package com.github.exabrial.speakeasy.symmetric.hmacsha2;
+package com.github.exabrial.speakeasy.oneway.keyed;
 
 import static com.github.exabrial.speakeasy.internal.SpeakEasyConstants.HMAC_SHA256;
 
@@ -24,8 +24,8 @@ import java.security.NoSuchAlgorithmException;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 
+import com.github.exabrial.speakeasy.comporator.SecureMessageComporator;
 import com.github.exabrial.speakeasy.encoding.Base64StringEncoder;
-import com.github.exabrial.speakeasy.misc.ConstantTimeMessageComporator;
 import com.github.exabrial.speakeasy.primitives.Fingerprinter;
 import com.github.exabrial.speakeasy.primitives.MessageComporator;
 import com.github.exabrial.speakeasy.primitives.StringEncoder;
@@ -35,24 +35,24 @@ import com.github.exabrial.speakeasy.symmetric.SymmetricKey;
  * HMAC takes a standard hash algorithm (Fingerprint) and makes it require a
  * symmetric key in order to produce hashes.
  */
-public class HMACSHA256SignerVerifier implements Fingerprinter {
+public class HMACSHA256Fingerprinter implements Fingerprinter {
 	private final SymmetricKey symmetricKey;
 	private final StringEncoder stringEncoder;
 	private final MessageComporator messageComporator;
 
-	public HMACSHA256SignerVerifier(final SymmetricKey symmetricKey) {
+	public HMACSHA256Fingerprinter(final SymmetricKey symmetricKey) {
 		this.symmetricKey = symmetricKey;
 		this.stringEncoder = Base64StringEncoder.getSingleton();
-		this.messageComporator = ConstantTimeMessageComporator.getSingleton();
+		this.messageComporator = SecureMessageComporator.getSingleton();
 	}
 
-	public HMACSHA256SignerVerifier(final SymmetricKey symmetricKey, final StringEncoder stringEncoder) {
+	public HMACSHA256Fingerprinter(final SymmetricKey symmetricKey, final StringEncoder stringEncoder) {
 		this.symmetricKey = symmetricKey;
 		this.stringEncoder = stringEncoder;
-		this.messageComporator = ConstantTimeMessageComporator.getSingleton();
+		this.messageComporator = SecureMessageComporator.getSingleton();
 	}
 
-	public HMACSHA256SignerVerifier(final SymmetricKey symmetricKey, final StringEncoder stringEncoder,
+	public HMACSHA256Fingerprinter(final SymmetricKey symmetricKey, final StringEncoder stringEncoder,
 			final MessageComporator messageComporator) {
 		this.symmetricKey = symmetricKey;
 		this.stringEncoder = stringEncoder;
@@ -82,10 +82,12 @@ public class HMACSHA256SignerVerifier implements Fingerprinter {
 			final SecretKeySpec secret_key = new SecretKeySpec(symmetricKey.toKey().getEncoded(), HMAC_SHA256);
 			hmac.init(secret_key);
 			final byte[] cSignatureBytes = hmac.doFinal(messageBytes);
-			final String cSignature = stringEncoder.encodeBytesAsString(cSignatureBytes);
-			return messageComporator.compare(cSignature, signature);
+			final byte[] pSignatureBytes = stringEncoder.decodeStringToBytes(signature);
+			return messageComporator.compare(cSignatureBytes, pSignatureBytes);
 		} catch (final InvalidKeyException | NoSuchAlgorithmException e) {
 			throw new RuntimeException(e);
+		} catch (final IllegalArgumentException e) {
+			return false;
 		}
 	}
 }

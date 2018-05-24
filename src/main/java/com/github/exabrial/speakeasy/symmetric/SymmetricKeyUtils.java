@@ -18,8 +18,10 @@ package com.github.exabrial.speakeasy.symmetric;
 
 import static com.github.exabrial.speakeasy.internal.SpeakEasyConstants.AES;
 import static com.github.exabrial.speakeasy.internal.SpeakEasyConstants.AES_KEY_SIZE;
+import static com.github.exabrial.speakeasy.internal.SpeakEasyConstants.SUN_JCE;
 
 import java.security.NoSuchAlgorithmException;
+import java.security.NoSuchProviderException;
 
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
@@ -84,11 +86,11 @@ public class SymmetricKeyUtils {
 	 */
 	public SymmetricKey generateSecureSymmetricKey() {
 		try {
-			final KeyGenerator keyGen = KeyGenerator.getInstance(AES);
+			final KeyGenerator keyGen = KeyGenerator.getInstance(AES, SUN_JCE);
 			keyGen.init(AES_KEY_SIZE, secureRandomProvider.borrowSecureRandom());
 			final SecretKey secretKey = keyGen.generateKey();
 			return new SymmetricKey(secretKey);
-		} catch (final NoSuchAlgorithmException e) {
+		} catch (final NoSuchAlgorithmException | NoSuchProviderException e) {
 			throw new RuntimeException(e);
 		}
 	}

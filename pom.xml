@@ -15,6 +15,10 @@
 	<description>Plain Simple Cryptography that makes it hard to do the wrong thing</description>
 	<name>speakeasy</name>
 	<url>https://github.com/exabrial/speakeasy</url>
+	<scm>
+		<connection>ssh://git@github.com:exabrial/speakeasy.git</connection>
+		<developerConnection>ssh://git@github.com:exabrial/speakeasy.git</developerConnection>
+	</scm>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
@@ -27,11 +31,35 @@
 	</licenses>
 	<dependencies>
 		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.12</version>
-			<scope>test</scope>
+			<groupId>org.bouncycastle</groupId>
+			<artifactId>bcprov-jdk15on</artifactId>
+			<version>1.59</version>
+			<scope>compile</scope>
 		</dependency>
+<!-- 		<dependency> -->
+<!-- 			<groupId>com.github.stefanbirkner</groupId> -->
+<!-- 			<artifactId>system-rules</artifactId> -->
+<!-- 			<version>1.17.2</version> -->
+<!-- 			<scope>test</scope> -->
+<!-- 		</dependency> -->
+<!-- 		<dependency> -->
+<!-- 			<groupId>org.junit.jupiter</groupId> -->
+<!-- 			<artifactId>junit-jupiter-api</artifactId> -->
+<!-- 			<version>5.2.0</version> -->
+<!-- 			<scope>test</scope> -->
+<!-- 		</dependency> -->
+<!-- 		<dependency> -->
+<!-- 			<groupId>org.junit.jupiter</groupId> -->
+<!-- 			<artifactId>junit-jupiter-engine</artifactId> -->
+<!-- 			<version>5.2.0</version> -->
+<!-- 			<scope>test</scope> -->
+<!-- 		</dependency> -->
+<!-- 		<dependency> -->
+<!-- 			<groupId>org.junit.platform</groupId> -->
+<!-- 			<artifactId>junit-platform-launcher</artifactId> -->
+<!-- 			<version>1.2.0</version> -->
+<!-- 			<scope>test</scope> -->
+<!-- 		</dependency> -->
 	</dependencies>
 	<build>
 		<plugins>
@@ -40,8 +68,8 @@
 				<artifactId>maven-surefire-plugin</artifactId>
 				<configuration>
 					<argLine>${surefireArgLine}</argLine>
-					<parallel>all</parallel>
-					<threadCount>2</threadCount>
+					<parallel>none</parallel>
+					<disableXmlReport>true</disableXmlReport>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -104,6 +132,8 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<configuration>
+					<!-- Hilarious: https://issues.apache.org/jira/browse/MCOMPILER-209 -->
+					<useIncrementalCompilation>false</useIncrementalCompilation>
 					<source>1.8</source>
 					<target>1.8</target>
 				</configuration>
@@ -255,6 +285,47 @@
 					</execution>
 				</executions>
 			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-shade-plugin</artifactId>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>shade</goal>
+						</goals>
+						<configuration>
+							<minimizeJar>true</minimizeJar>
+							<filters>
+								<filter>
+									<artifact>org.bouncycastle:bcprov-jdk15on</artifact>
+									<excludes>
+										<exclude>META-INF/**</exclude>
+									</excludes>
+								</filter>
+							</filters>
+							<relocations>
+								<relocation>
+									<pattern>org.bouncycastle</pattern>
+									<shadedPattern>com.github.exabrial.speakeasy.shaded.org.bouncycastle</shadedPattern>
+								</relocation>
+							</relocations>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>download-sources</id>
+						<goals>
+							<goal>sources</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 		<pluginManagement>
 			<plugins>
@@ -272,6 +343,13 @@
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-surefire-plugin</artifactId>
 					<version>2.21.0</version>
+<!-- 					<dependencies> -->
+<!-- 						<dependency> -->
+<!-- 							<groupId>org.junit.platform</groupId> -->
+<!-- 							<artifactId>junit-platform-surefire-provider</artifactId> -->
+<!-- 							<version>1.2.0</version> -->
+<!-- 						</dependency> -->
+<!-- 					</dependencies> -->
 				</plugin>
 				<plugin>
 					<groupId>org.apache.rat</groupId>
@@ -379,6 +457,11 @@
 					<groupId>org.codehaus.mojo</groupId>
 					<artifactId>jdepend-maven-plugin</artifactId>
 					<version>2.0</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-shade-plugin</artifactId>
+					<version>3.1.1</version>
 				</plugin>
 			</plugins>
 		</pluginManagement>

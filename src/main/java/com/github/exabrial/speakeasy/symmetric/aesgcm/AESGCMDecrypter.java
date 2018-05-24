@@ -19,10 +19,12 @@ package com.github.exabrial.speakeasy.symmetric.aesgcm;
 import static com.github.exabrial.speakeasy.internal.SpeakEasyConstants.AES_GCM;
 import static com.github.exabrial.speakeasy.internal.SpeakEasyConstants.AES_GCM_TAG_LENGTH;
 import static com.github.exabrial.speakeasy.internal.SpeakEasyConstants.GCM_NONCE_LENGTH;
+import static com.github.exabrial.speakeasy.internal.SpeakEasyConstants.SUN_JCE;
 
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+import java.security.NoSuchProviderException;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
@@ -61,7 +63,7 @@ public class AESGCMDecrypter implements Decrypter {
 			final byte[] iv = new byte[GCM_NONCE_LENGTH];
 			System.arraycopy(messageBytes, 0, iv, 0, iv.length);
 			final GCMParameterSpec gcmSpec = new GCMParameterSpec(AES_GCM_TAG_LENGTH, iv);
-			final Cipher cipher = Cipher.getInstance(AES_GCM);
+			final Cipher cipher = Cipher.getInstance(AES_GCM, SUN_JCE);
 			cipher.init(Cipher.DECRYPT_MODE, sharedKey.toKey(), gcmSpec, null);
 			final byte[] cipherTextBytes = new byte[messageBytes.length - iv.length];
 			System.arraycopy(messageBytes, iv.length, cipherTextBytes, 0, cipherTextBytes.length);
@@ -69,7 +71,7 @@ public class AESGCMDecrypter implements Decrypter {
 			final String plainText = stringEncoder.stringFromBytes(plainTextBytes);
 			return plainText;
 		} catch (IllegalBlockSizeException | BadPaddingException | InvalidKeyException | InvalidAlgorithmParameterException
-				| NoSuchAlgorithmException | NoSuchPaddingException e) {
+				| NoSuchAlgorithmException | NoSuchPaddingException | NoSuchProviderException e) {
 			throw new RuntimeException(e);
 		}
 	}

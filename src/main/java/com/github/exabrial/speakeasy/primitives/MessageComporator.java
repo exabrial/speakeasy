@@ -32,5 +32,5 @@ public interface MessageComporator {
 	 * @return true if the fingerprints match, false if they do not, or false if an
 	 *         error occurs.
 	 */
-	boolean compare(String calculatedFingerprint, String presentedFingerprint);
+	boolean compare(byte[] calculatedFingerprint, byte[] presentedFingerprint);
 }

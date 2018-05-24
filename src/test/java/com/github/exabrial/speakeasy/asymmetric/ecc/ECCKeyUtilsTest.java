@@ -15,9 +15,9 @@
 
 package com.github.exabrial.speakeasy.asymmetric.ecc;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class ECCKeyUtilsTest {
 	private final ECCKeyUtils eccKeyUtils = new ECCKeyUtils();

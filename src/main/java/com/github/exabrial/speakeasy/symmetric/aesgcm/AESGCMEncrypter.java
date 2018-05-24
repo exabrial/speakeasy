@@ -20,10 +20,12 @@ import static com.github.exabrial.speakeasy.encoding.Base64StringEncoder.getSing
 import static com.github.exabrial.speakeasy.internal.SpeakEasyConstants.AES_GCM;
 import static com.github.exabrial.speakeasy.internal.SpeakEasyConstants.AES_GCM_TAG_LENGTH;
 import static com.github.exabrial.speakeasy.internal.SpeakEasyConstants.GCM_NONCE_LENGTH;
+import static com.github.exabrial.speakeasy.internal.SpeakEasyConstants.SUN_JCE;
 
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+import java.security.NoSuchProviderException;
 import java.security.SecureRandom;
 
 import javax.crypto.BadPaddingException;
@@ -44,6 +46,7 @@ import com.github.exabrial.speakeasy.symmetric.SymmetricKey;
  * IV and message before decryption, but when combined with the GCM cipher mode,
  * message authentication is included, making it simpler to "get correct".
  */
+@SuppressWarnings("PMD.TooManyStaticImports")
 public class AESGCMEncrypter implements Encrypter {
 	private final StringEncoder stringEncoder;
 	private final SymmetricKey sharedKey;
@@ -69,7 +72,7 @@ public class AESGCMEncrypter implements Encrypter {
 			final SecureRandom secureRandom = secureRandomProvider.borrowSecureRandom();
 			secureRandom.nextBytes(iv);
 			final GCMParameterSpec gcmSpec = new GCMParameterSpec(AES_GCM_TAG_LENGTH, iv);
-			final Cipher cipher = Cipher.getInstance(AES_GCM);
+			final Cipher cipher = Cipher.getInstance(AES_GCM, SUN_JCE);
 			cipher.init(Cipher.ENCRYPT_MODE, sharedKey.toKey(), gcmSpec, secureRandom);
 			final byte[] plainTextBytes = stringEncoder.getStringAsBytes(plainText);
 			final byte[] cipherTextBytes = cipher.doFinal(plainTextBytes);
@@ -79,7 +82,7 @@ public class AESGCMEncrypter implements Encrypter {
 			final String encodedmessage = stringEncoder.encodeBytesAsString(ivAndCipherText);
 			return encodedmessage;
 		} catch (IllegalBlockSizeException | BadPaddingException | InvalidKeyException | InvalidAlgorithmParameterException
-				| NoSuchAlgorithmException | NoSuchPaddingException e) {
+				| NoSuchAlgorithmException | NoSuchPaddingException | NoSuchProviderException e) {
 			throw new RuntimeException(e);
 		}
 	}

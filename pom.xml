@@ -50,7 +50,8 @@
 				<artifactId>maven-surefire-plugin</artifactId>
 				<configuration>
 					<argLine>${surefireArgLine}</argLine>
-					<parallel>none</parallel>
+					<parallel>all</parallel>
+					<threadCount>2</threadCount>
 				</configuration>
 			</plugin>
 			<plugin>

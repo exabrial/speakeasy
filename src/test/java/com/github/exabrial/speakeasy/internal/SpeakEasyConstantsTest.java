@@ -16,14 +16,23 @@
 
 package com.github.exabrial.speakeasy.internal;
 
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.function.Executable;
 
 public class SpeakEasyConstantsTest {
 
 	@Test
 	void testAddSunEc() {
-		fail("Not yet implemented");
+		SpeakEasyConstants.sunEc("1.8.0_260");
+	}
+
+	@Test
+	void testAddSunEc_oldJdk8() {
+		final Executable executable = () -> {
+			SpeakEasyConstants.sunEc("1.8.0_48");
+		};
+		assertThrows(WhatInTheHellAreYouThinkingException.class, executable);
 	}
 }

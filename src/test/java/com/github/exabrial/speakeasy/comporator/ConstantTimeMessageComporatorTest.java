@@ -13,15 +13,14 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-
 package com.github.exabrial.speakeasy.comporator;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import org.junit.Test;
-
-import com.github.exabrial.speakeasy.comporator.SecureMessageComporator;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.function.Executable;
 
 public class ConstantTimeMessageComporatorTest {
 	private final SecureMessageComporator comporator = SecureMessageComporator.getSingleton();
@@ -33,7 +32,9 @@ public class ConstantTimeMessageComporatorTest {
 
 	@Test
 	public void testCompare_false() {
-		assertFalse(comporator.compare("calculatedFingerprint".getBytes(), "NotcalculatedFingerprint".getBytes()));
+		byte[] bytes = "calculatedFingerprint".getBytes();
+		bytes[5] = 0;
+		assertFalse(comporator.compare("calculatedFingerprint".getBytes(), bytes));
 	}
 
 	@Test
@@ -41,13 +42,19 @@ public class ConstantTimeMessageComporatorTest {
 		assertFalse(comporator.compare("NotcalculatedFingerprint".getBytes(), "calculatedFingerprint".getBytes()));
 	}
 
-	@Test(expected = NullPointerException.class)
+	@Test
 	public void testCompare_null() {
-		comporator.compare(null, "calculatedFingerprint".getBytes());
+		Executable executable = () -> {
+			comporator.compare(null, "calculatedFingerprint".getBytes());
+		};
+		assertThrows(NullPointerException.class, executable);
 	}
 
-	@Test(expected = NullPointerException.class)
+	@Test
 	public void testCompare_null2() {
-		comporator.compare("NotcalculatedFingerprint".getBytes(), null);
+		Executable executable = () -> {
+			comporator.compare("NotcalculatedFingerprint".getBytes(), null);
+		};
+		assertThrows(NullPointerException.class, executable);
 	}
 }

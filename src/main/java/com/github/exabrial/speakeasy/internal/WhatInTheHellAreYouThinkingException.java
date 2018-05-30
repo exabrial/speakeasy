@@ -16,6 +16,9 @@
 
 package com.github.exabrial.speakeasy.internal;
 
+/**
+ * If you need an explanation, you need to hire an expert.
+ */
 public class WhatInTheHellAreYouThinkingException extends RuntimeException {
 	private static final long serialVersionUID = 1L;
 

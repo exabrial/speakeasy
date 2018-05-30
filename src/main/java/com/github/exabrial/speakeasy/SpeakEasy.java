@@ -21,5 +21,5 @@ package com.github.exabrial.speakeasy;
  * Spring bootstrapping. Will probably use for "getStrongestFingerPrint" and
  * "getStrongestPracticalFingerprint"
  */
-public class SpeakEasy {
+public final class SpeakEasy {
 }

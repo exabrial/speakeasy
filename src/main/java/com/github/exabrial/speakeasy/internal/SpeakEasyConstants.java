@@ -22,11 +22,16 @@ import java.util.regex.Pattern;
 
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 
+import com.github.exabrial.speakeasy.SpeakEasy;
+
 /**
  * Internal class used to configure key sizes and algs. Good for reference but
  * not really useful to the user.
  */
 public final class SpeakEasyConstants {
+	private static final String SUN_EC_STRING = "SunEC";
+	private static final int ACCEPTABLE_JDK8_MINOR = 162;
+	private static final Pattern JDK8_PATTERN = Pattern.compile("1\\.8\\.0_(\\d+).*");
 	public static final Provider BC_PROVIDER = createBCProvider();
 	public static final String SUN = "SUN";
 	public static final String SUN_JCE = "SunJCE";
@@ -53,16 +58,14 @@ public final class SpeakEasyConstants {
 	public static final String BLAKE2B_512 = "BLAKE2B-512";
 	public static final String SHA256_WITH_RSA = "SHA256withRSA";
 
-	private static final int ACCEPTABLE_JDK8_MINOR = 162;
-	private static final Pattern JDK8_PATTERN = Pattern.compile("1\\.8\\.0_(\\d+).*");
-
-	private static final Provider createBCProvider() {
+	static Provider createBCProvider() {
 		final BouncyCastleProvider provider = new BouncyCastleProvider();
 		return provider;
 	}
 
-	private static final String addSunEc() {
-		final String version = System.getProperty("java.version");
+	static String addSunEc() {
+		final String version = getJavaVersionSystemProperty();
+		// TODO less than JDK8?
 		final Matcher matcher = JDK8_PATTERN.matcher(version);
 		if (matcher.matches()) {
 			final String subversionText = matcher.group(1);
@@ -74,7 +77,11 @@ public final class SpeakEasyConstants {
 						+ " while you install a modern JDK.");
 			}
 		}
-		return "SunEC";
+		return SUN_EC_STRING;
+	}
+
+	public static String getJavaVersionSystemProperty() {
+		return System.getProperty("java.version");
 	}
 
 	private SpeakEasyConstants() {

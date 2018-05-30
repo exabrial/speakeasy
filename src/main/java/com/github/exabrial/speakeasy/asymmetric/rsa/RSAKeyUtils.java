@@ -41,9 +41,7 @@ import com.github.exabrial.speakeasy.primitives.StringEncoder;
 /**
  * Utility class for managing RSA keys. @see
  * com.github.exabrial.speakeasy.symmetric.SymmetricKeyUtils.generateSecureSymmetricKey()
- * for some notes on secure generation. Keep in mind, creating RSA keys with a
- * weak random generator can totally compromisre the security of the system,
- * even allowing the private key to be divulged.
+ * for some notes on secure generation.
  */
 public class RSAKeyUtils implements AsymmetricKeyUtils<SpeakEasyRSAPublicKey, SpeakEasyRSAPrivateKey, SpeakEasyRSAKeyPair> {
 	private final StringEncoder stringEncoder;

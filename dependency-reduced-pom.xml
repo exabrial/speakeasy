@@ -15,8 +15,8 @@
     </license>
   </licenses>
   <scm>
-    <connection>ssh://git@github.com:exabrial/speakeasy.git</connection>
-    <developerConnection>ssh://git@github.com:exabrial/speakeasy.git</developerConnection>
+    <connection>scm:git:ssh://git@github.com:exabrial/speakeasy.git</connection>
+    <developerConnection>scm:git:ssh://git@github.com:exabrial/speakeasy.git</developerConnection>
   </scm>
   <build>
     <pluginManagement>
@@ -36,6 +36,16 @@
             <dependency>
               <groupId>org.junit.platform</groupId>
               <artifactId>junit-platform-surefire-provider</artifactId>
+              <version>1.2.0</version>
+            </dependency>
+            <dependency>
+              <groupId>org.junit.jupiter</groupId>
+              <artifactId>junit-jupiter-engine</artifactId>
+              <version>5.2.0</version>
+            </dependency>
+            <dependency>
+              <groupId>org.junit.platform</groupId>
+              <artifactId>junit-platform-launcher</artifactId>
               <version>1.2.0</version>
             </dependency>
           </dependencies>
@@ -287,11 +297,11 @@
               <goal>check</goal>
               <goal>cpd-check</goal>
             </goals>
+            <configuration>
+              <printFailingErrors>true</printFailingErrors>
+            </configuration>
           </execution>
         </executions>
-        <configuration>
-          <printFailingErrors>true</printFailingErrors>
-        </configuration>
       </plugin>
       <plugin>
         <artifactId>maven-checkstyle-plugin</artifactId>
@@ -328,7 +338,7 @@
         <artifactId>checksum-maven-plugin</artifactId>
         <executions>
           <execution>
-            <id>checksum-verify</id>
+            <id>checksum-create</id>
             <goals>
               <goal>artifacts</goal>
             </goals>
@@ -345,7 +355,7 @@
         <artifactId>maven-gpg-plugin</artifactId>
         <executions>
           <execution>
-            <id>gpg-verify</id>
+            <id>gpg-sign</id>
             <goals>
               <goal>sign</goal>
             </goals>
@@ -385,31 +395,38 @@
         <executions>
           <execution>
             <id>download-sources</id>
+            <phase>generate-sources</phase>
             <goals>
               <goal>sources</goal>
             </goals>
+          </execution>
+          <execution>
+            <id>dependency-analyze</id>
+            <goals>
+              <goal>analyze-only</goal>
+            </goals>
+            <configuration>
+              <failOnWarning>true</failOnWarning>
+            </configuration>
           </execution>
         </executions>
       </plugin>
     </plugins>
   </build>
+  <profiles>
+    <profile>
+      <id>skipChecks</id>
+      <properties>
+        <cpd.skip>true</cpd.skip>
+        <spotbugs.skip>true</spotbugs.skip>
+        <rat.skip>true</rat.skip>
+        <mdep.analyze.skip>true</mdep.analyze.skip>
+        <pmd.skip>true</pmd.skip>
+        <checkstyle.skip>true</checkstyle.skip>
+      </properties>
+    </profile>
+  </profiles>
   <dependencies>
-    <dependency>
-      <groupId>com.github.stefanbirkner</groupId>
-      <artifactId>system-rules</artifactId>
-      <version>1.17.2</version>
-      <scope>test</scope>
-      <exclusions>
-        <exclusion>
-          <artifactId>junit</artifactId>
-          <groupId>junit</groupId>
-        </exclusion>
-        <exclusion>
-          <artifactId>junit-dep</artifactId>
-          <groupId>junit</groupId>
-        </exclusion>
-      </exclusions>
-    </dependency>
     <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter-api</artifactId>
@@ -427,38 +444,6 @@
         <exclusion>
           <artifactId>junit-platform-commons</artifactId>
           <groupId>org.junit.platform</groupId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-    <dependency>
-      <groupId>org.junit.jupiter</groupId>
-      <artifactId>junit-jupiter-engine</artifactId>
-      <version>5.2.0</version>
-      <scope>test</scope>
-      <exclusions>
-        <exclusion>
-          <artifactId>junit-platform-engine</artifactId>
-          <groupId>org.junit.platform</groupId>
-        </exclusion>
-        <exclusion>
-          <artifactId>apiguardian-api</artifactId>
-          <groupId>org.apiguardian</groupId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-    <dependency>
-      <groupId>org.junit.platform</groupId>
-      <artifactId>junit-platform-launcher</artifactId>
-      <version>1.2.0</version>
-      <scope>test</scope>
-      <exclusions>
-        <exclusion>
-          <artifactId>junit-platform-engine</artifactId>
-          <groupId>org.junit.platform</groupId>
-        </exclusion>
-        <exclusion>
-          <artifactId>apiguardian-api</artifactId>
-          <groupId>org.apiguardian</groupId>
         </exclusion>
       </exclusions>
     </dependency>

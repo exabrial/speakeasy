@@ -598,6 +598,7 @@
 				<pmd.skip>true</pmd.skip>
 				<spotbugs.skip>true</spotbugs.skip>
 				<mdep.analyze.skip>true</mdep.analyze.skip>
+				<jacoco.skip>true</jacoco.skip>
 			</properties>
 		</profile>
 		<profile>

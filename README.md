@@ -117,7 +117,7 @@ This artifact isn't in central yet. :( Working on it.
 
 Currently, Speakeasy targets JDK 1.8. You will need a `~/.m2/toolchains.xml` file that points to a JDK 8 installation. An example file is included in this project.
 
-`mvn install`
+After that, simply run: `mvn install`. In your IDE, you can enable the `eclipse` profile to bring in the Junit5 dependencies. You can skip all the checks by running `mvn install -P skipChecks` for prototype builds... obviously don't do that long term. Finally there is a site you can run to see HTML reports of the project: `mvn clean site`. After this is complete, open the `target/site/index.html` file.
 
 ## TODO List
 * RSA: 2048, 3072, 4096

@@ -29,7 +29,7 @@ public class BasicMessageComporator implements MessageComporator {
 	}
 
 	@Override
-	public boolean compare(byte[] calculatedFingerprint, byte[] presentedFingerprint) {
+	public boolean compare(final byte[] calculatedFingerprint, final byte[] presentedFingerprint) {
 		if (calculatedFingerprint != null && presentedFingerprint != null) {
 			return Arrays.equals(calculatedFingerprint, presentedFingerprint);
 		} else {

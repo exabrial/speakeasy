@@ -27,7 +27,7 @@ public interface SecureRandomProvider {
 	 * Borrow a secure random. Callers should not store references that exist beyond
 	 * their local context. Best practice is to ALWAYS call borrowSecureRandom() and
 	 * never ever ever assign it to a reference.
-	 * 
+	 *
 	 * @return a SecureRandom
 	 */
 	SecureRandom borrowSecureRandom();

@@ -27,22 +27,22 @@ public class ECCKeyUtilsTest {
 
 	@Test
 	public void testCreateKeyPair() {
-		SpeakEasyEccKeyPair createKeyPair = eccKeyUtils.createKeyPair();
+		final SpeakEasyEccKeyPair createKeyPair = eccKeyUtils.createKeyPair();
 		assertEquals("EC", createKeyPair.getPrivateKey().toKey().getAlgorithm());
 		assertEquals("EC", createKeyPair.getPublicKey().toKey().getAlgorithm());
 	}
 
 	@Test
 	public void testReadPublicKey_ToStringSpeakEasyEccPublicKey() {
-		SpeakEasyEccPublicKey readPublicKey = eccKeyUtils.readPublicKey(publicKeyString);
-		String toKeyString = eccKeyUtils.toString(readPublicKey);
+		final SpeakEasyEccPublicKey readPublicKey = eccKeyUtils.readPublicKey(publicKeyString);
+		final String toKeyString = eccKeyUtils.toString(readPublicKey);
 		assertEquals(publicKeyString, toKeyString);
 	}
 
 	@Test
 	public void testReadPrivateKey_ToStringSpeakEasyEccPrivateKey() {
-		SpeakEasyEccPrivateKey readPrivateKey = eccKeyUtils.readPrivateKey(privateKeyString);
-		String toKeyString = eccKeyUtils.toString(readPrivateKey);
+		final SpeakEasyEccPrivateKey readPrivateKey = eccKeyUtils.readPrivateKey(privateKeyString);
+		final String toKeyString = eccKeyUtils.toString(readPrivateKey);
 		assertEquals(privateKeyString, toKeyString);
 	}
 }

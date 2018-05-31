@@ -14,19 +14,19 @@
  * the License.
  */
 
-package com.github.exabrial.speakeasy;
+package com.github.exabrial.speakeasy.testing;
 
 import com.github.exabrial.speakeasy.encoding.HexStringEncoder;
 import com.github.exabrial.speakeasy.primitives.StringEncoder;
 
 public class StringBytesEncoder implements StringEncoder {
 	@Override
-	public String encodeBytesAsString(byte[] message) {
+	public String encodeBytesAsString(final byte[] message) {
 		return HexStringEncoder.getSingleton().encodeBytesAsString(message);
 	}
 
 	@Override
-	public byte[] decodeStringToBytes(String message) {
+	public byte[] decodeStringToBytes(final String message) {
 		return message.getBytes();
 	}
 }

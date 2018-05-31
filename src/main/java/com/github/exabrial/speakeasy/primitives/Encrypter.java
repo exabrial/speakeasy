@@ -22,7 +22,7 @@ package com.github.exabrial.speakeasy.primitives;
 public interface Encrypter {
 	/**
 	 * Encrypts plainText into a ciphertext message.
-	 * 
+	 *
 	 * @param plainText
 	 *          plainText
 	 * @return ciphertext message

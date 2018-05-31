@@ -26,7 +26,7 @@ package com.github.exabrial.speakeasy.primitives;
 public interface PasswordHasher {
 	/**
 	 * Compute the hash for a password.
-	 * 
+	 *
 	 * @param password
 	 *          plaintext password
 	 * @return hash
@@ -36,7 +36,7 @@ public interface PasswordHasher {
 	/**
 	 * Checks to see if a plaintext password hashes to the given hash. TODO: Turn on
 	 * logging at the trace level to receive stack traces for errors.
-	 * 
+	 *
 	 * @param password
 	 *          plaintext password
 	 * @param hash

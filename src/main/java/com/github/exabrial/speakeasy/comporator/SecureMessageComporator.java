@@ -37,7 +37,7 @@ public class SecureMessageComporator implements MessageComporator {
 	public boolean compare(final byte[] calculatedFingerprint, byte[] presentedFingerprint) {
 		try {
 			Thread.sleep(random.nextInt(6));
-		} catch (InterruptedException e) {
+		} catch (final InterruptedException e) {
 			throw new RuntimeException(e);
 		}
 		boolean isValid = true;

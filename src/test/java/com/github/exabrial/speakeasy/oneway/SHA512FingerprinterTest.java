@@ -47,13 +47,13 @@ public class SHA512FingerprinterTest {
 
 	@Test
 	public void testFingerprint() {
-		String fingerprint = fingerprinter.fingerprint(testVector);
+		final String fingerprint = fingerprinter.fingerprint(testVector);
 		assertEquals(encodedTestVectorFingerprint, fingerprint);
 	}
 
 	@Test
 	public void testVerifyFingerprint() {
-		String fingerprint = fingerprinter.fingerprint(testVector);
+		final String fingerprint = fingerprinter.fingerprint(testVector);
 		assertTrue(fingerprinter.verifyFingerprint(testVector, fingerprint));
 	}
 }

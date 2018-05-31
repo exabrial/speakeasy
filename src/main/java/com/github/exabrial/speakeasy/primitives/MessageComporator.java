@@ -24,7 +24,7 @@ public interface MessageComporator {
 	/**
 	 * Compare two messages for equality. TODO: Turn on logging at the trace level
 	 * to receive stack traces for errors.
-	 * 
+	 *
 	 * @param calculatedFingerprint
 	 *          the fingerprint freshly calculated by a speakeasy fingerprinter
 	 * @param presentedFingerprint

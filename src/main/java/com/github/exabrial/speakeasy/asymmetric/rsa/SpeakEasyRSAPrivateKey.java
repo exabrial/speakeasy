@@ -24,7 +24,7 @@ import com.github.exabrial.speakeasy.asymmetric.SpeakEasyPrivateKey;
  * Holds an RSA private key.
  */
 public class SpeakEasyRSAPrivateKey implements SpeakEasyPrivateKey {
-	private PrivateKey privateKey;
+	private final PrivateKey privateKey;
 
 	public SpeakEasyRSAPrivateKey(final PrivateKey privateKey) {
 		this.privateKey = privateKey;

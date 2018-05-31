@@ -32,7 +32,7 @@ public class ConstantTimeMessageComporatorTest {
 
 	@Test
 	public void testCompare_false() {
-		byte[] bytes = "calculatedFingerprint".getBytes();
+		final byte[] bytes = "calculatedFingerprint".getBytes();
 		bytes[5] = 0;
 		assertFalse(comporator.compare("calculatedFingerprint".getBytes(), bytes));
 	}
@@ -44,7 +44,7 @@ public class ConstantTimeMessageComporatorTest {
 
 	@Test
 	public void testCompare_null() {
-		Executable executable = () -> {
+		final Executable executable = () -> {
 			comporator.compare(null, "calculatedFingerprint".getBytes());
 		};
 		assertThrows(NullPointerException.class, executable);
@@ -52,7 +52,7 @@ public class ConstantTimeMessageComporatorTest {
 
 	@Test
 	public void testCompare_null2() {
-		Executable executable = () -> {
+		final Executable executable = () -> {
 			comporator.compare("NotcalculatedFingerprint".getBytes(), null);
 		};
 		assertThrows(NullPointerException.class, executable);

@@ -22,7 +22,7 @@ package com.github.exabrial.speakeasy.internal;
 public class WhatInTheHellAreYouThinkingException extends RuntimeException {
 	private static final long serialVersionUID = 1L;
 
-	public WhatInTheHellAreYouThinkingException(String message) {
+	public WhatInTheHellAreYouThinkingException(final String message) {
 		super(message);
 	}
 }

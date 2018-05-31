@@ -51,7 +51,7 @@ public class SymmetricKeyUtils {
 
 	/**
 	 * Create a string representation of a key that can be deserialized later.
-	 * 
+	 *
 	 * @param symmetricKey
 	 *          the key to be serialized
 	 * @return the string representation of the key
@@ -64,7 +64,7 @@ public class SymmetricKeyUtils {
 
 	/**
 	 * Create a object representation of key from the serialized string.
-	 * 
+	 *
 	 * @param encodedKeyString
 	 *          string representation of a key
 	 * @return the object represented by the string
@@ -81,7 +81,7 @@ public class SymmetricKeyUtils {
 	 * take a random string and called .getBytes(), which only returns bytes
 	 * possible in ascii or UTF charsets, severely limiting the entropy of the key.
 	 * The method ensure correctness.
-	 * 
+	 *
 	 * @return a randomly generated key
 	 */
 	public SymmetricKey generateSecureSymmetricKey() {

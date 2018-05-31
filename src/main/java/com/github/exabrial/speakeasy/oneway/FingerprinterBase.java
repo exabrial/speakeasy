@@ -29,7 +29,7 @@ import com.github.exabrial.speakeasy.primitives.Fingerprinter;
 import com.github.exabrial.speakeasy.primitives.MessageComporator;
 import com.github.exabrial.speakeasy.primitives.StringEncoder;
 
-abstract class FingerprinterBase implements Fingerprinter {
+public abstract class FingerprinterBase implements Fingerprinter {
 	abstract String getAlg();
 
 	abstract StringEncoder getStringEncoder();

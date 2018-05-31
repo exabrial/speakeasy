@@ -38,7 +38,7 @@ class BasicMessageComporatorTest {
 
 	@Test
 	void testCompare_null() {
-		Executable executable = () -> {
+		final Executable executable = () -> {
 			comporator.compare(null, "calculatedFingerprint2".getBytes());
 		};
 		assertThrows(NullPointerException.class, executable);
@@ -46,7 +46,7 @@ class BasicMessageComporatorTest {
 
 	@Test
 	void testCompare_null2() {
-		Executable executable = () -> {
+		final Executable executable = () -> {
 			comporator.compare("calculatedFingerprint".getBytes(), null);
 		};
 		assertThrows(NullPointerException.class, executable);

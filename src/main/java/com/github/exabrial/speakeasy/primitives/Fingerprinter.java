@@ -23,7 +23,7 @@ package com.github.exabrial.speakeasy.primitives;
 public interface Fingerprinter {
 	/**
 	 * Compute the fingerprint for the given plaintext message.
-	 * 
+	 *
 	 * @param message
 	 *          plaintext
 	 * @return fingerprint
@@ -33,7 +33,7 @@ public interface Fingerprinter {
 	/**
 	 * Checks whether or not a fingerprint matches. TODO: Set the log level to trace
 	 * to see stack traces when errors occur.
-	 * 
+	 *
 	 * @param message
 	 *          plaintext
 	 * @param fingerprint

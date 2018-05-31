@@ -25,14 +25,14 @@ public class SymmetricKeyUtilsTest {
 
 	@Test
 	public void testFromString_toString() {
-		SymmetricKey symmetricKey = symmetricKeyUtils.fromString(encodedKeyString);
-		String keyString = symmetricKeyUtils.toString(symmetricKey);
+		final SymmetricKey symmetricKey = symmetricKeyUtils.fromString(encodedKeyString);
+		final String keyString = symmetricKeyUtils.toString(symmetricKey);
 		assertEquals(encodedKeyString, keyString);
 	}
 
 	@Test
 	public void testGenerateSecureSymmetricKey() {
-		SymmetricKey symmetricKey = symmetricKeyUtils.generateSecureSymmetricKey();
+		final SymmetricKey symmetricKey = symmetricKeyUtils.generateSecureSymmetricKey();
 		assertEquals("AES", symmetricKey.toKey().getAlgorithm());
 	}
 }

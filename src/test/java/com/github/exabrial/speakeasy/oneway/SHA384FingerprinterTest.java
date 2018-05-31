@@ -24,20 +24,20 @@ import org.junit.jupiter.api.Test;
 import com.github.exabrial.speakeasy.encoding.HexStringEncoder;
 
 public class SHA384FingerprinterTest {
-	private SHA384Fingerprinter fingerprinter = new SHA384Fingerprinter(HexStringEncoder.getSingleton());
-	private String testVector = "abcdbcdecdefdefgefghfghighijhijkijkljklmklmnlmnomnopnopq";
-	private String encodedTestVectorFingerprint = ("3391fdddfc8dc7393707a65b1b4709397cf8b1d162af05ab"
+	private final SHA384Fingerprinter fingerprinter = new SHA384Fingerprinter(HexStringEncoder.getSingleton());
+	private final String testVector = "abcdbcdecdefdefgefghfghighijhijkijkljklmklmnlmnomnopnopq";
+	private final String encodedTestVectorFingerprint = ("3391fdddfc8dc7393707a65b1b4709397cf8b1d162af05ab"
 			+ "fe8f450de5f36bc6b0455a8520bc4e6f5fe95b1fe3c8452b").toUpperCase();
 
 	@Test
 	public void testFingerprint() {
-		String fingerprint = fingerprinter.fingerprint(testVector);
+		final String fingerprint = fingerprinter.fingerprint(testVector);
 		assertEquals(encodedTestVectorFingerprint, fingerprint);
 	}
 
 	@Test
 	public void testVerifyFingerprint() {
-		String fingerprint = fingerprinter.fingerprint(testVector);
+		final String fingerprint = fingerprinter.fingerprint(testVector);
 		assertTrue(fingerprinter.verifyFingerprint(testVector, fingerprint));
 	}
 }

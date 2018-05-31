@@ -49,7 +49,7 @@ public class NativeThreadLocalSecureRandomProvider implements SecureRandomProvid
 
 	@Override
 	public SecureRandom borrowSecureRandom() {
-		WeakReference<SecureRandom> weakReference = threadLocal.get();
+		final WeakReference<SecureRandom> weakReference = threadLocal.get();
 		SecureRandom secureRandom;
 		if (weakReference != null) {
 			secureRandom = weakReference.get();
@@ -64,8 +64,8 @@ public class NativeThreadLocalSecureRandomProvider implements SecureRandomProvid
 				try {
 					// Probably on winblows, sigh. Retreat.
 					System.err
-							.println("WARN: NativePRNG not available, weaker RNG being used. It may not be a good idea to use this VM to do ANY ECC "
-									+ "operations, as it may be result in complete revelation of the secret keys");
+					.println("WARN: NativePRNG not available, weaker RNG being used. It may not be a good idea to use this VM to do ANY ECC "
+							+ "operations, as it may be result in complete revelation of the secret keys");
 					secureRandom = SecureRandom.getInstanceStrong();
 				} catch (final NoSuchAlgorithmException e1) {
 					throw new RuntimeException(e1);
@@ -76,7 +76,7 @@ public class NativeThreadLocalSecureRandomProvider implements SecureRandomProvid
 			// Because America. Why not?
 			final byte[] seed = SecureRandom.getSeed(55);
 			secureRandom.setSeed(seed);
-			threadLocal.set(new WeakReference<SecureRandom>(secureRandom));
+			threadLocal.set(new WeakReference<>(secureRandom));
 		}
 		return secureRandom;
 	}

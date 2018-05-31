@@ -21,24 +21,24 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
-import com.github.exabrial.testing.StringBytesEncoder;
+import com.github.exabrial.speakeasy.testing.StringBytesEncoder;
 
 public class Blake2b512FingerprinterTest {
-	private String testVector = "hello";
-	private String encodedTestVectorFingerprint = ("e4cfa39a3d37be31c59609e807970799caa68a19bfaa15135f165085e01d41a65ba1e1b146aeb6bd"
+	private final String testVector = "hello";
+	private final String encodedTestVectorFingerprint = ("e4cfa39a3d37be31c59609e807970799caa68a19bfaa15135f165085e01d41a65ba1e1b146aeb6bd"
 			+ "0092b49eac214c103ccfa3a365954bbbe52f74a2b3620c94").toUpperCase();
 
 	@Test
 	public void testFingerprint() {
-		Blake2b512Fingerprinter fingerprinter = new Blake2b512Fingerprinter(new StringBytesEncoder());
-		String fingerprint = fingerprinter.fingerprint(testVector);
+		final Blake2b512Fingerprinter fingerprinter = new Blake2b512Fingerprinter(new StringBytesEncoder());
+		final String fingerprint = fingerprinter.fingerprint(testVector);
 		assertEquals(encodedTestVectorFingerprint, fingerprint);
 	}
 
 	@Test
 	public void testVerifyFingerprint() {
-		Blake2b512Fingerprinter fingerprinter = new Blake2b512Fingerprinter();
-		String fingerprint = fingerprinter.fingerprint(testVector);
+		final Blake2b512Fingerprinter fingerprinter = new Blake2b512Fingerprinter();
+		final String fingerprint = fingerprinter.fingerprint(testVector);
 		assertTrue(fingerprinter.verifyFingerprint(testVector, fingerprint));
 	}
 }

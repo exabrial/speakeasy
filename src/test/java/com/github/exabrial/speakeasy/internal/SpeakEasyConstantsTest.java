@@ -29,6 +29,11 @@ public class SpeakEasyConstantsTest {
 	}
 
 	@Test
+	void testAddSunEc_java9() {
+		SpeakEasyConstants.sunEc("9.0.0_35");
+	}
+
+	@Test
 	void testAddSunEc_oldJdk8() {
 		final Executable executable = () -> {
 			SpeakEasyConstants.sunEc("1.8.0_48");

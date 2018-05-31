@@ -17,6 +17,7 @@
 package com.github.exabrial.speakeasy.encoding;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Arrays;
@@ -31,13 +32,33 @@ public class Base64StringEncoderTest {
 
 	@Test
 	public void testEncodeBytesAsString() {
-		String encodeBytesAsString = encoder.encodeBytesAsString(rfc4648TestVectorBytes);
+		final String encodeBytesAsString = encoder.encodeBytesAsString(rfc4648TestVectorBytes);
 		assertEquals(rfc4648TestVectorString, encodeBytesAsString);
 	}
 
 	@Test
 	public void testDecodeStringToBytes() {
-		byte[] decodeStringToBytes = encoder.decodeStringToBytes(rfc4648TestVectorString);
+		final byte[] decodeStringToBytes = encoder.decodeStringToBytes(rfc4648TestVectorString);
 		assertTrue(Arrays.equals(decodeStringToBytes, rfc4648TestVectorBytes));
+	}
+
+	@Test
+	public void testEncodeNull() {
+		assertNull(encoder.encodeBytesAsString(null));
+	}
+
+	@Test
+	public void testDecodeNull() {
+		assertNull(encoder.decodeStringToBytes(null));
+	}
+
+	@Test
+	public void testEncode0Length() {
+		assertEquals("", encoder.encodeBytesAsString(new byte[0]));
+	}
+
+	@Test
+	public void testDecode0Length() {
+		assertTrue(Arrays.equals(new byte[0], encoder.decodeStringToBytes("")));
 	}
 }

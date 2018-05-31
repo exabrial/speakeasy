@@ -34,12 +34,28 @@ public class Base64StringEncoder implements StringEncoder {
 
 	@Override
 	public String encodeBytesAsString(final byte[] message) {
-		return Base64.getEncoder().encodeToString(message);
+		final String encodedString;
+		if (message == null) {
+			encodedString = null;
+		} else if (message.length == 0) {
+			encodedString = "";
+		} else {
+			encodedString = Base64.getEncoder().encodeToString(message);
+		}
+		return encodedString;
 	}
 
 	@Override
 	public byte[] decodeStringToBytes(final String message) {
-		return Base64.getDecoder().decode(message);
+		final byte[] decodedBytes;
+		if (message == null) {
+			decodedBytes = null;
+		} else if (message.length() == 0) {
+			decodedBytes = new byte[0];
+		} else {
+			decodedBytes = Base64.getDecoder().decode(message);
+		}
+		return decodedBytes;
 	}
 
 	private enum Singleton {

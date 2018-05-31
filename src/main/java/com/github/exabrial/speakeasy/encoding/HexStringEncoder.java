@@ -36,16 +36,28 @@ public class HexStringEncoder implements StringEncoder {
 
 	@Override
 	public String encodeBytesAsString(final byte[] message) {
-		String hex = DatatypeConverter.printHexBinary(message);
-		if (hex != null) {
-			hex = hex.toUpperCase(Locale.US);
+		final String encodedString;
+		if (message == null) {
+			encodedString = null;
+		} else if (message.length == 0) {
+			encodedString = "";
+		} else {
+			encodedString = DatatypeConverter.printHexBinary(message).toUpperCase(Locale.US);
 		}
-		return hex;
+		return encodedString;
 	}
 
 	@Override
 	public byte[] decodeStringToBytes(final String message) {
-		return DatatypeConverter.parseHexBinary(message);
+		final byte[] decodedBytes;
+		if (message == null) {
+			decodedBytes = null;
+		} else if (message.length() == 0) {
+			decodedBytes = new byte[0];
+		} else {
+			decodedBytes = DatatypeConverter.parseHexBinary(message);
+		}
+		return decodedBytes;
 	}
 
 	private enum Singleton {

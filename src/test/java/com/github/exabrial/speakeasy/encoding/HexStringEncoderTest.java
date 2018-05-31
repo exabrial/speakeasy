@@ -17,6 +17,7 @@
 package com.github.exabrial.speakeasy.encoding;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Arrays;
@@ -30,13 +31,33 @@ public class HexStringEncoderTest {
 
 	@Test
 	public void testEncodeBytesAsString() {
-		String encodeBytesAsString = encoder.encodeBytesAsString(testVectorBytes);
+		final String encodeBytesAsString = encoder.encodeBytesAsString(testVectorBytes);
 		assertEquals(testVectorString, encodeBytesAsString);
 	}
 
 	@Test
 	public void testDecodeStringToBytes() {
-		byte[] decodeStringToBytes = encoder.decodeStringToBytes(testVectorString);
+		final byte[] decodeStringToBytes = encoder.decodeStringToBytes(testVectorString);
 		assertTrue(Arrays.equals(decodeStringToBytes, testVectorBytes));
+	}
+
+	@Test
+	public void testEncodeNull() {
+		assertNull(encoder.encodeBytesAsString(null));
+	}
+
+	@Test
+	public void testDecodeNull() {
+		assertNull(encoder.decodeStringToBytes(null));
+	}
+
+	@Test
+	public void testEncode0Length() {
+		assertEquals("", encoder.encodeBytesAsString(new byte[0]));
+	}
+
+	@Test
+	public void testDecode0Length() {
+		assertTrue(Arrays.equals(new byte[0], encoder.decodeStringToBytes("")));
 	}
 }

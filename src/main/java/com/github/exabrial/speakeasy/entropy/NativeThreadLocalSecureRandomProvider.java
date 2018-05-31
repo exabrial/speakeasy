@@ -26,21 +26,28 @@ import java.security.SecureRandom;
 import com.github.exabrial.speakeasy.primitives.SecureRandomProvider;
 
 /**
+ * <p>
  * Attempts to use platform native random generators. The output from the
  * platform native generator is XOR'd with output from software generator. If
  * platform native cannot be used, this will select the strongest random
  * generator type available.
+ * </p>
  *
+ * <p>
  * A SecureRandom returned by this implementation is created for EACH thread and
  * held using a WeakReference. Don't hold a reference objects returned outside
  * of your local scope. Best practice is to just call borrowSecureRandom()
  * _every_ time and allow the JIT to optimize your code properly.
+ * </p>
  *
+ * <p>
  * Important info about /dev/random and /dev/urandom
+ * </p>
  *
- * https://bit.ly/2IvSuaI
- *
- * https://bit.ly/2En8fOI
+ * <ul>
+ * <li>https://bit.ly/2IvSuaI</li>
+ * <li>https://bit.ly/2En8fOI</li>
+ * </ul>
  */
 public class NativeThreadLocalSecureRandomProvider implements SecureRandomProvider {
 	private static final String NATIVE_PRNG = "NativePRNG";
@@ -67,8 +74,8 @@ public class NativeThreadLocalSecureRandomProvider implements SecureRandomProvid
 				try {
 					// Probably on winblows, sigh. Retreat.
 					System.err
-					.println("WARN: NativePRNG not available, weaker RNG being used. It may not be a good idea to use this VM to do ANY ECC "
-							+ "operations, as it may be result in complete revelation of the secret keys");
+							.println("WARN: NativePRNG not available, weaker RNG being used. It may not be a good idea to use this VM to do ANY ECC "
+									+ "operations, as it may be result in complete revelation of the secret keys");
 					secureRandom = SecureRandom.getInstanceStrong();
 				} catch (final NoSuchAlgorithmException e1) {
 					throw new RuntimeException(e1);

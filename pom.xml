@@ -202,11 +202,8 @@
 						</license>
 					</licenses>
 					<excludes>
-						<exclude>README.md</exclude>
+						<exclude>*.md</exclude>
 						<exclude>checkstyle.xml</exclude>
-						<exclude>CONTRIBUTING.md</exclude>
-						<exclude>LICENSE.md</exclude>
-						<exclude>examples.md</exclude>
 						<exclude>speakeasy-eclipse-formatter.xml</exclude>
 						<exclude>toolchains.xml</exclude>
 						<exclude>CLs/*</exclude>
@@ -578,11 +575,8 @@
 						</license>
 					</licenses>
 					<excludes>
-						<exclude>README.md</exclude>
+						<exclude>*.md</exclude>
 						<exclude>checkstyle.xml</exclude>
-						<exclude>CONTRIBUTING.md</exclude>
-						<exclude>LICENSE.md</exclude>
-						<exclude>examples.md</exclude>
 						<exclude>speakeasy-eclipse-formatter.xml</exclude>
 						<exclude>toolchains.xml</exclude>
 						<exclude>CLs/*</exclude>

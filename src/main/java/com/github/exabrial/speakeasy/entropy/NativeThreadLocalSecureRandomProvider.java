@@ -29,14 +29,17 @@ import com.github.exabrial.speakeasy.primitives.SecureRandomProvider;
  * Attempts to use platform native random generators. The output from the
  * platform native generator is XOR'd with output from software generator. If
  * platform native cannot be used, this will select the strongest random
- * generator type available.<br/>
+ * generator type available.
+ *
  * A SecureRandom returned by this implementation is created for EACH thread and
  * held using a WeakReference. Don't hold a reference objects returned outside
  * of your local scope. Best practice is to just call borrowSecureRandom()
- * _every_ time and allow the JIT to optimize your code properly.<br/>
- * <br/>
- * Important info about /dev/random and /dev/urandom <br/>
- * https://bit.ly/2IvSuaI <br/>
+ * _every_ time and allow the JIT to optimize your code properly.
+ *
+ * Important info about /dev/random and /dev/urandom
+ *
+ * https://bit.ly/2IvSuaI
+ *
  * https://bit.ly/2En8fOI
  */
 public class NativeThreadLocalSecureRandomProvider implements SecureRandomProvider {

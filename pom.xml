@@ -16,8 +16,9 @@
 	<name>speakeasy</name>
 	<url>https://github.com/exabrial/speakeasy</url>
 	<scm>
-		<connection>scm:git:ssh://git@github.com:exabrial/speakeasy.git</connection>
+		<connection>scm:git:git://github.com:exabrial/speakeasy.git</connection>
 		<developerConnection>scm:git:ssh://git@github.com:exabrial/speakeasy.git</developerConnection>
+		<url>https://github.com/exabrial/speakeasy/tree/master</url>
 	</scm>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -29,6 +30,18 @@
 			<distribution>repo</distribution>
 		</license>
 	</licenses>
+	<developers>
+		<developer>
+			<id>exabrial</id>
+			<name>Jonathan S. Fisher</name>
+			<properties>
+				<dev.cl>Jonathan-S-Fisher.md</dev.cl>
+				<dev.pgp.fingerprint>871638A21A7F2C38066471420306A354336B4F0D</dev.pgp.fingerprint>
+				<dev.github.id>exabrial</dev.github.id>
+				<dev.keybase.id>exabrial</dev.keybase.id>
+			</properties>
+		</developer>
+	</developers>
 	<dependencies>
 		<dependency>
 			<groupId>org.bouncycastle</groupId>
@@ -355,6 +368,18 @@
 					</execution>
 				</executions>
 			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>javadoc-package</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 		<pluginManagement>
 			<plugins>
@@ -497,6 +522,16 @@
 					<artifactId>maven-shade-plugin</artifactId>
 					<version>3.1.1</version>
 				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-javadoc-plugin</artifactId>
+					<version>3.0.1</version>
+				</plugin>
+				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>taglist-maven-plugin</artifactId>
+					<version>2.4</version>
+				</plugin>
 			</plugins>
 		</pluginManagement>
 	</build>
@@ -585,6 +620,14 @@
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>jdepend-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>taglist-maven-plugin</artifactId>
 			</plugin>
 		</plugins>
 	</reporting>

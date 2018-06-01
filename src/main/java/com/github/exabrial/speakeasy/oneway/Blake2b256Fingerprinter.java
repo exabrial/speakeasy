@@ -16,12 +16,11 @@
 
 package com.github.exabrial.speakeasy.oneway;
 
-import static com.github.exabrial.speakeasy.internal.SpeakEasyConstants.BC_PROVIDER;
-import static com.github.exabrial.speakeasy.internal.SpeakEasyConstants.BLAKE2B_256;
+import java.security.NoSuchAlgorithmException;
 
-import java.security.Provider;
-
+import com.github.exabrial.speakeasy.comporator.BasicMessageComporator;
 import com.github.exabrial.speakeasy.encoding.Base64StringEncoder;
+import com.github.exabrial.speakeasy.primitives.MessageComporator;
 import com.github.exabrial.speakeasy.primitives.StringEncoder;
 
 /**
@@ -31,18 +30,21 @@ import com.github.exabrial.speakeasy.primitives.StringEncoder;
  */
 public class Blake2b256Fingerprinter extends FingerprinterBase {
 	private final StringEncoder stringEncoder;
+	private final MessageComporator messageComporator;
 
 	public Blake2b256Fingerprinter() {
 		this.stringEncoder = Base64StringEncoder.getSingleton();
+		this.messageComporator = BasicMessageComporator.getSingleton();
 	}
 
 	public Blake2b256Fingerprinter(final StringEncoder stringEncoder) {
 		this.stringEncoder = stringEncoder;
+		this.messageComporator = BasicMessageComporator.getSingleton();
 	}
 
-	@Override
-	String getAlg() {
-		return BLAKE2B_256;
+	public Blake2b256Fingerprinter(final StringEncoder stringEncoder, final MessageComporator messageComporator) {
+		this.stringEncoder = stringEncoder;
+		this.messageComporator = messageComporator;
 	}
 
 	@Override
@@ -51,7 +53,12 @@ public class Blake2b256Fingerprinter extends FingerprinterBase {
 	}
 
 	@Override
-	Provider getProvider() {
-		return BC_PROVIDER;
+	MessageComporator getMessageComporator() {
+		return messageComporator;
+	}
+
+	@Override
+	MessageDigester getDigester() throws NoSuchAlgorithmException {
+		return new Blake2bMessageDigester(null, 256);
 	}
 }

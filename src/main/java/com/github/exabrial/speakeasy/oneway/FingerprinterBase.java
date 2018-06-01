@@ -16,32 +16,14 @@
 
 package com.github.exabrial.speakeasy.oneway;
 
-import static com.github.exabrial.speakeasy.internal.SpeakEasyConstants.SUN;
-
-import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
-import java.security.Provider;
-import java.security.Security;
 
-import com.github.exabrial.speakeasy.comporator.BasicMessageComporator;
 import com.github.exabrial.speakeasy.primitives.Fingerprinter;
 import com.github.exabrial.speakeasy.primitives.MessageComporator;
 import com.github.exabrial.speakeasy.primitives.StringEncoder;
 
-abstract class FingerprinterBase implements Fingerprinter {
-	abstract String getAlg();
-
-	abstract StringEncoder getStringEncoder();
-
-	MessageComporator getMessageComporator() {
-		return BasicMessageComporator.getSingleton();
-	}
-
-	Provider getProvider() {
-		return Security.getProvider(SUN);
-	}
-
+public abstract class FingerprinterBase implements Fingerprinter {
 	@Override
 	public String fingerprint(final String message) {
 		try {
@@ -69,8 +51,14 @@ abstract class FingerprinterBase implements Fingerprinter {
 
 	private byte[] digest(final String message) throws NoSuchAlgorithmException, NoSuchProviderException {
 		final byte[] messageBytes = getStringEncoder().getStringAsBytes(message);
-		final MessageDigest digest = MessageDigest.getInstance(getAlg(), getProvider());
+		final MessageDigester digest = getDigester();
 		final byte[] fingerprintBytes = digest.digest(messageBytes);
 		return fingerprintBytes;
 	}
+	
+	abstract StringEncoder getStringEncoder();
+
+	abstract MessageComporator getMessageComporator();
+
+	abstract MessageDigester getDigester() throws NoSuchAlgorithmException, NoSuchProviderException;
 }

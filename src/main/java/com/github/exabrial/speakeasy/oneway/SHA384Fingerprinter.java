@@ -18,30 +18,47 @@ package com.github.exabrial.speakeasy.oneway;
 
 import static com.github.exabrial.speakeasy.internal.SpeakEasyConstants.SHA384;
 
+import java.security.NoSuchAlgorithmException;
+
+import com.github.exabrial.speakeasy.comporator.BasicMessageComporator;
 import com.github.exabrial.speakeasy.encoding.Base64StringEncoder;
+import com.github.exabrial.speakeasy.primitives.MessageComporator;
 import com.github.exabrial.speakeasy.primitives.StringEncoder;
 
 /**
- * SHA-384 implementation of Fingerprinter.
+ * SHA-256 implementation of Fingerprinter.
  */
 public class SHA384Fingerprinter extends FingerprinterBase {
 	private final StringEncoder stringEncoder;
+	private final MessageComporator messageComporator;
 
 	public SHA384Fingerprinter() {
 		this.stringEncoder = Base64StringEncoder.getSingleton();
+		this.messageComporator = BasicMessageComporator.getSingleton();
 	}
 
 	public SHA384Fingerprinter(final StringEncoder stringEncoder) {
 		this.stringEncoder = stringEncoder;
+		this.messageComporator = BasicMessageComporator.getSingleton();
 	}
 
-	@Override
-	String getAlg() {
-		return SHA384;
+	public SHA384Fingerprinter(final StringEncoder stringEncoder, final MessageComporator messageComporator) {
+		this.stringEncoder = stringEncoder;
+		this.messageComporator = messageComporator;
 	}
 
 	@Override
 	StringEncoder getStringEncoder() {
 		return stringEncoder;
+	}
+
+	@Override
+	MessageComporator getMessageComporator() {
+		return messageComporator;
+	}
+
+	@Override
+	MessageDigester getDigester() throws NoSuchAlgorithmException {
+		return new SHAMessageDigester(SHA384);
 	}
 }

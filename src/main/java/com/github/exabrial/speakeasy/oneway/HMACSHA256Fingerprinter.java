@@ -14,7 +14,7 @@
  * the License.
  */
 
-package com.github.exabrial.speakeasy.oneway.keyed;
+package com.github.exabrial.speakeasy.oneway;
 
 import static com.github.exabrial.speakeasy.internal.SpeakEasyConstants.HMAC_SHA256;
 

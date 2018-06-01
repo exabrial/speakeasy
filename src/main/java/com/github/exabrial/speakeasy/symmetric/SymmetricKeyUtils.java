@@ -58,12 +58,11 @@ public class SymmetricKeyUtils {
 	 *
 	 * @param encodedKeyString
 	 *          string representation of a key
+	 * @param keyClazz
+	 *          the type of @param keyClazz to deserialize
 	 * @return the object represented by the string
-	 * @throws UnknownKeyLengthException
-	 *           if the keyLength isn't supported
 	 */
-	public <K extends SymmetricKey> K fromString(final String encodedKeyString, final Class<K> keyClazz)
-			throws UnknownKeyLengthException {
+	public <K extends SymmetricKey> K fromString(final String encodedKeyString, final Class<K> keyClazz) {
 		final byte[] keyBytes = stringEncoder.decodeStringToBytes(encodedKeyString);
 		final K symmetricKey;
 		try {
@@ -81,6 +80,8 @@ public class SymmetricKeyUtils {
 	 * in ascii or UTF charsets, severely limiting the entropy of the key. The
 	 * method ensure correctness by allowing for all combinations possible.
 	 *
+	 * @param keyClazz
+	 *          the type of @param keyClazz to generate
 	 * @return a randomly generated key
 	 */
 	public <K extends SymmetricKey> K generateSecureSymmetricKey(final Class<K> keyClazz) {

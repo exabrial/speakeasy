@@ -58,7 +58,7 @@ public abstract class SymmetricKey implements SpeakEasyKey {
 	/**
 	 * Transforms this key into a key usable by the JCE.
 	 *
-	 * @see javax.crypto.spec.SecretKeySpec.SecretKeySpec(byte[], int, int, String)
+	 * @see javax.crypto.spec.SecretKeySpec#SecretKeySpec(byte[], int, int, String)
 	 *
 	 * @param algName
 	 *          to use to use in the alg field of SecretKeySpec

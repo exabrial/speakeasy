@@ -17,6 +17,7 @@
 package com.github.exabrial.speakeasy.symmetric.aesgcm;
 
 import static com.github.exabrial.speakeasy.encoding.Base64StringEncoder.getSingleton;
+import static com.github.exabrial.speakeasy.internal.SpeakEasyConstants.AES;
 import static com.github.exabrial.speakeasy.internal.SpeakEasyConstants.AES_GCM;
 import static com.github.exabrial.speakeasy.internal.SpeakEasyConstants.AES_GCM_TAG_LENGTH;
 import static com.github.exabrial.speakeasy.internal.SpeakEasyConstants.GCM_NONCE_LENGTH;
@@ -73,7 +74,7 @@ public class AESGCMEncrypter implements Encrypter {
 			secureRandom.nextBytes(iv);
 			final GCMParameterSpec gcmSpec = new GCMParameterSpec(AES_GCM_TAG_LENGTH, iv);
 			final Cipher cipher = Cipher.getInstance(AES_GCM, SUN_JCE);
-			cipher.init(Cipher.ENCRYPT_MODE, sharedKey.toJCEKey(), gcmSpec, secureRandom);
+			cipher.init(Cipher.DECRYPT_MODE, sharedKey.toJCEKey(AES), gcmSpec, null);
 			final byte[] plainTextBytes = stringEncoder.getStringAsBytes(plainText);
 			final byte[] cipherTextBytes = cipher.doFinal(plainTextBytes);
 			final byte[] ivAndCipherText = new byte[iv.length + cipherTextBytes.length];

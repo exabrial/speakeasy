@@ -44,8 +44,8 @@ public class RSAKeyUtilsTest {
 	@Test
 	public void testCreateKeyPair() {
 		final SpeakEasyRSAKeyPair createKeyPair = rsaKeyUtils.createKeyPair();
-		assertEquals("RSA", createKeyPair.getPrivateKey().toKey().getAlgorithm());
-		assertEquals("RSA", createKeyPair.getPublicKey().toKey().getAlgorithm());
+		assertEquals("RSA", createKeyPair.getPrivateKey().toJCEKey().getAlgorithm());
+		assertEquals("RSA", createKeyPair.getPublicKey().toJCEKey().getAlgorithm());
 	}
 
 	@Test

@@ -104,7 +104,7 @@ public class RSAKeyUtils implements AsymmetricKeyUtils<SpeakEasyRSAPublicKey, Sp
 	public String toString(final SpeakEasyRSAPublicKey speakEasyPublicKey) {
 		try {
 			final KeyFactory keyFactory = KeyFactory.getInstance(RSA, SUN_RSA_SIGN);
-			final EncodedKeySpec spec = keyFactory.getKeySpec(speakEasyPublicKey.toKey(), X509EncodedKeySpec.class);
+			final EncodedKeySpec spec = keyFactory.getKeySpec(speakEasyPublicKey.toJCEKey(), X509EncodedKeySpec.class);
 			return stringEncoder.encodeBytesAsString(spec.getEncoded());
 		} catch (NoSuchAlgorithmException | InvalidKeySpecException | NoSuchProviderException e) {
 			throw new RuntimeException(e);
@@ -115,7 +115,7 @@ public class RSAKeyUtils implements AsymmetricKeyUtils<SpeakEasyRSAPublicKey, Sp
 	public String toString(final SpeakEasyRSAPrivateKey speakEasyPrivateKey) {
 		try {
 			final KeyFactory keyFactory = KeyFactory.getInstance(RSA, SUN_RSA_SIGN);
-			final EncodedKeySpec spec = keyFactory.getKeySpec(speakEasyPrivateKey.toKey(), PKCS8EncodedKeySpec.class);
+			final EncodedKeySpec spec = keyFactory.getKeySpec(speakEasyPrivateKey.toJCEKey(), PKCS8EncodedKeySpec.class);
 			return stringEncoder.encodeBytesAsString(spec.getEncoded());
 		} catch (NoSuchAlgorithmException | InvalidKeySpecException | NoSuchProviderException e) {
 			throw new RuntimeException(e);

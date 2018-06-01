@@ -64,7 +64,7 @@ public class AESGCMDecrypter implements Decrypter {
 			System.arraycopy(messageBytes, 0, iv, 0, iv.length);
 			final GCMParameterSpec gcmSpec = new GCMParameterSpec(AES_GCM_TAG_LENGTH, iv);
 			final Cipher cipher = Cipher.getInstance(AES_GCM, SUN_JCE);
-			cipher.init(Cipher.DECRYPT_MODE, sharedKey.getKeyBytes(), gcmSpec, null);
+			cipher.init(Cipher.DECRYPT_MODE, sharedKey.toJCEKey(), gcmSpec, null);
 			final byte[] cipherTextBytes = new byte[messageBytes.length - iv.length];
 			System.arraycopy(messageBytes, iv.length, cipherTextBytes, 0, cipherTextBytes.length);
 			final byte[] plainTextBytes = cipher.doFinal(cipherTextBytes);

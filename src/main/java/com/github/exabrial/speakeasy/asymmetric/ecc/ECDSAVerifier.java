@@ -53,7 +53,7 @@ public class ECDSAVerifier implements Verifier {
 			final byte[] messageBytes = stringEncoder.getStringAsBytes(message);
 			final byte[] signatureBytes = stringEncoder.decodeStringToBytes(signatureText);
 			final Signature signature = Signature.getInstance(EC_SIG_ALG, SUN_EC);
-			signature.initVerify(publicKey.toKey());
+			signature.initVerify(publicKey.toJCEKey());
 			signature.update(messageBytes);
 			return signature.verify(signatureBytes);
 		} catch (final NullPointerException | ArrayIndexOutOfBoundsException | SignatureException e) {

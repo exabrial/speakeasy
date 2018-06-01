@@ -59,7 +59,7 @@ public class RSASigner implements Signer {
 			final byte[] messageBytes = stringEncoder.getStringAsBytes(message);
 			final Signature signature = Signature.getInstance(SHA256_WITH_RSA, SUN_RSA_SIGN);
 			final SecureRandom secureRandom = secureRandomProvider.borrowSecureRandom();
-			signature.initSign(privateKey.toKey(), secureRandom);
+			signature.initSign(privateKey.toJCEKey(), secureRandom);
 			signature.update(messageBytes);
 			final byte[] signatureBytes = signature.sign();
 			return stringEncoder.encodeBytesAsString(signatureBytes);

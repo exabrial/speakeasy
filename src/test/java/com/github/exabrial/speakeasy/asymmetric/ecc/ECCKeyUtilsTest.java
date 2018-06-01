@@ -29,8 +29,8 @@ public class ECCKeyUtilsTest {
 	@Test
 	public void testCreateKeyPair() {
 		final SpeakEasyEccKeyPair createKeyPair = eccKeyUtils.createKeyPair();
-		assertEquals("EC", createKeyPair.getPrivateKey().toKey().getAlgorithm());
-		assertEquals("EC", createKeyPair.getPublicKey().toKey().getAlgorithm());
+		assertEquals("EC", createKeyPair.getPrivateKey().toJCEKey().getAlgorithm());
+		assertEquals("EC", createKeyPair.getPublicKey().toJCEKey().getAlgorithm());
 	}
 
 	@Test

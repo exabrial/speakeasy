@@ -16,16 +16,14 @@
 
 package com.github.exabrial.speakeasy.symmetric;
 
-import com.github.exabrial.speakeasy.primitives.SpeakEasyKey;
-
 /**
  * An algorithm that uses a single key for two converse or inverse operations is
  * called symmetric. This class holds a 128 bit value key value.
  */
-public class SymmetricKey128 implements SpeakEasyKey {
+public class SymmetricKey128 extends SymmetricKey {
+	private static final int KEY_LENGTH = 16;
 
-	@Override
-	public byte[] getKeyBytes() {
-		return null;
+	SymmetricKey128(final byte[] keyBytes) {
+		super(keyBytes, KEY_LENGTH);
 	}
 }

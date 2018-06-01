@@ -44,8 +44,8 @@ import com.github.exabrial.speakeasy.primitives.StringEncoder;
  * Utility class for managing ECC keys. @see
  * com.github.exabrial.speakeasy.symmetric.SymmetricKeyUtils.generateSecureSymmetricKey()
  * for some notes on secure generation. Keep in mind, creating ECC keys with a
- * weak random generator can totally compromise the security of the system,
- * even allowing the private key to be divulged.
+ * weak random generator can totally compromise the security of the system, even
+ * allowing the private key to be divulged.
  */
 public class ECCKeyUtils implements AsymmetricKeyUtils<SpeakEasyEccPublicKey, SpeakEasyEccPrivateKey, SpeakEasyEccKeyPair> {
 	private final StringEncoder stringEncoder;
@@ -105,7 +105,7 @@ public class ECCKeyUtils implements AsymmetricKeyUtils<SpeakEasyEccPublicKey, Sp
 	public String toString(final SpeakEasyEccPublicKey speakEasyPublicKey) {
 		try {
 			final KeyFactory keyFactory = KeyFactory.getInstance(EC, SUN_EC);
-			final EncodedKeySpec spec = keyFactory.getKeySpec(speakEasyPublicKey.toKey(), X509EncodedKeySpec.class);
+			final EncodedKeySpec spec = keyFactory.getKeySpec(speakEasyPublicKey.toJCEKey(), X509EncodedKeySpec.class);
 			return stringEncoder.encodeBytesAsString(spec.getEncoded());
 		} catch (NoSuchAlgorithmException | InvalidKeySpecException | NoSuchProviderException e) {
 			throw new RuntimeException(e);
@@ -116,7 +116,7 @@ public class ECCKeyUtils implements AsymmetricKeyUtils<SpeakEasyEccPublicKey, Sp
 	public String toString(final SpeakEasyEccPrivateKey speakEasyPrivateKey) {
 		try {
 			final KeyFactory keyFactory = KeyFactory.getInstance(EC, SUN_EC);
-			final EncodedKeySpec spec = keyFactory.getKeySpec(speakEasyPrivateKey.toKey(), PKCS8EncodedKeySpec.class);
+			final EncodedKeySpec spec = keyFactory.getKeySpec(speakEasyPrivateKey.toJCEKey(), PKCS8EncodedKeySpec.class);
 			return stringEncoder.encodeBytesAsString(spec.getEncoded());
 		} catch (NoSuchAlgorithmException | InvalidKeySpecException | NoSuchProviderException e) {
 			throw new RuntimeException(e);

@@ -31,7 +31,7 @@ public class SpeakEasyEccPrivateKey implements SpeakEasyPrivateKey {
 	}
 
 	@Override
-	public PrivateKey toKey() {
+	public PrivateKey toJCEKey() {
 		return privateKey;
 	}
 

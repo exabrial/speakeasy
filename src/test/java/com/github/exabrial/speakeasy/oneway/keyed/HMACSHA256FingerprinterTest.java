@@ -30,7 +30,7 @@ public class HMACSHA256FingerprinterTest {
 	@Test
 	public void testVerifyMessageSignature() {
 		final SymmetricKeyUtils utils = new SymmetricKeyUtils();
-		final SymmetricKey128 key = utils.generateSecureSymmetricKey();
+		final SymmetricKey128 key = utils.generateSecureSymmetricKey(SymmetricKey128.class);
 		final HMACSHA256Fingerprinter sv = new HMACSHA256Fingerprinter(key);
 		final String signature = sv.fingerprint(message);
 		assertTrue(sv.verifyFingerprint(message, signature));
@@ -39,7 +39,7 @@ public class HMACSHA256FingerprinterTest {
 	@Test
 	public void testVerifyMessageSignature_modifiedSignature() {
 		final SymmetricKeyUtils utils = new SymmetricKeyUtils();
-		final SymmetricKey128 key = utils.generateSecureSymmetricKey();
+		final SymmetricKey128 key = utils.generateSecureSymmetricKey(SymmetricKey128.class);
 		final HMACSHA256Fingerprinter sv = new HMACSHA256Fingerprinter(key);
 		final String signature = sv.fingerprint(message);
 		assertFalse(sv.verifyFingerprint(message, "P" + signature));
@@ -48,7 +48,7 @@ public class HMACSHA256FingerprinterTest {
 	@Test
 	public void testVerifyMessageSignature_notBase64() {
 		final SymmetricKeyUtils utils = new SymmetricKeyUtils();
-		final SymmetricKey128 key = utils.generateSecureSymmetricKey();
+		final SymmetricKey128 key = utils.generateSecureSymmetricKey(SymmetricKey128.class);
 		final HMACSHA256Fingerprinter sv = new HMACSHA256Fingerprinter(key);
 		assertFalse(sv.verifyFingerprint(message, "I'm not base64 at all! haha"));
 	}
@@ -56,7 +56,7 @@ public class HMACSHA256FingerprinterTest {
 	@Test
 	public void testVerifyMessageSignature_base64ButInvaslid() {
 		final SymmetricKeyUtils utils = new SymmetricKeyUtils();
-		final SymmetricKey128 key = utils.generateSecureSymmetricKey();
+		final SymmetricKey128 key = utils.generateSecureSymmetricKey(SymmetricKey128.class);
 		final HMACSHA256Fingerprinter sv = new HMACSHA256Fingerprinter(key);
 		assertFalse(sv.verifyFingerprint(message, "ZG9uJ3QgdHJ5IHRoaXMgYXQgaG9tZQ=="));
 	}

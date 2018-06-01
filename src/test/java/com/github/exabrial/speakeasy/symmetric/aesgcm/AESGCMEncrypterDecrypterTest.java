@@ -30,7 +30,7 @@ public class AESGCMEncrypterDecrypterTest {
 	@Test
 	public void testEncryptDecrypt() throws Exception {
 		final SymmetricKeyUtils utils = new SymmetricKeyUtils();
-		final SymmetricKey128 sharedKey = utils.generateSecureSymmetricKey();
+		final SymmetricKey128 sharedKey = utils.generateSecureSymmetricKey(SymmetricKey128.class);
 		final AESGCMEncrypter encrypter = new AESGCMEncrypter(sharedKey);
 		final String cipherText = encrypter.encrypt(plainText);
 		final AESGCMDecrypter decrypter = new AESGCMDecrypter(sharedKey);
@@ -40,7 +40,7 @@ public class AESGCMEncrypterDecrypterTest {
 	@Test
 	public void testEncrypt_doesntProduceSameCiphertext() throws Exception {
 		final SymmetricKeyUtils utils = new SymmetricKeyUtils();
-		final SymmetricKey128 sharedKey = utils.generateSecureSymmetricKey();
+		final SymmetricKey128 sharedKey = utils.generateSecureSymmetricKey(SymmetricKey128.class);
 		final AESGCMEncrypter encrypter = new AESGCMEncrypter(sharedKey);
 		final String cipherText0 = encrypter.encrypt(plainText);
 		final String cipherText1 = encrypter.encrypt(plainText);

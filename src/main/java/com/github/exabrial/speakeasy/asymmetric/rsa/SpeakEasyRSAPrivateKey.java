@@ -31,10 +31,10 @@ public class SpeakEasyRSAPrivateKey implements SpeakEasyPrivateKey {
 	}
 
 	@Override
-	public PrivateKey toKey() {
+	public PrivateKey toJCEKey() {
 		return privateKey;
 	}
-	
+
 	@Override
 	public byte[] getKeyBytes() {
 		return privateKey.getEncoded();

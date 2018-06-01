@@ -31,7 +31,7 @@ public class SpeakEasyRSAPublicKey implements SpeakEasyPublicKey {
 	}
 
 	@Override
-	public PublicKey toKey() {
+	public PublicKey toJCEKey() {
 		return publicKey;
 	}
 

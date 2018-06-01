@@ -16,21 +16,11 @@
 
 package com.github.exabrial.speakeasy.symmetric;
 
-import static com.github.exabrial.speakeasy.internal.SpeakEasyConstants.AES;
-import static com.github.exabrial.speakeasy.internal.SpeakEasyConstants.AES_KEY_SIZE;
-import static com.github.exabrial.speakeasy.internal.SpeakEasyConstants.SUN_JCE;
-
-import java.security.NoSuchAlgorithmException;
-import java.security.NoSuchProviderException;
-
-import javax.crypto.KeyGenerator;
-import javax.crypto.SecretKey;
-import javax.crypto.spec.SecretKeySpec;
+import java.lang.reflect.InvocationTargetException;
 
 import com.github.exabrial.speakeasy.encoding.Base64StringEncoder;
 import com.github.exabrial.speakeasy.entropy.NativeThreadLocalSecureRandomProvider;
 import com.github.exabrial.speakeasy.primitives.SecureRandomProvider;
-import com.github.exabrial.speakeasy.primitives.SpeakEasyKey;
 import com.github.exabrial.speakeasy.primitives.StringEncoder;
 
 /**
@@ -57,7 +47,7 @@ public class SymmetricKeyUtils {
 	 *          the key to be serialized
 	 * @return the string representation of the key
 	 */
-	public String toString(final SpeakEasyKey symmetricKey) {
+	public String toString(final SymmetricKey symmetricKey) {
 		final byte[] keyBytes = symmetricKey.getKeyBytes();
 		final String encodedKey = stringEncoder.encodeBytesAsString(keyBytes);
 		return encodedKey;
@@ -69,30 +59,40 @@ public class SymmetricKeyUtils {
 	 * @param encodedKeyString
 	 *          string representation of a key
 	 * @return the object represented by the string
+	 * @throws UnknownKeyLengthException
+	 *           if the keyLength isn't supported
 	 */
-	public SpeakEasyKey fromString(final String encodedKeyString) {
-		final byte[] encodedKeyBytes = stringEncoder.decodeStringToBytes(encodedKeyString);
-		final SecretKey secretKey = new SecretKeySpec(encodedKeyBytes, 0, encodedKeyBytes.length, AES);
-		final SymmetricKey128 symmetricKey = new SymmetricKey128(secretKey);
+	public <K extends SymmetricKey> K fromString(final String encodedKeyString, final Class<K> keyClazz)
+			throws UnknownKeyLengthException {
+		final byte[] keyBytes = stringEncoder.decodeStringToBytes(encodedKeyString);
+		final K symmetricKey;
+		try {
+			symmetricKey = keyClazz.getDeclaredConstructor(byte[].class).newInstance(keyBytes);
+		} catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException
+				| NoSuchMethodException | SecurityException e) {
+			throw new RuntimeException(e);
+		}
 		return symmetricKey;
 	}
 
 	/**
 	 * The best way to create a new key is to generate it here. A lot of people with
-	 * take a random string and called .getBytes(), which only returns bytes
-	 * possible in ascii or UTF charsets, severely limiting the entropy of the key.
-	 * The method ensure correctness.
+	 * take a random string and call .getBytes(), which only returns bytes possible
+	 * in ascii or UTF charsets, severely limiting the entropy of the key. The
+	 * method ensure correctness by allowing for all combinations possible.
 	 *
 	 * @return a randomly generated key
 	 */
-	public SymmetricKey128 generateSecureSymmetricKey() {
+	public <K extends SymmetricKey> K generateSecureSymmetricKey(final Class<K> keyClazz) {
+		final byte[] keyBytes = new byte[64];
+		secureRandomProvider.borrowSecureRandom().nextBytes(keyBytes);
+		final K symmetricKey;
 		try {
-			final KeyGenerator keyGen = KeyGenerator.getInstance(AES, SUN_JCE);
-			keyGen.init(AES_KEY_SIZE, secureRandomProvider.borrowSecureRandom());
-			final SecretKey secretKey = keyGen.generateKey();
-			return new SymmetricKey128(secretKey);
-		} catch (final NoSuchAlgorithmException | NoSuchProviderException e) {
+			symmetricKey = keyClazz.getDeclaredConstructor(byte[].class).newInstance(keyBytes);
+		} catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException
+				| NoSuchMethodException | SecurityException e) {
 			throw new RuntimeException(e);
 		}
+		return symmetricKey;
 	}
 }

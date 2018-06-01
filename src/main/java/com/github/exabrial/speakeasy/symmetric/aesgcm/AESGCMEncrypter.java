@@ -73,7 +73,7 @@ public class AESGCMEncrypter implements Encrypter {
 			secureRandom.nextBytes(iv);
 			final GCMParameterSpec gcmSpec = new GCMParameterSpec(AES_GCM_TAG_LENGTH, iv);
 			final Cipher cipher = Cipher.getInstance(AES_GCM, SUN_JCE);
-			cipher.init(Cipher.ENCRYPT_MODE, sharedKey.toKey(), gcmSpec, secureRandom);
+			cipher.init(Cipher.ENCRYPT_MODE, sharedKey.toJCEKey(), gcmSpec, secureRandom);
 			final byte[] plainTextBytes = stringEncoder.getStringAsBytes(plainText);
 			final byte[] cipherTextBytes = cipher.doFinal(plainTextBytes);
 			final byte[] ivAndCipherText = new byte[iv.length + cipherTextBytes.length];

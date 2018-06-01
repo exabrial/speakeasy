@@ -62,7 +62,7 @@ public class ECDSASigner implements Signer {
 			final byte[] messageBytes = stringEncoder.getStringAsBytes(message);
 			final Signature signature = Signature.getInstance(EC_SIG_ALG, SUN_EC);
 			final SecureRandom secureRandom = secureRandomProvider.borrowSecureRandom();
-			signature.initSign(privateKey.toKey(), secureRandom);
+			signature.initSign(privateKey.toJCEKey(), secureRandom);
 			signature.update(messageBytes);
 			final byte[] signatureBytes = signature.sign();
 			return stringEncoder.encodeBytesAsString(signatureBytes);

@@ -31,7 +31,7 @@ public class SpeakEasyEccPublicKey implements SpeakEasyPublicKey {
 	}
 
 	@Override
-	public PublicKey toKey() {
+	public PublicKey toJCEKey() {
 		return publicKey;
 	}
 

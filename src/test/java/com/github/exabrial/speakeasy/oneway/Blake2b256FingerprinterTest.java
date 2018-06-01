@@ -25,7 +25,8 @@ import com.github.exabrial.speakeasy.testing.StringBytesEncoder;
 
 public class Blake2b256FingerprinterTest {
 	private final String testVector = "hello";
-	private final String encodedTestVectorFingerprint = ("324dcf027dd4a30a932c441f365a25e86b173defa4b8e58948253471b81b72cf").toUpperCase();
+	private final String encodedTestVectorFingerprint = ("324dcf027dd4a30a932c441f365a25e86b173defa4b8e58948253471b81b72cf")
+			.toUpperCase();
 
 	@Test
 	public void testFingerprint() {

@@ -21,7 +21,7 @@ package com.github.exabrial.speakeasy.symmetric;
  * called symmetric. This class holds a 128 bit value key value.
  */
 public class SymmetricKey128 extends SymmetricKey {
-	private static final int KEY_LENGTH = 16;
+	private static final int KEY_LENGTH = 128;
 
 	public SymmetricKey128(final byte[] keyBytes) {
 		super(keyBytes, KEY_LENGTH);

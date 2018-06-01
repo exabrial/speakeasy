@@ -30,17 +30,13 @@ import com.github.exabrial.speakeasy.primitives.SpeakEasyKey;
 public abstract class SymmetricKey implements SpeakEasyKey {
 	private final byte[] keyBytes;
 
-	SymmetricKey(byte[] keyBytes, final int keyLength) {
-		keyBytes = Arrays.copyOf(keyBytes, keyLength);
-		checkKeyBytes(keyBytes, keyLength);
-		this.keyBytes = keyBytes;
-	}
-
-	void checkKeyBytes(final byte[] keyBytes, final int keyLength) {
+	SymmetricKey(final byte[] keyBytes, final int keyLength) {
 		if (keyBytes == null) {
-			throw new NullPointerException("Key cannot be null!");
-		} else if (keyBytes.length != keyLength) {
-			throw new AssertionError("A " + keyLength + " byte key must have " + keyLength + " bytes....");
+			throw new NullPointerException("keyBytes cannot be null!");
+		} else if ((keyBytes.length * 8) < keyLength) {
+			throw new AssertionError("A " + keyLength + " bit key must have " + keyLength / 8 + " bytes....");
+		} else {
+			this.keyBytes = Arrays.copyOf(keyBytes, keyLength / 8);
 		}
 	}
 

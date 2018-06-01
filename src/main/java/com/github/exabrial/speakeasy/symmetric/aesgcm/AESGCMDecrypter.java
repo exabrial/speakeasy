@@ -43,6 +43,7 @@ import com.github.exabrial.speakeasy.symmetric.SymmetricKey128;
  *
  * @see AESGCMEncrypter
  */
+@SuppressWarnings("PMD.TooManyStaticImports")
 public class AESGCMDecrypter implements Decrypter {
 	private final StringEncoder stringEncoder;
 	private final SymmetricKey128 sharedKey;

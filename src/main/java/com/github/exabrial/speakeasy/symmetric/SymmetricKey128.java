@@ -23,7 +23,7 @@ package com.github.exabrial.speakeasy.symmetric;
 public class SymmetricKey128 extends SymmetricKey {
 	private static final int KEY_LENGTH = 16;
 
-	SymmetricKey128(final byte[] keyBytes) {
+	public SymmetricKey128(final byte[] keyBytes) {
 		super(keyBytes, KEY_LENGTH);
 	}
 }

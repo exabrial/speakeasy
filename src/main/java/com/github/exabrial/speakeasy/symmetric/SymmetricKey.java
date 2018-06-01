@@ -27,6 +27,10 @@ import org.bouncycastle.util.Arrays;
 
 import com.github.exabrial.speakeasy.primitives.SpeakEasyKey;
 
+/**
+ * Holds the key material for a key that is used both for a encrpt/decrypt,
+ * sign/verify, or hash/verify operation.
+ */
 public abstract class SymmetricKey implements SpeakEasyKey {
 	private final byte[] keyBytes;
 

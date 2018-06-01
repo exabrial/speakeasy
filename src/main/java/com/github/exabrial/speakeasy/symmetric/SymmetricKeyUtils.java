@@ -58,8 +58,10 @@ public class SymmetricKeyUtils {
 	 *
 	 * @param encodedKeyString
 	 *          string representation of a key
+	 * @param <K>
+	 *          the type of key to generate
 	 * @param keyClazz
-	 *          the type of @param keyClazz to deserialize
+	 *          class type of K
 	 * @return the object represented by the string
 	 */
 	public <K extends SymmetricKey> K fromString(final String encodedKeyString, final Class<K> keyClazz) {
@@ -80,9 +82,11 @@ public class SymmetricKeyUtils {
 	 * in ascii or UTF charsets, severely limiting the entropy of the key. The
 	 * method ensure correctness by allowing for all combinations possible.
 	 *
+	 * @param <K>
+	 *          the type of key to generate
 	 * @param keyClazz
-	 *          the type of @param keyClazz to generate
-	 * @return a randomly generated key
+	 *          class type of K
+	 * @return a randomly generated K
 	 */
 	public <K extends SymmetricKey> K generateSecureSymmetricKey(final Class<K> keyClazz) {
 		final byte[] keyBytes = new byte[64];

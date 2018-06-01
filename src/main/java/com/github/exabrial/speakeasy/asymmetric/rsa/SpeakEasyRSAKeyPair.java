@@ -19,8 +19,6 @@ package com.github.exabrial.speakeasy.asymmetric.rsa;
 import java.security.KeyPair;
 
 import com.github.exabrial.speakeasy.asymmetric.SpeakEasyKeyPair;
-import com.github.exabrial.speakeasy.asymmetric.SpeakEasyPrivateKey;
-import com.github.exabrial.speakeasy.asymmetric.SpeakEasyPublicKey;
 
 /**
  * Holds a public and private RSA keypair.
@@ -35,13 +33,12 @@ public class SpeakEasyRSAKeyPair implements SpeakEasyKeyPair {
 	}
 
 	@Override
-	public SpeakEasyPrivateKey getPrivateKey() {
+	public SpeakEasyRSAPrivateKey getPrivateKey() {
 		return speakEasyRSAPrivateKey;
 	}
 
 	@Override
-	public SpeakEasyPublicKey getPublicKey() {
+	public SpeakEasyRSAPublicKey getPublicKey() {
 		return speakEasyRSAPublicKey;
 	}
-
 }

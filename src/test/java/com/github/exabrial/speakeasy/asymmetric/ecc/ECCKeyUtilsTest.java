@@ -21,9 +21,10 @@ import org.junit.jupiter.api.Test;
 
 public class ECCKeyUtilsTest {
 	private final ECCKeyUtils eccKeyUtils = new ECCKeyUtils();
-	private final String publicKeyString = "MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEsCn+KLhNmgacinopuRKAAlBKGbZ5zuFHkTD/s6mk3i21VdS4zk70l7dXp+yM"
-			+ "tkdoUyPVsISwLO6ryVkX0wyLAQ==";
-	private final String privateKeyString = "MEECAQAwEwYHKoZIzj0CAQYIKoZIzj0DAQcEJzAlAgEBBCAXB74BNYk90OWLcs9eJOdp+o7+J/Va/Ge31Gitfrl/sg==";
+	private final String publicKeyString = "MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEsCn+KLhNmgacinopuRKAAlBKGbZ5zuFHkTD/s6mk3i21VdS4zk70l7d"
+			+ "Xp+yMtkdoUyPVsISwLO6ryVkX0wyLAQ==";
+	private final String privateKeyString = "MEECAQAwEwYHKoZIzj0CAQYIKoZIzj0DAQcEJzAlAgEBBCAXB74BNYk90OWLcs9eJOdp+o7+J/Va/Ge31Gitfrl/sg"
+			+ "==";
 
 	@Test
 	public void testCreateKeyPair() {

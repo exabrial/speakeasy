@@ -38,7 +38,7 @@ import com.github.exabrial.speakeasy.entropy.NativeThreadLocalSecureRandomProvid
 import com.github.exabrial.speakeasy.primitives.Encrypter;
 import com.github.exabrial.speakeasy.primitives.SecureRandomProvider;
 import com.github.exabrial.speakeasy.primitives.StringEncoder;
-import com.github.exabrial.speakeasy.symmetric.SymmetricKey;
+import com.github.exabrial.speakeasy.symmetric.SymmetricKey128;
 
 /**
  * AES is a fast and secure symmetric encryption algorithm when used correctly.
@@ -49,16 +49,16 @@ import com.github.exabrial.speakeasy.symmetric.SymmetricKey;
 @SuppressWarnings("PMD.TooManyStaticImports")
 public class AESGCMEncrypter implements Encrypter {
 	private final StringEncoder stringEncoder;
-	private final SymmetricKey sharedKey;
+	private final SymmetricKey128 sharedKey;
 	private final SecureRandomProvider secureRandomProvider;
 
-	public AESGCMEncrypter(final SymmetricKey sharedKey) {
+	public AESGCMEncrypter(final SymmetricKey128 sharedKey) {
 		this.stringEncoder = getSingleton();
 		this.sharedKey = sharedKey;
 		this.secureRandomProvider = NativeThreadLocalSecureRandomProvider.getSingleton();
 	}
 
-	public AESGCMEncrypter(final SymmetricKey sharedKey, final StringEncoder stringEncoder,
+	public AESGCMEncrypter(final SymmetricKey128 sharedKey, final StringEncoder stringEncoder,
 			final SecureRandomProvider secureRandomProvider) {
 		this.stringEncoder = stringEncoder;
 		this.sharedKey = sharedKey;

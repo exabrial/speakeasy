@@ -14,12 +14,18 @@
  * the License.
  */
 
-package com.github.exabrial.speakeasy;
+package com.github.exabrial.speakeasy.symmetric;
+
+import com.github.exabrial.speakeasy.primitives.SpeakEasyKey;
 
 /**
- * Does nothing. Just a placeholder for now. Might be used later for CDI or
- * Spring bootstrapping. Will probably use for "getStrongestFingerPrint" and
- * "getStrongestPracticalFingerprint"
+ * An algorithm that uses a single key for two converse or inverse operations is
+ * called symmetric. This class holds a 128 bit value key value.
  */
-public final class SpeakEasy {
+public class SymmetricKey128 implements SpeakEasyKey {
+
+	@Override
+	public byte[] getKeyBytes() {
+		return null;
+	}
 }

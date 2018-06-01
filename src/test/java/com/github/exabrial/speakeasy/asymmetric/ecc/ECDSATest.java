@@ -21,13 +21,13 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
-public class ECDSASignerTest {
+public class ECDSATest {
 	private final String message = "I was asked to name all the presidents. I thought they already had names.";
+	private final ECCKeyUtils utils = new ECCKeyUtils();
+	private final SpeakEasyEccKeyPair keyPair = utils.createKeyPair();
 
 	@Test
 	public void testSignmessage() {
-		final ECCKeyUtils utils = new ECCKeyUtils();
-		final SpeakEasyEccKeyPair keyPair = utils.createKeyPair();
 		final ECDSASigner signer = new ECDSASigner(keyPair.getPrivateKey());
 		final String signatureText = signer.signMessage(message);
 		final ECDSAVerifier verifier = new ECDSAVerifier(keyPair.getPublicKey());
@@ -36,8 +36,6 @@ public class ECDSASignerTest {
 
 	@Test
 	public void testSignmessage_modMessage() {
-		final ECCKeyUtils utils = new ECCKeyUtils();
-		final SpeakEasyEccKeyPair keyPair = utils.createKeyPair();
 		final ECDSASigner signer = new ECDSASigner(keyPair.getPrivateKey());
 		final String signatureText = signer.signMessage(message);
 		final ECDSAVerifier verifier = new ECDSAVerifier(keyPair.getPublicKey());
@@ -46,8 +44,6 @@ public class ECDSASignerTest {
 
 	@Test
 	public void testSignmessage_modMessage2() {
-		final ECCKeyUtils utils = new ECCKeyUtils();
-		final SpeakEasyEccKeyPair keyPair = utils.createKeyPair();
 		final ECDSASigner signer = new ECDSASigner(keyPair.getPrivateKey());
 		final String signatureText = signer.signMessage(message);
 		final ECDSAVerifier verifier = new ECDSAVerifier(keyPair.getPublicKey());
@@ -56,8 +52,6 @@ public class ECDSASignerTest {
 
 	@Test
 	public void testSignmessage_modSig() {
-		final ECCKeyUtils utils = new ECCKeyUtils();
-		final SpeakEasyEccKeyPair keyPair = utils.createKeyPair();
 		final ECDSASigner signer = new ECDSASigner(keyPair.getPrivateKey());
 		final String signatureText = signer.signMessage(message);
 		final ECDSAVerifier verifier = new ECDSAVerifier(keyPair.getPublicKey());

@@ -34,4 +34,9 @@ public class SpeakEasyEccPublicKey implements SpeakEasyPublicKey {
 	public PublicKey toKey() {
 		return publicKey;
 	}
+
+	@Override
+	public byte[] getKeyBytes() {
+		return publicKey.getEncoded();
+	}
 }

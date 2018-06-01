@@ -16,7 +16,9 @@
 
 package com.github.exabrial.speakeasy.internal;
 
+import java.math.BigInteger;
 import java.security.Provider;
+import java.security.spec.RSAKeyGenParameterSpec;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -43,6 +45,9 @@ public final class SpeakEasyConstants {
 	public static final int GCM_NONCE_LENGTH = 12;
 	public static final String HMAC_SHA256 = "HmacSHA256";
 	public static final int HMACSHA256_SIG_LENGTH = 32;
+	public static final BigInteger RSA_EXPONENT = RSAKeyGenParameterSpec.F4;
+	public static final int RSA_KEY_LENGTH = 2048;
+	public static final String RSA = "RSA";
 	public static final int SCRYPT_N = (int) Math.pow(2, 14);
 	public static final int SCRYPT_P = 1;
 	public static final int SCRYPT_R = 8;
@@ -54,6 +59,7 @@ public final class SpeakEasyConstants {
 	public static final String SUN = "SUN";
 	public static final String SUN_EC = sunEc(System.getProperty("java.version"));
 	public static final String SUN_JCE = "SunJCE";
+	public static final String SUN_RSA_SIGN = "SunRsaSign";
 
 	static Provider createBCProvider() {
 		final BouncyCastleProvider provider = new BouncyCastleProvider();
@@ -66,10 +72,9 @@ public final class SpeakEasyConstants {
 			final String subversionText = matcher.group(1);
 			final int subversion = Integer.parseInt(subversionText);
 			if (subversion < ACCEPTABLE_JDK8_MINOR) {
-				throw new WhatInTheHellAreYouThinkingException("Hello. You are running an ancient JDK and attempting to do cryptography."
-						+ " This is not a safe operation, as your private keys can be revealed by an attacker by"
-						+ " simply sending you some specially crafted messages. We're going to abort here and wait"
-						+ " while you install a modern JDK.");
+				throw new WhatInTheHellAreYouThinkingException("Hello. You are running an ancient JDK and attempting to do 'cryptography'."
+						+ " This is not a safe operation, as your private keys can be revealed by an attacker by simply sending you some"
+						+ " specially crafted messages. We're going to abort here and wait while you install a modern JDK.");
 			}
 		}
 		return "SunEC";

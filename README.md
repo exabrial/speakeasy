@@ -75,9 +75,11 @@ public class MyThing {
 
 * ECDSA
 * SHA256, SHA384, SHA512
-* Blake2b-256, 384, 512 (both keyed/non-keyed)
+* Blake2b-256, 384, 512 (non-keyed)
 * AES128
 * HMAC-SHA256
+* RSA Signatures
+
 
 ## Compatibility
 
@@ -120,11 +122,9 @@ Currently, Speakeasy targets JDK 1.8. You will need a `~/.m2/toolchains.xml` fil
 After that, simply run: `mvn install`. In your IDE, you can enable the `eclipse` profile to bring in the Junit5 dependencies. You can skip all the checks by running `mvn install -P skipChecks` for prototype builds... obviously don't do that long term. Finally there is a site you can run to see HTML reports of the project: `mvn clean site`. After this is complete, open the `target/site/index.html` file.
 
 ## TODO List
-* RSA: 2048, 3072, 4096
-
-If these can be found in a JCE, I'll include them, otherwise I'll probably start a seperate JCE project where we IMPLEMENT CRYPTO lol:
 * SHA3: 256, 384, 512
 * Argon, Scrypt, Bcrypt
 * EdDSA signatures
-* Curve25519 for ECDSA, ECIES
-* Hmac over the new Fingerprint algs
+* Curve25519 for ECDSA
+* ECIES
+

@@ -16,16 +16,14 @@
 
 package com.github.exabrial.speakeasy.primitives;
 
-import java.security.Key;
-
 /**
  * A key that can be used by various SpeakEasy primitives.
  */
 public interface SpeakEasyKey {
 	/**
-	 * Transform this object into a JCE key.
+	 * Key the raw bytes for this key.
 	 *
-	 * @return a JCE representation of the wrapped key.
+	 * @return key raw bytes.
 	 */
-	Key toKey();
+	byte[] getKeyBytes();
 }

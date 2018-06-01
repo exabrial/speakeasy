@@ -21,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 import org.junit.jupiter.api.Test;
 
-import com.github.exabrial.speakeasy.symmetric.SymmetricKey;
+import com.github.exabrial.speakeasy.symmetric.SymmetricKey128;
 import com.github.exabrial.speakeasy.symmetric.SymmetricKeyUtils;
 
 public class AESGCMEncrypterDecrypterTest {
@@ -30,7 +30,7 @@ public class AESGCMEncrypterDecrypterTest {
 	@Test
 	public void testEncryptDecrypt() throws Exception {
 		final SymmetricKeyUtils utils = new SymmetricKeyUtils();
-		final SymmetricKey sharedKey = utils.generateSecureSymmetricKey();
+		final SymmetricKey128 sharedKey = utils.generateSecureSymmetricKey();
 		final AESGCMEncrypter encrypter = new AESGCMEncrypter(sharedKey);
 		final String cipherText = encrypter.encrypt(plainText);
 		final AESGCMDecrypter decrypter = new AESGCMDecrypter(sharedKey);
@@ -40,7 +40,7 @@ public class AESGCMEncrypterDecrypterTest {
 	@Test
 	public void testEncrypt_doesntProduceSameCiphertext() throws Exception {
 		final SymmetricKeyUtils utils = new SymmetricKeyUtils();
-		final SymmetricKey sharedKey = utils.generateSecureSymmetricKey();
+		final SymmetricKey128 sharedKey = utils.generateSecureSymmetricKey();
 		final AESGCMEncrypter encrypter = new AESGCMEncrypter(sharedKey);
 		final String cipherText0 = encrypter.encrypt(plainText);
 		final String cipherText1 = encrypter.encrypt(plainText);

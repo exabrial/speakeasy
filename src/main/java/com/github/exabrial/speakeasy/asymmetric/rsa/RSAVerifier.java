@@ -18,9 +18,11 @@ package com.github.exabrial.speakeasy.asymmetric.rsa;
 
 import static com.github.exabrial.speakeasy.encoding.Base64StringEncoder.getSingleton;
 import static com.github.exabrial.speakeasy.internal.SpeakEasyConstants.SHA256_WITH_RSA;
+import static com.github.exabrial.speakeasy.internal.SpeakEasyConstants.SUN_RSA_SIGN;
 
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+import java.security.NoSuchProviderException;
 import java.security.Signature;
 import java.security.SignatureException;
 
@@ -50,13 +52,13 @@ public class RSAVerifier implements Verifier {
 		try {
 			final byte[] messageBytes = stringEncoder.getStringAsBytes(message);
 			final byte[] signatureBytes = stringEncoder.decodeStringToBytes(signatureText);
-			final Signature signature = Signature.getInstance(SHA256_WITH_RSA);
+			final Signature signature = Signature.getInstance(SHA256_WITH_RSA, SUN_RSA_SIGN);
 			signature.initVerify(publicKey.toKey());
 			signature.update(messageBytes);
 			return signature.verify(signatureBytes);
 		} catch (final NullPointerException | ArrayIndexOutOfBoundsException | SignatureException e) {
 			return false;
-		} catch (final InvalidKeyException | NoSuchAlgorithmException e) {
+		} catch (final InvalidKeyException | NoSuchAlgorithmException | NoSuchProviderException e) {
 			throw new RuntimeException(e);
 		}
 	}

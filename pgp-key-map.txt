@@ -1,0 +1,6 @@
+# Map of artifacts to PGP keys for pgpverify plugin
+
+org.apiguardian:*:*=0x164BD2247B936711
+org.bouncycastle:*:*=0x08F0AAB4D0C1A4BDDE340765B341DDB020FCB6AB
+org.junit.*:*:*=0x85911F425EC61B51
+org.opentest4j:*:*=0x85911F425EC61B51

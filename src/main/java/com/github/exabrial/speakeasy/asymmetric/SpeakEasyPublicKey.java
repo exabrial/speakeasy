@@ -25,6 +25,5 @@ import com.github.exabrial.speakeasy.primitives.SpeakEasyKey;
  * SpeakEasyKeyPair
  */
 public interface SpeakEasyPublicKey extends SpeakEasyKey {
-	@Override
 	PublicKey toKey();
 }

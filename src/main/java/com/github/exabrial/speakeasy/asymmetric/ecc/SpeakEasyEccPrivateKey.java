@@ -34,4 +34,9 @@ public class SpeakEasyEccPrivateKey implements SpeakEasyPrivateKey {
 	public PrivateKey toKey() {
 		return privateKey;
 	}
+
+	@Override
+	public byte[] getKeyBytes() {
+		return privateKey.getEncoded();
+	}
 }

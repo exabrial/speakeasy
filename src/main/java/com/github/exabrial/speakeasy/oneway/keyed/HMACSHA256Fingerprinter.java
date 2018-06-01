@@ -28,31 +28,31 @@ import com.github.exabrial.speakeasy.comporator.SecureMessageComporator;
 import com.github.exabrial.speakeasy.encoding.Base64StringEncoder;
 import com.github.exabrial.speakeasy.primitives.Fingerprinter;
 import com.github.exabrial.speakeasy.primitives.MessageComporator;
+import com.github.exabrial.speakeasy.primitives.SpeakEasyKey;
 import com.github.exabrial.speakeasy.primitives.StringEncoder;
-import com.github.exabrial.speakeasy.symmetric.SymmetricKey;
 
 /**
  * HMAC takes a standard hash algorithm (Fingerprint) and makes it require a
  * symmetric key in order to produce hashes.
  */
 public class HMACSHA256Fingerprinter implements Fingerprinter {
-	private final SymmetricKey symmetricKey;
+	private final SpeakEasyKey symmetricKey;
 	private final StringEncoder stringEncoder;
 	private final MessageComporator messageComporator;
 
-	public HMACSHA256Fingerprinter(final SymmetricKey symmetricKey) {
+	public HMACSHA256Fingerprinter(final SpeakEasyKey symmetricKey) {
 		this.symmetricKey = symmetricKey;
 		this.stringEncoder = Base64StringEncoder.getSingleton();
 		this.messageComporator = SecureMessageComporator.getSingleton();
 	}
 
-	public HMACSHA256Fingerprinter(final SymmetricKey symmetricKey, final StringEncoder stringEncoder) {
+	public HMACSHA256Fingerprinter(final SpeakEasyKey symmetricKey, final StringEncoder stringEncoder) {
 		this.symmetricKey = symmetricKey;
 		this.stringEncoder = stringEncoder;
 		this.messageComporator = SecureMessageComporator.getSingleton();
 	}
 
-	public HMACSHA256Fingerprinter(final SymmetricKey symmetricKey, final StringEncoder stringEncoder,
+	public HMACSHA256Fingerprinter(final SpeakEasyKey symmetricKey, final StringEncoder stringEncoder,
 			final MessageComporator messageComporator) {
 		this.symmetricKey = symmetricKey;
 		this.stringEncoder = stringEncoder;
@@ -64,7 +64,7 @@ public class HMACSHA256Fingerprinter implements Fingerprinter {
 		try {
 			final byte[] messageBytes = stringEncoder.getStringAsBytes(message);
 			final Mac hmac = Mac.getInstance(HMAC_SHA256);
-			final SecretKeySpec secret_key = new SecretKeySpec(symmetricKey.toKey().getEncoded(), HMAC_SHA256);
+			final SecretKeySpec secret_key = new SecretKeySpec(symmetricKey.getKeyBytes(), HMAC_SHA256);
 			hmac.init(secret_key);
 			final byte[] signatureBytes = hmac.doFinal(messageBytes);
 			final String signature = stringEncoder.encodeBytesAsString(signatureBytes);
@@ -79,7 +79,7 @@ public class HMACSHA256Fingerprinter implements Fingerprinter {
 		try {
 			final byte[] messageBytes = stringEncoder.getStringAsBytes(message);
 			final Mac hmac = Mac.getInstance(HMAC_SHA256);
-			final SecretKeySpec secret_key = new SecretKeySpec(symmetricKey.toKey().getEncoded(), HMAC_SHA256);
+			final SecretKeySpec secret_key = new SecretKeySpec(symmetricKey.getKeyBytes(), HMAC_SHA256);
 			hmac.init(secret_key);
 			final byte[] cSignatureBytes = hmac.doFinal(messageBytes);
 			final byte[] pSignatureBytes = stringEncoder.decodeStringToBytes(signature);

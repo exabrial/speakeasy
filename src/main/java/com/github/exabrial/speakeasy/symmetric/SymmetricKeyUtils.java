@@ -30,6 +30,7 @@ import javax.crypto.spec.SecretKeySpec;
 import com.github.exabrial.speakeasy.encoding.Base64StringEncoder;
 import com.github.exabrial.speakeasy.entropy.NativeThreadLocalSecureRandomProvider;
 import com.github.exabrial.speakeasy.primitives.SecureRandomProvider;
+import com.github.exabrial.speakeasy.primitives.SpeakEasyKey;
 import com.github.exabrial.speakeasy.primitives.StringEncoder;
 
 /**
@@ -56,8 +57,8 @@ public class SymmetricKeyUtils {
 	 *          the key to be serialized
 	 * @return the string representation of the key
 	 */
-	public String toString(final SymmetricKey symmetricKey) {
-		final byte[] keyBytes = symmetricKey.toKey().getEncoded();
+	public String toString(final SpeakEasyKey symmetricKey) {
+		final byte[] keyBytes = symmetricKey.getKeyBytes();
 		final String encodedKey = stringEncoder.encodeBytesAsString(keyBytes);
 		return encodedKey;
 	}
@@ -69,10 +70,10 @@ public class SymmetricKeyUtils {
 	 *          string representation of a key
 	 * @return the object represented by the string
 	 */
-	public SymmetricKey fromString(final String encodedKeyString) {
+	public SpeakEasyKey fromString(final String encodedKeyString) {
 		final byte[] encodedKeyBytes = stringEncoder.decodeStringToBytes(encodedKeyString);
 		final SecretKey secretKey = new SecretKeySpec(encodedKeyBytes, 0, encodedKeyBytes.length, AES);
-		final SymmetricKey symmetricKey = new SymmetricKey(secretKey);
+		final SymmetricKey128 symmetricKey = new SymmetricKey128(secretKey);
 		return symmetricKey;
 	}
 
@@ -84,12 +85,12 @@ public class SymmetricKeyUtils {
 	 *
 	 * @return a randomly generated key
 	 */
-	public SymmetricKey generateSecureSymmetricKey() {
+	public SymmetricKey128 generateSecureSymmetricKey() {
 		try {
 			final KeyGenerator keyGen = KeyGenerator.getInstance(AES, SUN_JCE);
 			keyGen.init(AES_KEY_SIZE, secureRandomProvider.borrowSecureRandom());
 			final SecretKey secretKey = keyGen.generateKey();
-			return new SymmetricKey(secretKey);
+			return new SymmetricKey128(secretKey);
 		} catch (final NoSuchAlgorithmException | NoSuchProviderException e) {
 			throw new RuntimeException(e);
 		}

@@ -106,8 +106,17 @@ Yay! See [CONTRIBUTING.md](CONTRIBUTING.md)
 
 ## Downloading
 
-This artifact isn't in central yet. :( Working on it.
+Add this to your Maven pom.xml:
 
+
+```
+<dependency>
+	<groupId>com.github.exabrial</groupId>
+	<artifactId>speakeasy</artifactId>
+	<version>1.0.0</version>
+	<scope>compile</scope>
+</dependency>
+```
 
 ## Building
 

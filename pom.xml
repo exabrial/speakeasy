@@ -16,8 +16,8 @@
 	<name>speakeasy</name>
 	<url>https://github.com/exabrial/speakeasy</url>
 	<scm>
-		<connection>scm:git:ssh://git@github.com:exabrial/speakeasy.git</connection>
-		<developerConnection>scm:git:ssh://git@github.com:exabrial/speakeasy.git</developerConnection>
+		<connection>scm:git:ssh://git@github.com/exabrial/speakeasy.git</connection>
+		<developerConnection>scm:git:ssh://git@github.com/exabrial/speakeasy.git</developerConnection>
 		<url>https://github.com/exabrial/speakeasy/tree/master</url>
 	</scm>
 	<properties>

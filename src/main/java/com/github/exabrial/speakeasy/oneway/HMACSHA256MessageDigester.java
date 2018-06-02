@@ -16,21 +16,28 @@
 
 package com.github.exabrial.speakeasy.oneway;
 
-import static com.github.exabrial.speakeasy.internal.SpeakEasyConstants.SUN;
+import static com.github.exabrial.speakeasy.internal.SpeakEasyConstants.HMAC_SHA256;
 
-import java.security.MessageDigest;
+import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
 
-class SHAMessageDigester implements MessageDigester {
-	private final String digestName;
+import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
 
-	public SHAMessageDigester(final String digestName) {
-		this.digestName = digestName;
+class HMACSHA256MessageDigester implements MessageDigester {
+	private final byte[] keyBytes;
+
+	HMACSHA256MessageDigester(final byte[] keyBytes) {
+		this.keyBytes = keyBytes;
 	}
 
 	@Override
-	public byte[] digest(final byte[] message) throws NoSuchAlgorithmException, NoSuchProviderException {
-		return MessageDigest.getInstance(digestName, SUN).digest(message);
+	public byte[] digest(final byte[] messageBytes) throws NoSuchAlgorithmException, NoSuchProviderException, InvalidKeyException {
+		final Mac hmac = Mac.getInstance(HMAC_SHA256);
+		final SecretKeySpec secret_key = new SecretKeySpec(keyBytes, HMAC_SHA256);
+		hmac.init(secret_key);
+		final byte[] signatureBytes = hmac.doFinal(messageBytes);
+		return signatureBytes;
 	}
 }

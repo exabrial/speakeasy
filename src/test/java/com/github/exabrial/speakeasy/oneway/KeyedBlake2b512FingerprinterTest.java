@@ -17,31 +17,25 @@
 package com.github.exabrial.speakeasy.oneway;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Arrays;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
-import com.github.exabrial.speakeasy.oneway.KeyedBlake2b256Fingerprinter;
 import com.github.exabrial.speakeasy.symmetric.SymmetricKey512;
 
-class Blake2b256KeyedFingerprinterTest {
+public class KeyedBlake2b512FingerprinterTest {
 	private final String testString = "I wanted to come up with a good construction joke... lets just say I'm working on it.";
-	private final String expected = "IQCae1ZNGYrIq+mu65ScJVqxDa0ItVGt911xcD7sokc=";
+	private final String expected = "sXgL+RBlgM5l9yr11/1H/kI61VITpxcP10msp0zMR8eZ0mFmC9+j2R9qHprnqd0yD/Cm8z1zFHH5UA+v4WghQQ==";
 
 	@Test
 	void testFingerprintAndVerify() {
 		final byte[] bytes = new byte[64];
 		Arrays.fill(bytes, (byte) 1);
 		final SymmetricKey512 key = new SymmetricKey512(bytes);
-		final KeyedBlake2b256Fingerprinter fingerPrinter = new KeyedBlake2b256Fingerprinter(key);
+		final KeyedBlake2b512Fingerprinter fingerPrinter = new KeyedBlake2b512Fingerprinter(key);
 		assertEquals(expected, fingerPrinter.fingerprint(testString));
-	}
-
-	@Test
-	@Disabled
-	void testVerifyFingerprint() {
-		// TODO need some RFC test vectors
+		assertTrue(fingerPrinter.verifyFingerprint(testString, expected));
 	}
 }

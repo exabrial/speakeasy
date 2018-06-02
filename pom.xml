@@ -138,7 +138,7 @@
 										<limit>
 											<counter>LINE</counter>
 											<value>COVEREDRATIO</value>
-											<minimum>50%</minimum>
+											<minimum>40%</minimum>
 										</limit>
 									</limits>
 								</rule>
@@ -396,6 +396,16 @@
 					</execution>
 				</executions>
 			</plugin>
+			<plugin>
+				<groupId>org.sonatype.plugins</groupId>
+				<artifactId>nexus-staging-maven-plugin</artifactId>
+				<extensions>true</extensions>
+				<configuration>
+					<serverId>ossrh</serverId>
+					<nexusUrl>https://oss.sonatype.org/</nexusUrl>
+					<autoReleaseAfterClose>true</autoReleaseAfterClose>
+				</configuration>
+			</plugin>
 		</plugins>
 		<pluginManagement>
 			<plugins>
@@ -552,6 +562,11 @@
 					<groupId>org.simplify4u.plugins</groupId>
 					<artifactId>pgpverify-maven-plugin</artifactId>
 					<version>1.2.0</version>
+				</plugin>
+				<plugin>
+					<groupId>org.sonatype.plugins</groupId>
+					<artifactId>nexus-staging-maven-plugin</artifactId>
+					<version>1.6.7</version>
 				</plugin>
 			</plugins>
 		</pluginManagement>

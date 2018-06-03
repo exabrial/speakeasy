@@ -106,7 +106,7 @@ Yay! See [CONTRIBUTING.md](CONTRIBUTING.md)
 
 ## Downloading
 
-Add this to your Maven pom.xml:
+### Using Maven:
 
 
 ```
@@ -117,6 +117,8 @@ Add this to your Maven pom.xml:
 	<scope>compile</scope>
 </dependency>
 ```
+
+I highly recommend you add `pgpverify-maven-plugin` to your pom to check signatures on your artifacts. You can see how this is done by looking at Speakeasy's pom.
 
 ## Building
 

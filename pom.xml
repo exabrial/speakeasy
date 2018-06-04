@@ -309,14 +309,14 @@
 				<executions>
 					<execution>
 						<id>gpg-sign</id>
-						<phase></phase>
+						<phase>verify</phase>
 						<goals>
 							<goal>sign</goal>
 						</goals>
 					</execution>
 				</executions>
 				<configuration>
-					<keyname>Speakeast Signing Key</keyname>
+					<keyname>Speakeasy Signing Key</keyname>
 				</configuration>
 			</plugin>
 			<plugin>

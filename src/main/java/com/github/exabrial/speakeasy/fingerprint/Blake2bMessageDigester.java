@@ -14,7 +14,7 @@
  * the License.
  */
 
-package com.github.exabrial.speakeasy.oneway;
+package com.github.exabrial.speakeasy.fingerprint;
 
 import org.bouncycastle.crypto.digests.Blake2bDigest;
 

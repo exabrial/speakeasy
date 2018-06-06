@@ -14,37 +14,36 @@
  * the License.
  */
 
-package com.github.exabrial.speakeasy.oneway;
-
-import java.security.NoSuchAlgorithmException;
+package com.github.exabrial.speakeasy.fingerprint;
 
 import com.github.exabrial.speakeasy.comporator.BasicMessageComporator;
 import com.github.exabrial.speakeasy.encoding.Base64StringEncoder;
 import com.github.exabrial.speakeasy.primitives.MessageComporator;
 import com.github.exabrial.speakeasy.primitives.StringEncoder;
-import com.github.exabrial.speakeasy.symmetric.SymmetricKey512;
+import com.github.exabrial.speakeasy.symmetric.SymmetricKey256;
 
 /**
- * A keyed (HMAC like) Fingerprinter using the Blake2b function.
+ * A keyed (HMAC like) Fingerprinter using the Blake2b function. 128bits is
+ * [currently] secure in keyed mode (with a proper 256 bit key).
  */
-public class KeyedBlake2b256Fingerprinter extends FingerprinterBase {
-	private final SymmetricKey512 symmetricKey;
+public class KeyedBlake2b128Fingerprinter extends FingerprinterBase {
+	private final SymmetricKey256 symmetricKey;
 	private final StringEncoder stringEncoder;
 	private final MessageComporator messageComporator;
 
-	public KeyedBlake2b256Fingerprinter(final SymmetricKey512 symmetricKey) {
+	public KeyedBlake2b128Fingerprinter(final SymmetricKey256 symmetricKey) {
 		this.symmetricKey = symmetricKey;
 		this.stringEncoder = Base64StringEncoder.getSingleton();
 		this.messageComporator = BasicMessageComporator.getSingleton();
 	}
 
-	public KeyedBlake2b256Fingerprinter(final SymmetricKey512 symmetricKey, final StringEncoder stringEncoder) {
+	public KeyedBlake2b128Fingerprinter(final SymmetricKey256 symmetricKey, final StringEncoder stringEncoder) {
 		this.symmetricKey = symmetricKey;
 		this.stringEncoder = stringEncoder;
 		this.messageComporator = BasicMessageComporator.getSingleton();
 	}
 
-	public KeyedBlake2b256Fingerprinter(final SymmetricKey512 symmetricKey, final StringEncoder stringEncoder,
+	public KeyedBlake2b128Fingerprinter(final SymmetricKey256 symmetricKey, final StringEncoder stringEncoder,
 			final MessageComporator messageComporator) {
 		this.symmetricKey = symmetricKey;
 		this.stringEncoder = stringEncoder;
@@ -62,7 +61,7 @@ public class KeyedBlake2b256Fingerprinter extends FingerprinterBase {
 	}
 
 	@Override
-	MessageDigester getDigester() throws NoSuchAlgorithmException {
-		return new Blake2bMessageDigester(symmetricKey.getKeyBytes(), 256);
+	MessageDigester getDigester() {
+		return new Blake2bMessageDigester(symmetricKey.getKeyBytes(), 128);
 	}
 }

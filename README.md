@@ -97,7 +97,9 @@ public class MyThing {
 
 ## License
 
-ALL files in this project are licensed. See [LICENSE.md](LICENSE.md)
+**ALL** files in this project are licensed. See [LICENSE.md](LICENSE.md)
+
+Note that this project's binary artifacts repackage small elements of the BouncyCastle Cryptography library; those parts retain their original MIT License.
 
 ## Contributing
 
@@ -138,4 +140,3 @@ After that, simply run: `mvn install`. In your IDE, you can enable the `eclipse`
 * EdDSA signatures
 * Curve25519 for ECDSA
 * ECIES
-

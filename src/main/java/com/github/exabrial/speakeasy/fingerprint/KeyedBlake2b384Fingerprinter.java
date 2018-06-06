@@ -14,9 +14,7 @@
  * the License.
  */
 
-package com.github.exabrial.speakeasy.oneway;
-
-import java.security.NoSuchAlgorithmException;
+package com.github.exabrial.speakeasy.fingerprint;
 
 import com.github.exabrial.speakeasy.comporator.BasicMessageComporator;
 import com.github.exabrial.speakeasy.encoding.Base64StringEncoder;
@@ -27,24 +25,24 @@ import com.github.exabrial.speakeasy.symmetric.SymmetricKey512;
 /**
  * A keyed (HMAC like) Fingerprinter using the Blake2b function.
  */
-public class KeyedBlake2b512Fingerprinter extends FingerprinterBase {
+public class KeyedBlake2b384Fingerprinter extends FingerprinterBase {
 	private final SymmetricKey512 symmetricKey;
 	private final StringEncoder stringEncoder;
 	private final MessageComporator messageComporator;
 
-	public KeyedBlake2b512Fingerprinter(final SymmetricKey512 symmetricKey) {
+	public KeyedBlake2b384Fingerprinter(final SymmetricKey512 symmetricKey) {
 		this.symmetricKey = symmetricKey;
 		this.stringEncoder = Base64StringEncoder.getSingleton();
 		this.messageComporator = BasicMessageComporator.getSingleton();
 	}
 
-	public KeyedBlake2b512Fingerprinter(final SymmetricKey512 symmetricKey, final StringEncoder stringEncoder) {
+	public KeyedBlake2b384Fingerprinter(final SymmetricKey512 symmetricKey, final StringEncoder stringEncoder) {
 		this.symmetricKey = symmetricKey;
 		this.stringEncoder = stringEncoder;
 		this.messageComporator = BasicMessageComporator.getSingleton();
 	}
 
-	public KeyedBlake2b512Fingerprinter(final SymmetricKey512 symmetricKey, final StringEncoder stringEncoder,
+	public KeyedBlake2b384Fingerprinter(final SymmetricKey512 symmetricKey, final StringEncoder stringEncoder,
 			final MessageComporator messageComporator) {
 		this.symmetricKey = symmetricKey;
 		this.stringEncoder = stringEncoder;
@@ -62,7 +60,7 @@ public class KeyedBlake2b512Fingerprinter extends FingerprinterBase {
 	}
 
 	@Override
-	MessageDigester getDigester() throws NoSuchAlgorithmException {
-		return new Blake2bMessageDigester(symmetricKey.getKeyBytes(), 512);
+	MessageDigester getDigester() {
+		return new Blake2bMessageDigester(symmetricKey.getKeyBytes(), 384);
 	}
 }

@@ -14,7 +14,7 @@
  * the License.
  */
 
-package com.github.exabrial.speakeasy.oneway;
+package com.github.exabrial.speakeasy.fingerprint;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -23,6 +23,7 @@ import java.util.Arrays;
 
 import org.junit.jupiter.api.Test;
 
+import com.github.exabrial.speakeasy.fingerprint.KeyedBlake2b128Fingerprinter;
 import com.github.exabrial.speakeasy.symmetric.SymmetricKey256;
 
 public class KeyedBlake2b128FingerprinterTest {

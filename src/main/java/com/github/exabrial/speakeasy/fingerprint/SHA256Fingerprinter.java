@@ -14,11 +14,9 @@
  * the License.
  */
 
-package com.github.exabrial.speakeasy.oneway;
+package com.github.exabrial.speakeasy.fingerprint;
 
 import static com.github.exabrial.speakeasy.internal.SpeakEasyConstants.SHA256;
-
-import java.security.NoSuchAlgorithmException;
 
 import com.github.exabrial.speakeasy.comporator.BasicMessageComporator;
 import com.github.exabrial.speakeasy.encoding.Base64StringEncoder;
@@ -58,7 +56,7 @@ public class SHA256Fingerprinter extends FingerprinterBase {
 	}
 
 	@Override
-	MessageDigester getDigester() throws NoSuchAlgorithmException {
+	MessageDigester getDigester() {
 		return new SHAMessageDigester(SHA256);
 	}
 }

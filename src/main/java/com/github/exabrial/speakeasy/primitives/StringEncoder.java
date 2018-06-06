@@ -20,11 +20,26 @@ import java.nio.charset.StandardCharsets;
 
 /**
  * Transforms a byte[] to a textual representation, and vice versa. All strings
- * are assumed to be UTF-8.
+ * are assumed to be UTF-8. Implementations do not have to be deterministic, but
+ * must be fully reversible.
  */
 public interface StringEncoder {
+	/**
+	 * Encodes a byte[] to a string representation.
+	 * 
+	 * @param message
+	 *          the byte[] to transform
+	 * @return a String representation of said bytes
+	 */
 	String encodeBytesAsString(byte[] message);
 
+	/**
+	 * Decodes a string into bytes.
+	 * 
+	 * @param message
+	 *          The input string to decode
+	 * @return a byte representation of said string
+	 */
 	byte[] decodeStringToBytes(String message);
 
 	default byte[] getStringAsBytes(final String message) {

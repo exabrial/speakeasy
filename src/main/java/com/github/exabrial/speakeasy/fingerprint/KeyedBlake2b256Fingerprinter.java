@@ -14,35 +14,37 @@
  * the License.
  */
 
-package com.github.exabrial.speakeasy.oneway;
-
-import static com.github.exabrial.speakeasy.internal.SpeakEasyConstants.SHA384;
-
-import java.security.NoSuchAlgorithmException;
+package com.github.exabrial.speakeasy.fingerprint;
 
 import com.github.exabrial.speakeasy.comporator.BasicMessageComporator;
 import com.github.exabrial.speakeasy.encoding.Base64StringEncoder;
 import com.github.exabrial.speakeasy.primitives.MessageComporator;
 import com.github.exabrial.speakeasy.primitives.StringEncoder;
+import com.github.exabrial.speakeasy.symmetric.SymmetricKey512;
 
 /**
- * SHA-256 implementation of Fingerprinter.
+ * A keyed (HMAC like) Fingerprinter using the Blake2b function.
  */
-public class SHA384Fingerprinter extends FingerprinterBase {
+public class KeyedBlake2b256Fingerprinter extends FingerprinterBase {
+	private final SymmetricKey512 symmetricKey;
 	private final StringEncoder stringEncoder;
 	private final MessageComporator messageComporator;
 
-	public SHA384Fingerprinter() {
+	public KeyedBlake2b256Fingerprinter(final SymmetricKey512 symmetricKey) {
+		this.symmetricKey = symmetricKey;
 		this.stringEncoder = Base64StringEncoder.getSingleton();
 		this.messageComporator = BasicMessageComporator.getSingleton();
 	}
 
-	public SHA384Fingerprinter(final StringEncoder stringEncoder) {
+	public KeyedBlake2b256Fingerprinter(final SymmetricKey512 symmetricKey, final StringEncoder stringEncoder) {
+		this.symmetricKey = symmetricKey;
 		this.stringEncoder = stringEncoder;
 		this.messageComporator = BasicMessageComporator.getSingleton();
 	}
 
-	public SHA384Fingerprinter(final StringEncoder stringEncoder, final MessageComporator messageComporator) {
+	public KeyedBlake2b256Fingerprinter(final SymmetricKey512 symmetricKey, final StringEncoder stringEncoder,
+			final MessageComporator messageComporator) {
+		this.symmetricKey = symmetricKey;
 		this.stringEncoder = stringEncoder;
 		this.messageComporator = messageComporator;
 	}
@@ -58,7 +60,7 @@ public class SHA384Fingerprinter extends FingerprinterBase {
 	}
 
 	@Override
-	MessageDigester getDigester() throws NoSuchAlgorithmException {
-		return new SHAMessageDigester(SHA384);
+	MessageDigester getDigester() {
+		return new Blake2bMessageDigester(symmetricKey.getKeyBytes(), 256);
 	}
 }

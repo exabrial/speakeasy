@@ -14,30 +14,31 @@
  * the License.
  */
 
-package com.github.exabrial.speakeasy.oneway;
+package com.github.exabrial.speakeasy.fingerprint;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
+import com.github.exabrial.speakeasy.fingerprint.Blake2b384Fingerprinter;
 import com.github.exabrial.speakeasy.testing.StringBytesEncoder;
 
-public class Blake2b256FingerprinterTest {
+public class Blake2b384FingerprinterTest {
 	private final String testVector = "hello";
-	private final String encodedTestVectorFingerprint = ("324dcf027dd4a30a932c441f365a25e86b173defa4b8e58948253471b81b72cf")
-			.toUpperCase();
+	private final String encodedTestVectorFingerprint = ("85f19170be541e7774da197c12ce959b91a280b2f23e3113d6638a3335507ed72ddc30f81244dbe9"
+			+ "fa8d195c23bceb7e").toUpperCase();
 
 	@Test
 	public void testFingerprint() {
-		final Blake2b256Fingerprinter fingerprinter = new Blake2b256Fingerprinter(new StringBytesEncoder());
+		final Blake2b384Fingerprinter fingerprinter = new Blake2b384Fingerprinter(new StringBytesEncoder());
 		final String fingerprint = fingerprinter.fingerprint(testVector);
 		assertEquals(encodedTestVectorFingerprint, fingerprint);
 	}
 
 	@Test
 	public void testVerifyFingerprint() {
-		final Blake2b256Fingerprinter fingerprinter = new Blake2b256Fingerprinter();
+		final Blake2b384Fingerprinter fingerprinter = new Blake2b384Fingerprinter();
 		final String fingerprint = fingerprinter.fingerprint(testVector);
 		assertTrue(fingerprinter.verifyFingerprint(testVector, fingerprint));
 	}

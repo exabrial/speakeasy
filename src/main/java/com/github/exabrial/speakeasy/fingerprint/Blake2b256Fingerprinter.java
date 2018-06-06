@@ -14,9 +14,7 @@
  * the License.
  */
 
-package com.github.exabrial.speakeasy.oneway;
-
-import java.security.NoSuchAlgorithmException;
+package com.github.exabrial.speakeasy.fingerprint;
 
 import com.github.exabrial.speakeasy.comporator.BasicMessageComporator;
 import com.github.exabrial.speakeasy.encoding.Base64StringEncoder;
@@ -28,21 +26,21 @@ import com.github.exabrial.speakeasy.primitives.StringEncoder;
  * faster than md5 and sha1, but offers none of the security problems. This
  * implementation uses a "self-keying" construction.
  */
-public class Blake2b384Fingerprinter extends FingerprinterBase {
+public class Blake2b256Fingerprinter extends FingerprinterBase {
 	private final StringEncoder stringEncoder;
 	private final MessageComporator messageComporator;
 
-	public Blake2b384Fingerprinter() {
+	public Blake2b256Fingerprinter() {
 		this.stringEncoder = Base64StringEncoder.getSingleton();
 		this.messageComporator = BasicMessageComporator.getSingleton();
 	}
 
-	public Blake2b384Fingerprinter(final StringEncoder stringEncoder) {
+	public Blake2b256Fingerprinter(final StringEncoder stringEncoder) {
 		this.stringEncoder = stringEncoder;
 		this.messageComporator = BasicMessageComporator.getSingleton();
 	}
 
-	public Blake2b384Fingerprinter(final StringEncoder stringEncoder, final MessageComporator messageComporator) {
+	public Blake2b256Fingerprinter(final StringEncoder stringEncoder, final MessageComporator messageComporator) {
 		this.stringEncoder = stringEncoder;
 		this.messageComporator = messageComporator;
 	}
@@ -58,7 +56,7 @@ public class Blake2b384Fingerprinter extends FingerprinterBase {
 	}
 
 	@Override
-	MessageDigester getDigester() throws NoSuchAlgorithmException {
-		return new Blake2bMessageDigester(null, 384);
+	MessageDigester getDigester() {
+		return new Blake2bMessageDigester(null, 256);
 	}
 }

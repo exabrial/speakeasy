@@ -14,7 +14,7 @@
  * the License.
  */
 
-package com.github.exabrial.speakeasy.oneway;
+package com.github.exabrial.speakeasy.fingerprint;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -22,11 +22,13 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
 
 import com.github.exabrial.speakeasy.encoding.HexStringEncoder;
+import com.github.exabrial.speakeasy.fingerprint.SHA384Fingerprinter;
 
-public class SHA256FingerprinterTest {
-	private final SHA256Fingerprinter fingerprinter = new SHA256Fingerprinter(HexStringEncoder.getSingleton());
+public class SHA384FingerprinterTest {
+	private final SHA384Fingerprinter fingerprinter = new SHA384Fingerprinter(HexStringEncoder.getSingleton());
 	private final String testVector = "abcdbcdecdefdefgefghfghighijhijkijkljklmklmnlmnomnopnopq";
-	private final String encodedTestVectorFingerprint = "248d6a61d20638b8e5c026930c3e6039a33ce45964ff2167f6ecedd419db06c1".toUpperCase();
+	private final String encodedTestVectorFingerprint = ("3391fdddfc8dc7393707a65b1b4709397cf8b1d162af05ab"
+			+ "fe8f450de5f36bc6b0455a8520bc4e6f5fe95b1fe3c8452b").toUpperCase();
 
 	@Test
 	public void testFingerprint() {

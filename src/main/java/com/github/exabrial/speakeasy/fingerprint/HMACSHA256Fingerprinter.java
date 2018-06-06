@@ -14,35 +14,38 @@
  * the License.
  */
 
-package com.github.exabrial.speakeasy.oneway;
-
-import java.security.NoSuchAlgorithmException;
+package com.github.exabrial.speakeasy.fingerprint;
 
 import com.github.exabrial.speakeasy.comporator.BasicMessageComporator;
 import com.github.exabrial.speakeasy.encoding.Base64StringEncoder;
 import com.github.exabrial.speakeasy.primitives.MessageComporator;
 import com.github.exabrial.speakeasy.primitives.StringEncoder;
+import com.github.exabrial.speakeasy.symmetric.SymmetricKey128;
 
 /**
- * Blake2b is _the fastest_ cryptographic hash algorithm available, it's much
- * faster than md5 and sha1, but offers none of the security problems. This
- * implementation uses a "self-keying" construction.
+ * HMAC takes a standard hash algorithm (Fingerprint) and makes it require a
+ * symmetric key in order to produce hashes.
  */
-public class Blake2b512Fingerprinter extends FingerprinterBase {
+public class HMACSHA256Fingerprinter extends FingerprinterBase {
+	private final SymmetricKey128 symmetricKey;
 	private final StringEncoder stringEncoder;
 	private final MessageComporator messageComporator;
 
-	public Blake2b512Fingerprinter() {
+	public HMACSHA256Fingerprinter(final SymmetricKey128 symmetricKey) {
+		this.symmetricKey = symmetricKey;
 		this.stringEncoder = Base64StringEncoder.getSingleton();
 		this.messageComporator = BasicMessageComporator.getSingleton();
 	}
 
-	public Blake2b512Fingerprinter(final StringEncoder stringEncoder) {
+	public HMACSHA256Fingerprinter(final SymmetricKey128 symmetricKey, final StringEncoder stringEncoder) {
+		this.symmetricKey = symmetricKey;
 		this.stringEncoder = stringEncoder;
 		this.messageComporator = BasicMessageComporator.getSingleton();
 	}
 
-	public Blake2b512Fingerprinter(final StringEncoder stringEncoder, final MessageComporator messageComporator) {
+	public HMACSHA256Fingerprinter(final SymmetricKey128 symmetricKey, final StringEncoder stringEncoder,
+			final MessageComporator messageComporator) {
+		this.symmetricKey = symmetricKey;
 		this.stringEncoder = stringEncoder;
 		this.messageComporator = messageComporator;
 	}
@@ -58,7 +61,7 @@ public class Blake2b512Fingerprinter extends FingerprinterBase {
 	}
 
 	@Override
-	MessageDigester getDigester() throws NoSuchAlgorithmException {
-		return new Blake2bMessageDigester(null, 512);
+	MessageDigester getDigester() {
+		return new HMACSHA256MessageDigester(symmetricKey.getKeyBytes());
 	}
 }

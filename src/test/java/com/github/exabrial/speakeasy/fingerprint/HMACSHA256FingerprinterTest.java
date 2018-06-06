@@ -14,14 +14,14 @@
  * the License.
  */
 
-package com.github.exabrial.speakeasy.oneway;
+package com.github.exabrial.speakeasy.fingerprint;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
-import com.github.exabrial.speakeasy.oneway.HMACSHA256Fingerprinter;
+import com.github.exabrial.speakeasy.fingerprint.HMACSHA256Fingerprinter;
 import com.github.exabrial.speakeasy.symmetric.SymmetricKey128;
 import com.github.exabrial.speakeasy.symmetric.SymmetricKeyUtils;
 

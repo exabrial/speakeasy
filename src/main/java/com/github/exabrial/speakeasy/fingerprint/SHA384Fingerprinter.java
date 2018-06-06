@@ -14,9 +14,9 @@
  * the License.
  */
 
-package com.github.exabrial.speakeasy.oneway;
+package com.github.exabrial.speakeasy.fingerprint;
 
-import java.security.NoSuchAlgorithmException;
+import static com.github.exabrial.speakeasy.internal.SpeakEasyConstants.SHA384;
 
 import com.github.exabrial.speakeasy.comporator.BasicMessageComporator;
 import com.github.exabrial.speakeasy.encoding.Base64StringEncoder;
@@ -24,25 +24,23 @@ import com.github.exabrial.speakeasy.primitives.MessageComporator;
 import com.github.exabrial.speakeasy.primitives.StringEncoder;
 
 /**
- * Blake2b is _the fastest_ cryptographic hash algorithm available, it's much
- * faster than md5 and sha1, but offers none of the security problems. This
- * implementation uses a "self-keying" construction.
+ * SHA-256 implementation of Fingerprinter.
  */
-public class Blake2b256Fingerprinter extends FingerprinterBase {
+public class SHA384Fingerprinter extends FingerprinterBase {
 	private final StringEncoder stringEncoder;
 	private final MessageComporator messageComporator;
 
-	public Blake2b256Fingerprinter() {
+	public SHA384Fingerprinter() {
 		this.stringEncoder = Base64StringEncoder.getSingleton();
 		this.messageComporator = BasicMessageComporator.getSingleton();
 	}
 
-	public Blake2b256Fingerprinter(final StringEncoder stringEncoder) {
+	public SHA384Fingerprinter(final StringEncoder stringEncoder) {
 		this.stringEncoder = stringEncoder;
 		this.messageComporator = BasicMessageComporator.getSingleton();
 	}
 
-	public Blake2b256Fingerprinter(final StringEncoder stringEncoder, final MessageComporator messageComporator) {
+	public SHA384Fingerprinter(final StringEncoder stringEncoder, final MessageComporator messageComporator) {
 		this.stringEncoder = stringEncoder;
 		this.messageComporator = messageComporator;
 	}
@@ -58,7 +56,7 @@ public class Blake2b256Fingerprinter extends FingerprinterBase {
 	}
 
 	@Override
-	MessageDigester getDigester() throws NoSuchAlgorithmException {
-		return new Blake2bMessageDigester(null, 256);
+	MessageDigester getDigester() {
+		return new SHAMessageDigester(SHA384);
 	}
 }

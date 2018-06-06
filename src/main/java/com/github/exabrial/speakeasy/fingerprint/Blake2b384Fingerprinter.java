@@ -14,11 +14,7 @@
  * the License.
  */
 
-package com.github.exabrial.speakeasy.oneway;
-
-import static com.github.exabrial.speakeasy.internal.SpeakEasyConstants.SHA512;
-
-import java.security.NoSuchAlgorithmException;
+package com.github.exabrial.speakeasy.fingerprint;
 
 import com.github.exabrial.speakeasy.comporator.BasicMessageComporator;
 import com.github.exabrial.speakeasy.encoding.Base64StringEncoder;
@@ -26,23 +22,25 @@ import com.github.exabrial.speakeasy.primitives.MessageComporator;
 import com.github.exabrial.speakeasy.primitives.StringEncoder;
 
 /**
- * SHA-256 implementation of Fingerprinter.
+ * Blake2b is _the fastest_ cryptographic hash algorithm available, it's much
+ * faster than md5 and sha1, but offers none of the security problems. This
+ * implementation uses a "self-keying" construction.
  */
-public class SHA512Fingerprinter extends FingerprinterBase {
+public class Blake2b384Fingerprinter extends FingerprinterBase {
 	private final StringEncoder stringEncoder;
 	private final MessageComporator messageComporator;
 
-	public SHA512Fingerprinter() {
+	public Blake2b384Fingerprinter() {
 		this.stringEncoder = Base64StringEncoder.getSingleton();
 		this.messageComporator = BasicMessageComporator.getSingleton();
 	}
 
-	public SHA512Fingerprinter(final StringEncoder stringEncoder) {
+	public Blake2b384Fingerprinter(final StringEncoder stringEncoder) {
 		this.stringEncoder = stringEncoder;
 		this.messageComporator = BasicMessageComporator.getSingleton();
 	}
 
-	public SHA512Fingerprinter(final StringEncoder stringEncoder, final MessageComporator messageComporator) {
+	public Blake2b384Fingerprinter(final StringEncoder stringEncoder, final MessageComporator messageComporator) {
 		this.stringEncoder = stringEncoder;
 		this.messageComporator = messageComporator;
 	}
@@ -58,7 +56,7 @@ public class SHA512Fingerprinter extends FingerprinterBase {
 	}
 
 	@Override
-	MessageDigester getDigester() throws NoSuchAlgorithmException {
-		return new SHAMessageDigester(SHA512);
+	MessageDigester getDigester() {
+		return new Blake2bMessageDigester(null, 384);
 	}
 }

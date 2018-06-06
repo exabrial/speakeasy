@@ -14,13 +14,14 @@
  * the License.
  */
 
-package com.github.exabrial.speakeasy.oneway;
+package com.github.exabrial.speakeasy.fingerprint;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
+import com.github.exabrial.speakeasy.fingerprint.Blake2b512Fingerprinter;
 import com.github.exabrial.speakeasy.testing.StringBytesEncoder;
 
 public class Blake2b512FingerprinterTest {

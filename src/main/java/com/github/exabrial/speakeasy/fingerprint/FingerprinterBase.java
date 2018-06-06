@@ -14,7 +14,7 @@
  * the License.
  */
 
-package com.github.exabrial.speakeasy.oneway;
+package com.github.exabrial.speakeasy.fingerprint;
 
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
@@ -61,5 +61,5 @@ abstract class FingerprinterBase implements Fingerprinter {
 
 	abstract MessageComporator getMessageComporator();
 
-	abstract MessageDigester getDigester() throws NoSuchAlgorithmException, NoSuchProviderException;
+	abstract MessageDigester getDigester();
 }

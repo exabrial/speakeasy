@@ -309,14 +309,14 @@
 				<executions>
 					<execution>
 						<id>gpg-sign</id>
-						<phase></phase>
+						<phase>verify</phase>
 						<goals>
 							<goal>sign</goal>
 						</goals>
 					</execution>
 				</executions>
 				<configuration>
-					<keyname>Speakeast Signing Key</keyname>
+					<keyname>Speakeasy Signing Key</keyname>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -517,7 +517,7 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-dependency-plugin</artifactId>
-					<version>3.1.0</version>
+					<version>3.1.1</version>
 				</plugin>
 				<plugin>
 					<groupId>org.codehaus.mojo</groupId>
@@ -532,7 +532,7 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-javadoc-plugin</artifactId>
-					<version>3.0.0</version>
+					<version>3.0.1</version>
 				</plugin>
 				<plugin>
 					<groupId>org.codehaus.mojo</groupId>
@@ -548,6 +548,11 @@
 					<groupId>org.sonatype.plugins</groupId>
 					<artifactId>nexus-staging-maven-plugin</artifactId>
 					<version>1.6.7</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-plugin-plugin</artifactId>
+					<version>3.5.2</version>
 				</plugin>
 			</plugins>
 		</pluginManagement>

@@ -315,9 +315,6 @@
 						</goals>
 					</execution>
 				</executions>
-				<configuration>
-					<keyname>Speakeasy Signing Key</keyname>
-				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
